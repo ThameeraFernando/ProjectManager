@@ -9,7 +9,9 @@ const NavBar = () => {
   return (
     <Wrapper>
       <div className="nav-center">
-        <button className="toggle-btn" onClick={toggleSideBar}></button>
+        <button className="toggle-btn" onClick={toggleSideBar}>
+          <FaAlignLeft />
+        </button>
         <div>
           <Logo />
           <h3 className="logo-text">Dashboard</h3>
