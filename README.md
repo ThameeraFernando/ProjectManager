@@ -1,3 +1,3 @@
 # ProjectManager
-Application Frameworks Group Project
-Research Project Management Tool using MERN
+# Application Frameworks Group Project
+# Research Project Management Tool using MERN
