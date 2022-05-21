@@ -1,5 +1,13 @@
 import { BrowserRouter, Route, Link, Routes } from "react-router-dom";
-import { Landing, Register, Error, DashBoard } from "./pages/index";
+import { Landing, Register, Error } from "./pages/index";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import {
+  SharedLayout,
+  Profile,
+  AllUsers,
+  Home,
+  User,
+} from "./pages/dashboard/index";
 function App() {
   return (
     <>
@@ -10,7 +18,19 @@ function App() {
           <Link to="/landing">Landing</Link>
         </nav>
         <Routes>
-          <Route path="/" element={<DashBoard />}></Route>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <SharedLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Home />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="user" element={<User />} />
+            <Route path="all-users" element={<AllUsers />} />
+          </Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/landing" element={<Landing />}></Route>
           <Route path="*" element={<Error />}></Route>
