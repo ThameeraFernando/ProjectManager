@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import reducer from "./reducer";
 import axios from "axios";
 import {
@@ -12,6 +13,17 @@ import {
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
+  GET_ALL_USERS_BEGIN,
+  GET_ALL_USERS_SUCCESS,
+  SET_UPDATE_USER,
+  UPDATE_USER_ADMIN_BEGIN,
+  UPDATE_USER_ADMIN_SUCCESS,
+  UPDATE_USER_ADMIN_ERROR,
+  SET_DELETE_USER,
+  DELETE_USER,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -21,8 +33,16 @@ export const initialState = {
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
-  token: token ? token : null,
+  token: token,
   showSideBar: false,
+  users: [],
+  totalUsers: 0,
+  numOfPages: 1,
+  page: 1,
+  updateUserId: "",
+  deleteUserId: "",
+  isUpdate: false,
+  isDelete: false,
 };
 
 const AppContext = React.createContext();
@@ -105,6 +125,120 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
   };
+  //Axios setup instance
+  const authFetch = axios.create({
+    baseURL: "/api/v1",
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
+  });
+  //check for unauthorize users
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        logoutUser();
+      }
+      return Promise.reject(error);
+    }
+  );
+  //update user
+  const updateUser = async (currentUser) => {
+    console.log(currentUser);
+    dispatch({ type: UPDATE_USER_BEGIN });
+    try {
+      const { data } = await authFetch.patch("auth/updateUser", currentUser);
+      const { user, token } = data;
+      console.log(data);
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user, token },
+      });
+      addUserToLocalStorage({ user, token });
+    } catch (error) {
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
+    }
+    clearAlert();
+  };
+  //get all users
+  const getUsers = async () => {
+    let url = "/users";
+    dispatch({ type: GET_ALL_USERS_BEGIN });
+    try {
+      const { data } = await authFetch.get(url);
+      const { users, totalUsers, numOfPages } = data;
+      dispatch({
+        type: GET_ALL_USERS_SUCCESS,
+        payload: { users, totalUsers, numOfPages },
+      });
+    } catch (error) {
+      console.log(error);
+      logoutUser();
+    }
+    clearAlert();
+  };
+  //set update user
+  const setUpdateUser = (id) => {
+    // console.log(`set update User ${id}`);
+    dispatch({ type: SET_UPDATE_USER, payload: { id } });
+  };
+  //delete user
+  const setDeleteUser = (id) => {
+    // console.log(`delete User ${id}`);
+    dispatch({ type: SET_DELETE_USER, payload: { id } });
+  };
+  //update user
+  const updateUserAdmin = async ({
+    UPisValidStaff,
+    UPname,
+    UPtype,
+    UPemail,
+  }) => {
+    dispatch({ type: UPDATE_USER_ADMIN_BEGIN });
+    try {
+      console.log({
+        UPisValidStaff,
+        UPname,
+        UPtype,
+        UPemail,
+      });
+      await authFetch.patch(`/users/${state.updateUserId}`, {
+        email: UPemail,
+        name: UPname,
+        type: UPtype,
+        isValidStaff: UPisValidStaff,
+      });
+      dispatch({ type: UPDATE_USER_ADMIN_SUCCESS });
+      navigator("/all-users");
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: UPDATE_USER_ADMIN_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+  //delete user
+  const navigator = useNavigate();
+  const deleteUser = async () => {
+    const id = state.deleteUserId;
+    dispatch({ type: DELETE_USER });
+    try {
+      await authFetch.delete(`/users/${id}`);
+      getUsers();
+      navigator("/all-users");
+    } catch (error) {
+      logoutUser();
+    }
+  };
   return (
     <AppContext.Provider
       value={{
@@ -114,6 +248,12 @@ const AppProvider = ({ children }) => {
         loginUser,
         toggleSideBar,
         logoutUser,
+        updateUser,
+        getUsers,
+        setDeleteUser,
+        setUpdateUser,
+        updateUserAdmin,
+        deleteUser,
       }}
     >
       {children}

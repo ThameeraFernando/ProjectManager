@@ -1,5 +1,5 @@
-import { IoBarChartSharp } from "react-icons/io5";
-import { MdQueryStats } from "react-icons/md";
+import { AiTwotoneHome } from "react-icons/ai";
+import { FaUsers } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 
 const links = [
@@ -7,16 +7,16 @@ const links = [
     id: 1,
     text: "home",
     path: "/",
-    icon: <IoBarChartSharp />,
+    icon: <AiTwotoneHome />,
   },
   {
     id: 2,
     text: "all users",
     path: "all-users",
-    icon: <MdQueryStats />,
+    icon: <FaUsers />,
   },
   {
-    id: 4,
+    id: 3,
     text: "profile",
     path: "profile",
     icon: <ImProfile />,

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import links from "../utils/links";
 
 const NavLinks = ({ toggleSideBar }) => {
+  
   return (
     <div className="nav-links">
       {links.map((link) => {

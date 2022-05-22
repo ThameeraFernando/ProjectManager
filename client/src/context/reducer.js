@@ -10,6 +10,17 @@ import {
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
+  GET_ALL_USERS_BEGIN,
+  GET_ALL_USERS_SUCCESS,
+  SET_UPDATE_USER,
+  UPDATE_USER_ADMIN_BEGIN,
+  UPDATE_USER_ADMIN_SUCCESS,
+  UPDATE_USER_ADMIN_ERROR,
+  SET_DELETE_USER,
+  DELETE_USER,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -83,11 +94,11 @@ const reducer = (state, action) => {
       alertType: "danger",
     };
   }
-
+  //toggle sidebar
   if (action.type === TOGGLE_SIDEBAR) {
     return { ...state, showSideBar: !state.showSideBar };
   }
-
+  //logout the user
   if (action.type === LOGOUT_USER) {
     return {
       ...initialState,
@@ -95,6 +106,113 @@ const reducer = (state, action) => {
       token: null,
       userLocation: "",
       jobLocation: "",
+    };
+  }
+  if (action.type === UPDATE_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      user: action.payload.user,
+      token: action.payload.token,
+      alertType: "success",
+      alertText: "User Profile Updated!",
+    };
+  }
+  if (action.type === UPDATE_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  //get all users
+  if (action.type === GET_ALL_USERS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === GET_ALL_USERS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      users: action.payload.users,
+      totalUsers: action.payload.totalUsers,
+      numOfPages: action.payload.numOfPages,
+    };
+  }
+  //set update user
+  if (action.type === SET_UPDATE_USER) {
+    const user = state.users.find((user) => user._id === action.payload.id);
+    const { _id, createdAt, name, type, email, updatedAt, isValidStaff } = user;
+    return {
+      ...state,
+      isUpdate: true,
+      isDelete: false,
+      updateUserId: _id,
+      createdAt,
+      name,
+      type,
+      email,
+      updatedAt,
+      isValidStaff,
+    };
+  }
+  if (action.type === UPDATE_USER_ADMIN_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_USER_ADMIN_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "User Updated",
+    };
+  }
+  if (action.type === UPDATE_USER_ADMIN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === SET_DELETE_USER) {
+    const user = state.users.find((user) => user._id === action.payload.id);
+    const { _id, createdAt, name, type, email, updatedAt, isValidStaff } = user;
+    console.log(user);
+    return {
+      ...state,
+      isDelete: true,
+      isUpdate: false,
+      deleteUserId: _id,
+      createdAt,
+      name,
+      type,
+      email,
+      updatedAt,
+      isValidStaff,
+    };
+  }
+  if (action.type === DELETE_USER) {
+    return {
+      ...state,
+      isLoading: true,
     };
   }
   throw new Error(`no such action :${action.type}`);
