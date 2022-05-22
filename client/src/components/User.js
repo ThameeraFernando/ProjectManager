@@ -4,7 +4,10 @@ import UserInfo from "./UserInfo";
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Job";
 import { useAppContext } from "../context/appContext";
-import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import { MdEmail, MdUpdate } from "react-icons/md";
+import { IoPerson, IoTime } from "react-icons/io5";
+import { BsFillBagCheckFill } from "react-icons/bs";
+import { GrValidate } from "react-icons/gr";
 
 const User = ({
   _id,
@@ -35,12 +38,12 @@ const User = ({
       </header>
       <div className="content">
         <div className="content-center">
-          <UserInfo icon={<FaLocationArrow />} text={name} />
-          <UserInfo icon={<FaLocationArrow />} text={email} />
-          <UserInfo icon={<FaLocationArrow />} text={type} />
-          <UserInfo icon={<FaLocationArrow />} text={cRdate} />
-          <UserInfo icon={<FaLocationArrow />} text={uPdate} />
-          <UserInfo icon={<FaLocationArrow />} text={validStaff} />
+          <UserInfo icon={<IoPerson />} text={name} />
+          <UserInfo icon={<MdEmail />} text={email} />
+          <UserInfo icon={<BsFillBagCheckFill />} text={type} />
+          <UserInfo icon={<IoTime />} text={cRdate} />
+          <UserInfo icon={<MdUpdate />} text={uPdate} />
+          <UserInfo icon={<GrValidate />} text={validStaff} />
         </div>
         <footer>
           <div className="actions">
