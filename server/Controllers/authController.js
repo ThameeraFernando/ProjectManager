@@ -31,7 +31,17 @@ const register = async (req, res, next) => {
 };
 //update user controller
 const updateUser = async (req, res) => {
-  return res.status(StatusCodes.OK).json({ msg: "updateUser controller" });
+  const { email, name, type } = req.body;
+  if (!email || !name || !type) {
+    throw new BadRequestError("Provide all values");
+  }
+  const user = await User.findOne({ _id: req.user.userID });
+  user.email = email;
+  user.name = name;
+  user.type = type;
+  await user.save();
+  const token = user.createJWT();
+  return res.status(StatusCodes.OK).json({ user, token });
 };
 
 module.exports = { login, register, updateUser };
