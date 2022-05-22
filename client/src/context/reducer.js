@@ -15,6 +15,10 @@ import {
   UPDATE_USER_ERROR,
   GET_ALL_USERS_BEGIN,
   GET_ALL_USERS_SUCCESS,
+  SET_UPDATE_USER,
+  UPDATE_USER_ADMIN_BEGIN,
+  UPDATE_USER_ADMIN_SUCCESS,
+  UPDATE_USER_ADMIN_ERROR,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -143,6 +147,46 @@ const reducer = (state, action) => {
       users: action.payload.users,
       totalUsers: action.payload.totalUsers,
       numOfPages: action.payload.numOfPages,
+    };
+  }
+  //set update user
+  if (action.type === SET_UPDATE_USER) {
+    const user = state.users.find((user) => user._id === action.payload.id);
+    const { _id, createdAt, name, type, email, updatedAt, isValidStaff } = user;
+    return {
+      ...state,
+      isUpdate: true,
+      updateUserId: _id,
+      createdAt,
+      name,
+      type,
+      email,
+      updatedAt,
+      isValidStaff,
+    };
+  }
+  if (action.type === UPDATE_USER_ADMIN_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_USER_ADMIN_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "User Updated",
+    };
+  }
+  if (action.type === UPDATE_USER_ADMIN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
     };
   }
   throw new Error(`no such action :${action.type}`);

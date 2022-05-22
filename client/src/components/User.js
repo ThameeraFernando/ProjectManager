@@ -45,7 +45,7 @@ const User = ({
         <footer>
           <div className="actions">
             <Link
-              to="/profile"
+              to="/update-user"
               className="btn edit-btn"
               onClick={() => setUpdateUser(_id)}
             >
