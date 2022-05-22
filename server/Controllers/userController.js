@@ -1,6 +1,8 @@
 const User = require("../modal/User");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors/index");
+const CustomApiError = require("../errors/custom-api-error");
+const { JsonWebTokenError } = require("jsonwebtoken");
 
 const getAllUsers = async (req, res) => {
   const users = await User.find({});
@@ -24,15 +26,19 @@ const UpdateUser = async (req, res) => {
     runValidators: true,
     new: true,
   });
-  // user.name = name;
-  // user.email = email;
-  // user.type = type;
-  // user.isValidStaff = isValidStaff;
-  // await user.save();
+
   res.status(StatusCodes.OK).send({ updateUser });
 };
 const deleteUser = async (req, res) => {
-  return res.status(200).send({ msg: "delete user" });
+  const { id: dId } = req.params;
+  const user = await User.findOne({ _id: dId });
+  if (!user) {
+    throw new NotFoundError();
+  }
+  //check permissions
+
+  await user.remove();
+  return res.status(StatusCodes.OK).send({ msg: "Success! User Removed" });
 };
 
 module.exports = { getAllUsers, UpdateUser, deleteUser };

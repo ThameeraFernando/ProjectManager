@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import reducer from "./reducer";
 import axios from "axios";
 import {
@@ -21,6 +22,8 @@ import {
   UPDATE_USER_ADMIN_BEGIN,
   UPDATE_USER_ADMIN_SUCCESS,
   UPDATE_USER_ADMIN_ERROR,
+  SET_DELETE_USER,
+  DELETE_USER,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -37,7 +40,9 @@ export const initialState = {
   numOfPages: 1,
   page: 1,
   updateUserId: "",
+  deleteUserId: "",
   isUpdate: false,
+  isDelete: false,
 };
 
 const AppContext = React.createContext();
@@ -181,12 +186,13 @@ const AppProvider = ({ children }) => {
   };
   //set update user
   const setUpdateUser = (id) => {
-    console.log(`set update User ${id}`);
+    // console.log(`set update User ${id}`);
     dispatch({ type: SET_UPDATE_USER, payload: { id } });
   };
   //delete user
-  const deleteUser = (id) => {
-    console.log(`delete User ${id}`);
+  const setDeleteUser = (id) => {
+    // console.log(`delete User ${id}`);
+    dispatch({ type: SET_DELETE_USER, payload: { id } });
   };
   //update user
   const updateUserAdmin = async ({
@@ -210,16 +216,28 @@ const AppProvider = ({ children }) => {
         isValidStaff: UPisValidStaff,
       });
       dispatch({ type: UPDATE_USER_ADMIN_SUCCESS });
+      navigator("/all-users");
     } catch (error) {
-      // if (error.response.status === 400) return;
       console.log(error);
       dispatch({
         type: UPDATE_USER_ADMIN_ERROR,
         payload: { msg: error.response.data.msg },
       });
-      
     }
     clearAlert();
+  };
+  //delete user
+  const navigator = useNavigate();
+  const deleteUser = async () => {
+    const id = state.deleteUserId;
+    dispatch({ type: DELETE_USER });
+    try {
+      await authFetch.delete(`/users/${id}`);
+      getUsers();
+      navigator("/all-users");
+    } catch (error) {
+      logoutUser();
+    }
   };
   return (
     <AppContext.Provider
@@ -232,9 +250,10 @@ const AppProvider = ({ children }) => {
         logoutUser,
         updateUser,
         getUsers,
-        deleteUser,
+        setDeleteUser,
         setUpdateUser,
         updateUserAdmin,
+        deleteUser,
       }}
     >
       {children}

@@ -19,7 +19,7 @@ const User = ({
   cRdate = cRdate.format("MMM Do, YYYY");
   let uPdate = moment(createdAt);
   uPdate = uPdate.format("MMM Do, YYYY");
-  const { deleteUser, setUpdateUser } = useAppContext();
+  const { setDeleteUser, setUpdateUser } = useAppContext();
   let validStaff = "Not a valid staff member.";
   if (isValidStaff) {
     validStaff = "Valid staff member";
@@ -51,13 +51,13 @@ const User = ({
             >
               Edit
             </Link>
-            <button
-              onClick={() => deleteUser(_id)}
-              type="button"
+            <Link
+              to="/update-user"
               className="btn delete-btn"
+              onClick={() => setDeleteUser(_id)}
             >
               Delete
-            </button>
+            </Link>
           </div>
         </footer>
       </div>

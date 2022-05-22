@@ -19,6 +19,8 @@ import {
   UPDATE_USER_ADMIN_BEGIN,
   UPDATE_USER_ADMIN_SUCCESS,
   UPDATE_USER_ADMIN_ERROR,
+  SET_DELETE_USER,
+  DELETE_USER,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -156,6 +158,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isUpdate: true,
+      isDelete: false,
       updateUserId: _id,
       createdAt,
       name,
@@ -187,6 +190,29 @@ const reducer = (state, action) => {
       alertType: "danger",
       showAlert: true,
       alertText: action.payload.msg,
+    };
+  }
+  if (action.type === SET_DELETE_USER) {
+    const user = state.users.find((user) => user._id === action.payload.id);
+    const { _id, createdAt, name, type, email, updatedAt, isValidStaff } = user;
+    console.log(user);
+    return {
+      ...state,
+      isDelete: true,
+      isUpdate: false,
+      deleteUserId: _id,
+      createdAt,
+      name,
+      type,
+      email,
+      updatedAt,
+      isValidStaff,
+    };
+  }
+  if (action.type === DELETE_USER) {
+    return {
+      ...state,
+      isLoading: true,
     };
   }
   throw new Error(`no such action :${action.type}`);

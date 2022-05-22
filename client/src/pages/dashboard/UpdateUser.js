@@ -16,6 +16,8 @@ const UpdateUser = () => {
     email,
     updatedAt,
     isValidStaff,
+    isDelete,
+    deleteUser,
   } = useAppContext();
   let newUPcreatedAt = moment(createdAt);
   newUPcreatedAt = newUPcreatedAt.format("MMM Do,YYYY");
@@ -30,91 +32,112 @@ const UpdateUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!UPname || !UPemail) {
-      displayAlert();
-      return;
+    if (isUpdate) {
+      if (!UPname || !UPemail) {
+        displayAlert();
+        return;
+      }
+      updateUserAdmin({
+        UPisValidStaff,
+        UPname,
+        UPtype,
+        UPemail,
+      });
     }
-    updateUserAdmin({
-      UPisValidStaff,
-      UPname,
-      UPtype,
-      UPemail,
-    });
+    if (isDelete) {
+      deleteUser();
+    }
   };
   return (
     <Wrapper>
       <form className="form">
-        <h3>updateUser</h3>
+        {isUpdate && <h3>Update User</h3>}
+        {isDelete && <h3>Delete User</h3>}
+
         {showAlert && <Alert />}
         <div className="form-center">
+          <>
+            <FormRow
+              type="text"
+              name="name"
+              value={UPname}
+              handleChange={(e) => setUPname(e.target.value)}
+              isReadOnly={isDelete ? true : false}
+            />
+            <FormRow
+              type="email"
+              name="email"
+              value={UPemail}
+              handleChange={(e) => setUPemail(e.target.value)}
+              isReadOnly={isDelete ? true : false}
+            />
+            <div>
+              <label htmlFor="type" className="form-label">
+                Type
+              </label>
+              <select
+                name="type"
+                value={UPtype}
+                onChange={(e) => setUPtype(e.target.value)}
+                className="form-input"
+                disabled={isDelete && "disabled"}
+              >
+                <option value="Student">Student</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Panel Member">Panel Member</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <FormRow
+              type="text"
+              name="Created date"
+              value={UPcreatedAt}
+              handleChange={(e) => setUPcreatedAt(e.target.value)}
+              isReadOnly={true}
+            />
+            <FormRow
+              type="text"
+              name="Last Updated date"
+              value={UPupdatedAt}
+              handleChange={(e) => setUPupdatedAt(e.target.value)}
+              isReadOnly={true}
+            />
+            <div className="form-row">
+              <label htmlFor="type" className="form-label">
+                Valid Staff member
+              </label>
+              <select
+                name="validStaff"
+                value={UPisValidStaff}
+                className="form-input"
+                onChange={(e) => setUPisValidStaff(e.target.value)}
+                disabled={isDelete && "disabled"}
+              >
+                <option value={true}>True</option>
+                <option value={false}>False</option>
+              </select>
+            </div>
+          </>
           {isUpdate && (
-            <>
-              <FormRow
-                type="text"
-                name="name"
-                value={UPname}
-                handleChange={(e) => setUPname(e.target.value)}
-              />
-              <FormRow
-                type="email"
-                name="email"
-                value={UPemail}
-                handleChange={(e) => setUPemail(e.target.value)}
-              />
-              <div>
-                <label htmlFor="type" className="form-label">
-                  Type
-                </label>
-                <select
-                  name="type"
-                  value={UPtype}
-                  onChange={(e) => setUPtype(e.target.value)}
-                  className="form-input"
-                >
-                  <option value="Student">Student</option>
-                  <option value="Supervisor">Supervisor</option>
-                  <option value="Panel Member">Panel Member</option>
-                  <option value="Admin">Admin</option>
-                </select>
-              </div>
-              <FormRow
-                type="text"
-                name="Created date"
-                value={UPcreatedAt}
-                handleChange={(e) => setUPcreatedAt(e.target.value)}
-                isReadOnly={true}
-              />
-              <FormRow
-                type="text"
-                name="Last Updated date"
-                value={UPupdatedAt}
-                handleChange={(e) => setUPupdatedAt(e.target.value)}
-                isReadOnly={true}
-              />
-              <div className="form-row">
-                <label htmlFor="type" className="form-label">
-                  Valid Staff member
-                </label>
-                <select
-                  name="validStaff"
-                  value={UPisValidStaff}
-                  className="form-input"
-                  onChange={(e) => setUPisValidStaff(e.target.value)}
-                >
-                  <option value={true}>True</option>
-                  <option value={false}>False</option>
-                </select>
-              </div>
-            </>
+            <button
+              className="btn btn-block"
+              type="submit"
+              disabled={isLoading}
+              onClick={handleSubmit}
+            >
+              {isLoading ? "Please wait..." : "Save changes"}
+            </button>
           )}
-          <button
-            className="btn btn-bloc"
-            type="submit"
-            disabled={isLoading}
-            onClick={handleSubmit}
-          >
-            {isLoading ? "Please wait..." : "save changes"}
-          </button>
+          {isDelete && (
+            <button
+              className="btn btn-block"
+              type="submit"
+              disabled={isLoading}
+              onClick={handleSubmit}
+            >
+              {isLoading ? "Please wait..." : "Delete User"}
+            </button>
+          )}
         </div>
       </form>
     </Wrapper>
