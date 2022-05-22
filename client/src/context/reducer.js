@@ -1,11 +1,18 @@
+import { initialState } from "./appContext";
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+  TOGGLE_SIDEBAR,
+  LOGOUT_USER,
 } from "./actions";
 const reducer = (state, action) => {
+  //alert actions
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -22,6 +29,7 @@ const reducer = (state, action) => {
       alertText: "",
     };
   }
+  //register user actions
   if (action.type === REGISTER_USER_BEGIN) {
     return {
       ...state,
@@ -46,6 +54,47 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+  //login user actions
+  if (action.type === LOGIN_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === LOGIN_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      showAlert: true,
+      alertText: "Login Successful! Redirecting...",
+      alertType: "success",
+    };
+  }
+  if (action.type === LOGIN_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertText: action.payload.msg,
+      alertType: "danger",
+    };
+  }
+
+  if (action.type === TOGGLE_SIDEBAR) {
+    return { ...state, showSideBar: !state.showSideBar };
+  }
+
+  if (action.type === LOGOUT_USER) {
+    return {
+      ...initialState,
+      user: null,
+      token: null,
+      userLocation: "",
+      jobLocation: "",
     };
   }
   throw new Error(`no such action :${action.type}`);

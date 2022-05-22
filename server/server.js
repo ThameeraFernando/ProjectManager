@@ -6,6 +6,11 @@ const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
+//use morgan middleware
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
 dotenv.config();
 //middleware
 app.use(express.json());

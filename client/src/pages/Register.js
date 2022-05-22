@@ -18,7 +18,7 @@ const initialState = {
 function Register() {
   const navigate = useNavigate();
   //use global context
-  const { isLoading, showAlert, displayAlert, registerUser, user } =
+  const { isLoading, showAlert, displayAlert, registerUser, user, loginUser } =
     useAppContext();
   //redirect to home page
   useEffect(() => {
@@ -40,6 +40,14 @@ function Register() {
     // console.log(values);
     if (isMember) {
       console.log("already a member");
+      //check for empty values
+      if (!email || !password) {
+        displayAlert();
+        return;
+      } else {
+        const currentMember = { email, password };
+        loginUser(currentMember);
+      }
     } else {
       //check for empty values
       if (!name || !email || !password || !type) {
@@ -62,34 +70,37 @@ function Register() {
         <Logo />
         {showAlert && <Alert />}
         {values.isMember ? <h3>Login</h3> : <h3>Register</h3>}
-
-        <FormRow
-          type="text"
-          name="name"
-          handleChange={handleChange}
-          value={values.name}
-        />
+        {!values.isMember && (
+          <>
+            <FormRow
+              type="text"
+              name="name"
+              handleChange={handleChange}
+              value={values.name}
+            />
+            <div className="form-row">
+              <label htmlFor="type" className="form-label">
+                Type
+              </label>
+              <select
+                name="type"
+                value={values.type}
+                onChange={handleChange}
+                className="form-input"
+              >
+                <option value="Student">Student</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Panel Member">Panel Member</option>
+              </select>
+            </div>
+          </>
+        )}
         <FormRow
           type="email"
           name="email"
           handleChange={handleChange}
           value={values.email}
         />
-        <div className="form-row">
-          <label htmlFor="type" className="form-label">
-            Type
-          </label>
-          <select
-            name="type"
-            value={values.type}
-            onChange={handleChange}
-            className="form-input"
-          >
-            <option value="Student">Student</option>
-            <option value="Supervisor">Supervisor</option>
-            <option value="Panel Member">Panel Member</option>
-          </select>
-        </div>
         <FormRow
           type="password"
           name="password"
