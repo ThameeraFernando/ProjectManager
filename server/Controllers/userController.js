@@ -1,5 +1,10 @@
+const User = require("../modal/User");
+const { StatusCodes } = require("http-status-codes");
 const getAllUsers = async (req, res) => {
-  return res.status(200).send({ msg: "get all users" });
+  const users = await User.find({});
+  return res
+    .status(StatusCodes.OK)
+    .send({ users, totalUsers: users.length, numOfPages: 1 });
 };
 const UpdateUser = async (req, res) => {
   return res.status(200).send({ msg: "update user" });

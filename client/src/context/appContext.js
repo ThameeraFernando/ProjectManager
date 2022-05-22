@@ -15,6 +15,8 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  GET_ALL_USERS_BEGIN,
+  GET_ALL_USERS_SUCCESS,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -26,6 +28,10 @@ export const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   showSideBar: false,
+  users: [],
+  totalUsers: 0,
+  numOfPages: 1,
+  page: 1,
 };
 
 const AppContext = React.createContext();
@@ -115,6 +121,18 @@ const AppProvider = ({ children }) => {
       Authorization: `Bearer ${state.token}`,
     },
   });
+  //check for unauthorize users
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        logoutUser();
+      }
+      return Promise.reject(error);
+    }
+  );
   //update user
   const updateUser = async (currentUser) => {
     console.log(currentUser);
@@ -129,12 +147,39 @@ const AppProvider = ({ children }) => {
       });
       addUserToLocalStorage({ user, token });
     } catch (error) {
-      dispatch({
-        type: UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
     }
     clearAlert();
+  };
+  //get all users
+  const getUsers = async () => {
+    let url = "/users";
+    dispatch({ type: GET_ALL_USERS_BEGIN });
+    try {
+      const { data } = await authFetch.get(url);
+      const { users, totalUsers, numOfPages } = data;
+      dispatch({
+        type: GET_ALL_USERS_SUCCESS,
+        payload: { users, totalUsers, numOfPages },
+      });
+    } catch (error) {
+      console.log(error);
+      logoutUser();
+    }
+    clearAlert();
+  };
+  //update user
+  const setUpdateUser = (id) => {
+    console.log(`set update User ${id}`);
+  };
+  //delete user
+  const deleteUser = (id) => {
+    console.log(`delete User ${id}`);
   };
   return (
     <AppContext.Provider
@@ -146,6 +191,9 @@ const AppProvider = ({ children }) => {
         toggleSideBar,
         logoutUser,
         updateUser,
+        getUsers,
+        deleteUser,
+        setUpdateUser,
       }}
     >
       {children}

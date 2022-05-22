@@ -13,6 +13,8 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  GET_ALL_USERS_BEGIN,
+  GET_ALL_USERS_SUCCESS,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -124,6 +126,23 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+  //get all users
+  if (action.type === GET_ALL_USERS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === GET_ALL_USERS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      users: action.payload.users,
+      totalUsers: action.payload.totalUsers,
+      numOfPages: action.payload.numOfPages,
     };
   }
   throw new Error(`no such action :${action.type}`);

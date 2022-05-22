@@ -16,7 +16,7 @@ const links = [
     icon: <FaUsers />,
   },
   {
-    id: 4,
+    id: 3,
     text: "profile",
     path: "profile",
     icon: <ImProfile />,
