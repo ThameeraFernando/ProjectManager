@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, FormRow } from "../../components/index";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 const UpdateUser = () => {
   const {
     showAlert,
@@ -18,6 +19,7 @@ const UpdateUser = () => {
     isValidStaff,
     isDelete,
     deleteUser,
+    user,
   } = useAppContext();
   let newUPcreatedAt = moment(createdAt);
   newUPcreatedAt = newUPcreatedAt.format("MMM Do,YYYY");
@@ -48,6 +50,13 @@ const UpdateUser = () => {
       deleteUser();
     }
   };
+  const navigator = useNavigate();
+  useEffect(() => {
+    // console.log(user.type);
+    if (user.type !== "Admin") {
+      navigator("/");
+    }
+  });
   return (
     <Wrapper>
       <form className="form">
