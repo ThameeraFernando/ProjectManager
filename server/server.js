@@ -29,6 +29,9 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
+//student routes
+app.use("/api/v1/student");
+
 //setup not found middleware
 app.use(notFound);
 app.use(errorHandler);
