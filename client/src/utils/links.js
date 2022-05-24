@@ -21,6 +21,12 @@ const links = [
     path: "profile",
     icon: <ImProfile />,
   },
+  {
+    id: 4,
+    text: "upload documents",
+    path: "upload-docs",
+    icon: <ImProfile />,
+  },
 ];
 
 export default links;

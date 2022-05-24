@@ -10,6 +10,7 @@ import {
   Home,
   User,
   UpdateUser,
+  Uploaddocs,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               <Route path="update-user" element={<UpdateUser />} />
               <Route path="user" element={<User />} />
               <Route path="all-users" element={<AllUsers />} />
+              <Route path="upload-docs" element={<Uploaddocs />} />
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>
