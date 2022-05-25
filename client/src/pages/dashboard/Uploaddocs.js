@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
-
+import { useAppContext } from "../../context/appContext";
 // import { Link } from "react-router-dom";
 const Uploaddocs = () => {
   const [file, setFile] = useState("");
@@ -11,6 +11,7 @@ const Uploaddocs = () => {
   const [allDescriptions, setAllDescriptions] = useState([]);
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAppContext();
   const getAllFiles = async () => {
     try {
       const response = await axios.get("/api/v1/files");
@@ -41,11 +42,15 @@ const Uploaddocs = () => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post(`/api/v1/files/${description}`, formData, {
-        headers: {
-          "Content-Type": "mutipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        `/api/v1/files/${description}/${user.type}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "mutipart/form-data",
+          },
+        }
+      );
       console.log(res);
       getAllFiles();
       setIsLoading(false);

@@ -11,6 +11,10 @@ const docSchema = new Schema(
       type: String,
       required: [true, "please provide name."],
     },
+    submittedBy: {
+      type: String,
+      default: "none",
+    },
   },
   { timestamps: true }
 );
