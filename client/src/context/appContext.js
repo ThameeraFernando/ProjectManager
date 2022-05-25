@@ -43,8 +43,9 @@ import {
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
   SET_VIEW_SUPERVISOR,
-
-
+  GET_ALL_SUPERVISORS_BEGIN,
+  GET_ALL_SUPERVISORS_SUCCESS,
+  GET_ALL_SUPERVISORS_ERROR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -78,9 +79,12 @@ export const initialState = {
   memberemailFour: "",
   membersupervisor: "pending",
   membercoSupervisor: "pending",
+  memberTopic: "",
   memberisRegister: false,
   StudentGroups: [],
   submissions: [],
+  supervisors: [],
+  totalSupervisors: [],
 };
 
 const AppContext = React.createContext();
@@ -278,13 +282,18 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
   // add supervisor type and field
-  const supervise = async ({name,email,type,field,userId}) => {
-    try { 
-      dispatch({type:SUPERVISE_BEGIN}) 
-      const response = await axios.post('/api/v1/supervisor', {name,email,type,field,userId})
-      dispatch({type:SUPERVISE_SUCCESS})
+  const supervise = async ({ name, email, type, field, userId }) => {
+    try {
+      dispatch({ type: SUPERVISE_BEGIN });
+      const response = await axios.post("/api/v1/supervisor", {
+        name,
+        email,
+        type,
+        field,
+        userId,
+      });
+      dispatch({ type: SUPERVISE_SUCCESS });
     } catch (error) {
       dispatch({
         type: SUPERVISE_ERROR,
@@ -292,7 +301,24 @@ const AppProvider = ({ children }) => {
       });
     }
     clearAlert();
-  }
+  };
+
+  //get all supervisor
+  const getAllSupervisor = async () => {
+    dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
+    try {
+      const { data } = await authFetch.get("/supervisor");
+      const { supervisors, totalSupervisors } = data;
+
+      dispatch({
+        type: GET_ALL_SUPERVISORS_SUCCESS,
+        payload: { supervisors, totalSupervisors },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
 
   //student group reg
 
@@ -331,6 +357,7 @@ const AppProvider = ({ children }) => {
         emailFour,
         supervisor,
         coSupervisor,
+        topic,
         isRegister,
       } = data.data;
 
@@ -348,6 +375,7 @@ const AppProvider = ({ children }) => {
           emailFour,
           supervisor,
           coSupervisor,
+          topic,
           isRegister,
         },
       });
@@ -373,7 +401,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   //get all submissions
   const getALlSubmissions = async () => {
     let url = "/submissions";
@@ -391,6 +418,7 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
   //create a new submission
   const CreateSubmission = async (newSubmission) => {
     dispatch({ type: CREATE_A_SUBMISSION_BEGIN });
@@ -407,6 +435,7 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
   //remove submission
   const removeSubmission = async (sid) => {
     console.log(sid);
@@ -423,8 +452,6 @@ const AppProvider = ({ children }) => {
   const setView = (id) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
   };
-
-
 
   return (
     <AppContext.Provider
@@ -449,8 +476,7 @@ const AppProvider = ({ children }) => {
         getALlSubmissions,
         removeSubmission,
         setView,
-
-
+        getAllSupervisor,
       }}
     >
       {children}

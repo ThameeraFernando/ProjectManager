@@ -15,6 +15,7 @@ const groupRegister = async (req, res) => {
     emailFour,
     supervisor,
     coSupervisor,
+    topic,
   } = req.body;
 
   console.log(req.body);
@@ -30,7 +31,8 @@ const groupRegister = async (req, res) => {
     !emailThree ||
     !emailFour ||
     !supervisor ||
-    !coSupervisor
+    !coSupervisor ||
+    !topic
   ) {
     throw new BadRequestError("Please provide all values");
   }

@@ -24,6 +24,8 @@ const StudnetGroup = () => {
     membersupervisor,
     membercoSupervisor,
     memberisRegister,
+    memberTopic,
+    user,
   } = useAppContext();
 
   const [groupID, setGroupID] = useState(membergroupID);
@@ -31,10 +33,11 @@ const StudnetGroup = () => {
   const [itNumTwo, setItNumTwo] = useState(memberitNumTwo);
   const [itNumThree, setItNumThree] = useState(memberitNumThree);
   const [itNumFour, setItNumFour] = useState(memberitNumFour);
-  const [emailOne, setEmailOne] = useState(memberemailOne);
+  const [emailOne, setEmailOne] = useState(user.email);
   const [emailTwo, setEmailTwo] = useState(memberemailTwo);
   const [emailThree, setEmailThree] = useState(memberemailThree);
   const [emailFour, setEmailFour] = useState(memberemailFour);
+  const [topic, setTopic] = useState(memberTopic);
   const [supervisor, setSupervisor] = useState("pending");
   const [coSupervisor, setCoSupervisor] = useState("pending");
 
@@ -76,6 +79,7 @@ const StudnetGroup = () => {
       emailFour,
       supervisor,
       coSupervisor,
+      topic,
       isRegister,
     };
 
@@ -118,7 +122,7 @@ const StudnetGroup = () => {
             labelText="member One Email"
             name="emailOne"
             value={memberemailOne || emailOne}
-            isReadOnly={memberisRegister}
+            isReadOnly={true}
             handleChange={(e) => setEmailOne(e.target.value)}
           />
 
@@ -177,6 +181,15 @@ const StudnetGroup = () => {
             isReadOnly={memberisRegister}
             value={memberemailFour || emailFour}
             handleChange={(e) => setEmailFour(e.target.value)}
+          />
+
+          <FormRow
+            type="text"
+            labelText="Research Topic"
+            name="topic"
+            isReadOnly={memberisRegister}
+            value={memberTopic || topic}
+            handleChange={(e) => setTopic(e.target.value)}
           />
 
           {/*Supervisor*/}
