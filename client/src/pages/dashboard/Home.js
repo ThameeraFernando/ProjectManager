@@ -80,54 +80,60 @@ const Home = () => {
             const { filename, _id } = file;
 
             return (
-              <ItemWrapper>
-                <div key={file._id}>
-                  <header>
-                    <h4>{file.filename}</h4>
-                    <br />
-                    {allDescriptions.map((des) => {
-                      const { description } = des;
-                      if (des.docName == filename) {
-                        return <h4>{description}</h4>;
-                      }
-                    })}
-                  </header>
-                  <div className="content">
-                    <div className="content-center">
-                      <footer>
-                        <div className="actions">
-                          <button
-                            type="submit"
-                            onClick={(e) => download({ e, filename })}
-                            className="btn btn-primary mr-1"
-                            disabled={isLoading}
-                          >
-                            Get the file
-                          </button>
-                          {user.type === "Admin" && (
-                            <button
-                              type="submit"
-                              onClick={(e) => Delete({ e, filename })}
-                              className="btn btn-primary mr-1"
-                              disabled={isLoading}
-                            >
-                              Delete
-                            </button>
-                          )}
-                          {/* <a
+              <>
+                {allDescriptions.map((des) => {
+                  const { description } = des;
+                  if (des.docName == filename && des.submittedBy == "Admin") {
+                    return (
+                      <>
+                        <ItemWrapper>
+                          <div key={file._id}>
+                            <header>
+                              <h4>{file.filename}</h4>
+                              <br />
+                              <h4>{description}</h4>
+                            </header>
+                            <div className="content">
+                              <div className="content-center">
+                                <footer>
+                                  <div className="actions">
+                                    <button
+                                      type="submit"
+                                      onClick={(e) => download({ e, filename })}
+                                      className="btn btn-primary mr-1"
+                                      disabled={isLoading}
+                                    >
+                                      Get the file
+                                    </button>
+                                    {user.type === "Admin" && (
+                                      <button
+                                        type="submit"
+                                        onClick={(e) => Delete({ e, filename })}
+                                        className="btn btn-primary mr-1"
+                                        disabled={isLoading}
+                                      >
+                                        Delete
+                                      </button>
+                                    )}
+                                    {/* <a
                             className="btn btn-primary mt-1 mb-1"
                             id="gLink"
                             href={`/FOC/${file.filename}`}
                             download
-                          >
+                            >
                             download
                           </a> */}
-                        </div>
-                      </footer>
-                    </div>
-                  </div>
-                </div>
-              </ItemWrapper>
+                                  </div>
+                                </footer>
+                              </div>
+                            </div>
+                          </div>
+                        </ItemWrapper>
+                      </>
+                    );
+                  }
+                })}
+              </>
             );
           })}
       </div>
