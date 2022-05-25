@@ -15,6 +15,10 @@ const docSchema = new Schema(
       type: String,
       default: "none",
     },
+    submittedTo: {
+      type: String,
+      default: "none",
+    },
   },
   { timestamps: true }
 );
