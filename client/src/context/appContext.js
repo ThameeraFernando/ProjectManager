@@ -27,15 +27,12 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
-<<<<<<< HEAD
   GET_STUDENT_GROUP_BEGIN,
   GET_STUDENT_GROUP_SUCCESS,
   GET_STUDENT_GROUP_ERROR,
-=======
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
->>>>>>> master
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -56,7 +53,7 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
-<<<<<<< HEAD
+
   membergroupID: "",
   membermember: "",
   memberitNumOne: "",
@@ -70,9 +67,7 @@ export const initialState = {
   membersupervisor: "pending",
   membercoSupervisor: "pending",
   memberisRegister: false,
-=======
   StudentGroups: [],
->>>>>>> master
 };
 
 const AppContext = React.createContext();
@@ -354,7 +349,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   return (
     <AppContext.Provider
       value={{
@@ -375,7 +369,6 @@ const AppProvider = ({ children }) => {
         getGroups,
 
         getAllStudents,
-
       }}
     >
       {children}

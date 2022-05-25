@@ -54,11 +54,9 @@ const getGroupRegister = async (req, res) => {
   console.log(groups);
 };
 
-module.exports = { groupRegister, getGroupRegister };
-
 const getAllStudentGroups = async (req, res) => {
   const studentgroups = await Groups.find({});
   res.status(StatusCodes.OK).json(studentgroups);
 };
 
-module.exports = { groupRegister, getAllStudentGroups };
+module.exports = { groupRegister, getAllStudentGroups, getGroupRegister };
