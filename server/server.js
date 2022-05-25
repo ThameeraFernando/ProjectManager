@@ -5,7 +5,11 @@ const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
+
+const studentRouter = require("./Routes/studentRoute");
+
 const fileRouter = require("./Routes/docRoutes");
+
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 // const fileUpload = require("express-fileupload");
@@ -40,7 +44,8 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/files", fileRouter);
 
 //student routes
-// app.use("/api/v1/student");
+app.use("/api/v1/students", studentRouter);
+
 
 //setup not found middleware
 app.use(notFound);
