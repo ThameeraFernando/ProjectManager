@@ -13,7 +13,7 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member"
   ) {
     NewLinks = links.filter((link) => {
-      if (link.path !== "all-users") {
+      if (link.path !== "all-users" && link.path !== "upload-docs") {
         return link;
       }
     });

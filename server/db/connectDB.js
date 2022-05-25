@@ -8,3 +8,8 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+// console.log(conn);
+
+// const conn = mongoose.createConnection(process.env.dbURL);
+
+// module.exports = conn;
