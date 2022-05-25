@@ -1,4 +1,5 @@
 import AllUsers from "./AllUsers";
+import DownloadFile from "./DownloadFile";
 import Home from "./Home";
 import Profile from "./Profile";
 import SharedLayout from "./SharedLayout";
@@ -8,6 +9,7 @@ import User from "./User";
 import StudnetGroup from "./StudnetGroup";
 
 export {
+  DownloadFile,
   Uploaddocs,
   SharedLayout,
   Profile,
@@ -16,4 +18,5 @@ export {
   User,
   UpdateUser,
   StudnetGroup,
+
 };

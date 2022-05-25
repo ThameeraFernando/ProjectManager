@@ -12,6 +12,7 @@ import {
   UpdateUser,
   Uploaddocs,
   StudnetGroup,
+  DownloadFile,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             >
               <Route index element={<Home />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="download-file/:id" element={<DownloadFile />} />
               <Route path="update-user" element={<UpdateUser />} />
               <Route path="user" element={<User />} />
               <Route path="all-users" element={<AllUsers />} />
