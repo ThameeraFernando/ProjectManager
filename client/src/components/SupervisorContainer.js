@@ -5,14 +5,22 @@ import Supervisor from "./Supervisor";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const SupervisorContainer = () => {
-  const { getUsers, users, page, totalUsers, isLoading } = useAppContext();
+  const {
+    getAllSupervisor,
+    totalSupervisors,
+    supervisors,
+    totalUsers,
+    isLoading,
+  } = useAppContext();
+
   useEffect(() => {
-    getUsers();
+    getAllSupervisor();
   }, []);
+
   if (isLoading) {
     return <Loading center />;
   }
-  if (users.length === 0) {
+  if (supervisors.length === 0) {
     return (
       <Wrapper>
         <h2>No Users to display.</h2>
@@ -22,13 +30,11 @@ const SupervisorContainer = () => {
   return (
     <Wrapper>
       <h4>
-        {totalUsers} Supervisor{users.length > 1 && "s"}
+        {totalSupervisors} Supervisor{supervisors.length > 1 && "s"}
       </h4>
       <div className="jobs">
-        {users.map((user) => {
-          if (user.type === "Supervisor") {
-            return <Supervisor key={user._id} {...user} />;
-          }
+        {supervisors.map((supervisor) => {
+          return <Supervisor key={supervisors._id} {...supervisor} />;
         })}
       </div>
     </Wrapper>

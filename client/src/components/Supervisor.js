@@ -9,19 +9,13 @@ import { IoPerson, IoTime } from "react-icons/io5";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
 
-const Supervisor = ({
-  _id,
-  createdAt,
-  name,
-  type,
-  email,
-  updatedAt,
-  isValidStaff,
-}) => {
+const Supervisor = ({ name, type, email, availability, field }) => {
+  const { requestSupervisor } = useAppContext();
+
   return (
     <Wrapper>
       <header>
-        <div className="main-icon">{email.charAt(0)}</div>
+        <div className="main-icon">{name.charAt(0)}</div>
         <div className="info">
           <h5>{type}</h5>
           <p>{name}</p>
@@ -29,10 +23,22 @@ const Supervisor = ({
       </header>
       <div className="content">
         <div className="content-center">
-          <SupervisorInfo icon={<IoPerson />} text={name} />
+          <SupervisorInfo icon={<IoPerson />} text={name} topic="Name" />
           <SupervisorInfo icon={<MdEmail />} text={email} />
+          <SupervisorInfo icon={<MdEmail />} text={availability} />
+          <SupervisorInfo icon={<MdEmail />} text={field} />
           <SupervisorInfo icon={<BsFillBagCheckFill />} text={type} />
         </div>
+
+        <footer>
+          <button
+            type="button"
+            className="btn edit-btn"
+            onClick={() => requestSupervisor()}
+          >
+            Request
+          </button>
+        </footer>
       </div>
     </Wrapper>
   );

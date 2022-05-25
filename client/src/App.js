@@ -22,6 +22,7 @@ import {
   Submissions,
   CreateSubmission,
   AddSubmissions,
+  StudentResearchRequest,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
               <Route path="staff-members" element={<StaffMembers />} />
               <Route path="student-groups" element={<StudnetGroup />} />
               <Route path="supervisors" element={<Supervisors />} />
+              <Route
+                path="student-research-request"
+                element={<StudentResearchRequest />}
+              />
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>

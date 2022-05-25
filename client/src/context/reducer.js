@@ -40,7 +40,9 @@ import {
   CREATE_A_SUBMISSION_END,
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
-
+  GET_ALL_SUPERVISORS_BEGIN,
+  GET_ALL_SUPERVISORS_SUCCESS,
+  GET_ALL_SUPERVISORS_ERROR,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -236,10 +238,10 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
-  
+
   // supervise
   if (action.type === SUPERVISE_BEGIN) {
-  return {
+    return {
       ...state,
       isLoading: true,
     };
@@ -252,7 +254,7 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
-    if (action.type === SUPERVISE_ERROR) {
+  if (action.type === SUPERVISE_ERROR) {
     return {
       ...state,
       isLoading: false,
@@ -263,7 +265,7 @@ const reducer = (state, action) => {
   }
 
   if (action.type === SUPERVISE_SUCCESS) {
-  return {
+    return {
       ...state,
       isLoading: false,
       showAlert: true,
@@ -273,7 +275,6 @@ const reducer = (state, action) => {
   }
 
   if (action.type === STUDENT_GROUP_SUCCESS) {
-
     return {
       ...state,
       isLoading: false,
@@ -308,6 +309,7 @@ const reducer = (state, action) => {
       memberemailFour: action.payload.emailFour,
       membersupervisor: action.payload.supervisor,
       membercoSupervisor: action.payload.coSupervisor,
+      memberTopic: action.payload.topic,
       memberisRegister: action.payload.isRegister,
     };
   }
@@ -372,6 +374,23 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+
+  if (action.type === GET_ALL_SUPERVISORS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_ALL_SUPERVISORS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      supervisors: action.payload.supervisors,
+      totalSupervisors: action.payload.totalSupervisors,
     };
   }
 
