@@ -34,14 +34,18 @@ const links = [
     path: "student-groups",
     icon: <BiGroup />,
   },
+
   {
     id: 6,
-    text: "supervisors",
-    path: "supervisors",
-
     text: "All student groups",
     path: "all-student-groups",
+    icon: <BiGroup />,
+  },
 
+  {
+    id: 8,
+    text: "supervisors",
+    path: "supervisors",
     icon: <BiGroup />,
   },
 ];

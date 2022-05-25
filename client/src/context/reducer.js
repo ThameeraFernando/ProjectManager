@@ -272,24 +272,24 @@ const reducer = (state, action) => {
       membercoSupervisor: action.payload.coSupervisor,
       memberisRegister: action.payload.isRegister,
     };
-    //get all student groups
-    //get all users
-    if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
-      return {
-        ...state,
-        isLoading: true,
-        showAlert: false,
-      };
-    }
-    if (action.type === GET_ALL_STUDENT_GROUPS_SUCCESS) {
-      return {
-        ...state,
-        isLoading: false,
-        StudentGroups: action.payload.data,
-      };
-    }
-
-    throw new Error(`no such action :${action.type}`);
   }
+  //get all student groups
+  //get all users
+  if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === GET_ALL_STUDENT_GROUPS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      StudentGroups: action.payload.data,
+    };
+  }
+
+  throw new Error(`no such action :${action.type}`);
 };
 export default reducer;
