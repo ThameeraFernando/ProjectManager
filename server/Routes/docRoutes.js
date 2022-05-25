@@ -50,17 +50,23 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 //Upload EndPoint
-router.post("/:des/:subName", upload.single("file"), async (req, res) => {
-  const NewDescription = req.params.des;
-  const subName = req.params.subName;
+router.post(
+  "/:des/:subName/:subTo",
+  upload.single("file"),
+  async (req, res) => {
+    const NewDescription = req.params.des;
+    const subTo = req.params.subTo;
+    const subName = req.params.subName;
 
-  const docs = await Doc.create({
-    docName: filename,
-    description: NewDescription,
-    submittedBy: subName,
-  });
-  res.json({ file: req.file });
-});
+    const docs = await Doc.create({
+      docName: filename,
+      description: NewDescription,
+      submittedBy: subName,
+      submittedTo: subTo,
+    });
+    res.json({ file: req.file });
+  }
+);
 //get doc details
 router.get("/docs", async (req, res) => {
   const docs = await Doc.find({});
@@ -115,7 +121,6 @@ router.delete("/:filename", async (req, res, next) => {
     res.status(200).end();
   });
 });
-
 
 module.exports = router;
 

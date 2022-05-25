@@ -2,7 +2,13 @@ import { AiTwotoneHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { ImProfile, ImUserPlus, ImFilesEmpty, ImPlus } from "react-icons/im";
 import { BiGroup } from "react-icons/bi";
-
+import {
+  AiOutlineUsergroupAdd,
+  AiOutlineFileAdd,
+  AiOutlineUpload,
+} from "react-icons/ai";
+import { GiTeacher } from "react-icons/gi";
+import { MdOutlineDriveFolderUpload } from "react-icons/md";
 
 const links = [
   {
@@ -45,13 +51,13 @@ const links = [
     id: 7,
     text: "upload documents",
     path: "upload-docs",
-    icon: <ImProfile />,
+    icon: <MdOutlineDriveFolderUpload />,
   },
   {
     id: 8,
     text: "student groups",
     path: "student-groups",
-    icon: <BiGroup />,
+    icon: <AiOutlineUsergroupAdd />,
   },
   {
     id: 9,
@@ -63,20 +69,19 @@ const links = [
     id: 10,
     text: "staff members",
     path: "staff-members",
-    icon: <BiGroup />,
+    icon: <GiTeacher />,
   },
   {
     id: 11,
     text: "Submissions",
     path: "submissions",
-    icon: <BiGroup />,
+    icon: <AiOutlineUpload />,
   },
   {
     id: 12,
     text: "create submissions",
     path: "create-submissions",
-    icon: <BiGroup />,
-
+    icon: <AiOutlineFileAdd />,
   },
   {
     id: 13,

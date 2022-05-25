@@ -3,7 +3,8 @@ import { Alert, FormRow } from "../../components/index";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import SubmissionContainer from "../../components/SubmissionContainer";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const CreateSubmission = () => {
   const {
     getALlSubmissions,
@@ -15,12 +16,15 @@ const CreateSubmission = () => {
   useEffect(() => {
     getALlSubmissions();
   }, []);
+  const [startDate, setStartDate] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [submittedTo, setSubmittedTo] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
   const [description, setDescription] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(startDate);
+    setDueDate(startDate);
     if (!dueDate || !submittedBy || !submittedTo || !description) {
       displayAlert();
       return;
@@ -54,12 +58,16 @@ const CreateSubmission = () => {
               value={submittedBy}
               handleChange={(e) => setSubmittedBy(e.target.value)}
             />{" "}
-            <FormRow
-              type="text"
-              name="dueDate"
-              value={dueDate}
-              handleChange={(e) => setDueDate(e.target.value)}
-            />
+            <div className="form-row">
+              <label htmlFor="date" className="form-label">
+                Due Date
+              </label>
+              <DatePicker
+                className="form-input"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              />
+            </div>
             <button
               className="btn btn-bloc"
               type="submit"
