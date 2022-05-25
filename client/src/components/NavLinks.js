@@ -18,6 +18,17 @@ const NavLinks = ({ toggleSideBar }) => {
       }
     });
   }
+  if (
+    user.type === "Student" ||
+    user.type === "Admin" ||
+    user.type === "Panel Member"
+  ) {
+    NewLinks = links.filter((link) => {
+      if (link.path !== "studentrequsets" && link.path !== "reportsubmissions") {
+        return link;
+      }
+    });
+  }
   return (
     <div className="nav-links">
       {NewLinks.map((link) => {

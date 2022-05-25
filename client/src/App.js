@@ -10,6 +10,9 @@ import {
   Home,
   User,
   UpdateUser,
+  StudentRequestList,
+  ReportSubmissions,
+
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
               <Route path="update-user" element={<UpdateUser />} />
               <Route path="user" element={<User />} />
               <Route path="all-users" element={<AllUsers />} />
+              <Route path="studentrequsets" element={<StudentRequestList />} />
+              <Route path="reportsubmissions" element={<ReportSubmissions />} />
+
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>
