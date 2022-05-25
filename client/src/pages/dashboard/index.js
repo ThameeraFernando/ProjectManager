@@ -18,6 +18,7 @@ import StaffMembers from "./StaffMembers";
 import Submissions from "./Submissions";
 import CreateSubmission from "./CreateSubmission";
 import AddSubmissions from "./AddSubmissions";
+import StudentResearchRequest from "./StudentResearchRequest";
 
 export {
   DownloadFile,
@@ -38,4 +39,5 @@ export {
   StudentRequestList,
   ReportSubmissions,
   Supervise,
+  StudentResearchRequest,
 };

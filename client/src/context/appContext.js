@@ -339,6 +339,8 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  //get specific student group
+
   const getGroups = async () => {
     try {
       const data = await authFetch.get(
@@ -380,6 +382,11 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {}
+  };
+
+  //request supervisor
+  const requestSupervisor = async () => {
+    getGroups();
   };
 
   //get all Student Groups
@@ -477,6 +484,7 @@ const AppProvider = ({ children }) => {
         removeSubmission,
         setView,
         getAllSupervisor,
+        requestSupervisor,
       }}
     >
       {children}

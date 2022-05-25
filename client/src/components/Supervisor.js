@@ -10,6 +10,8 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
 
 const Supervisor = ({ name, type, email, availability, field }) => {
+  const { requestSupervisor } = useAppContext();
+
   return (
     <Wrapper>
       <header>
@@ -29,7 +31,11 @@ const Supervisor = ({ name, type, email, availability, field }) => {
         </div>
 
         <footer>
-          <button type="button" className="btn edit-btn">
+          <button
+            type="button"
+            className="btn edit-btn"
+            onClick={() => requestSupervisor()}
+          >
             Request
           </button>
         </footer>

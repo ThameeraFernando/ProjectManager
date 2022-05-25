@@ -3,7 +3,6 @@ import { FaUsers } from "react-icons/fa";
 import { ImProfile, ImUserPlus, ImFilesEmpty, ImPlus } from "react-icons/im";
 import { BiGroup } from "react-icons/bi";
 
-
 const links = [
   {
     id: 1,
@@ -76,12 +75,17 @@ const links = [
     text: "create submissions",
     path: "create-submissions",
     icon: <BiGroup />,
-
   },
   {
     id: 13,
     text: "supervisors",
     path: "supervisors",
+    icon: <BiGroup />,
+  },
+  {
+    id: 14,
+    text: "requests",
+    path: "student-research-request",
     icon: <BiGroup />,
   },
 ];

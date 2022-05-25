@@ -27,7 +27,11 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member"
   ) {
     NewLinks = links.filter((link) => {
-      if (link.path !== "student-groups" && link.path !== "supervisors") {
+      if (
+        link.path !== "student-groups" &&
+        link.path !== "supervisors" &&
+        link.path !== "student-research-request"
+      ) {
         return link;
       }
     });
@@ -39,7 +43,10 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member"
   ) {
     NewLinks = links.filter((link) => {
-      if (link.path !== "studentrequsets" && link.path !== "reportsubmissions") {
+      if (
+        link.path !== "studentrequsets" &&
+        link.path !== "reportsubmissions"
+      ) {
         return link;
       }
     });
