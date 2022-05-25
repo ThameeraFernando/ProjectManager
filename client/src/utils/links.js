@@ -40,6 +40,24 @@ const links = [
     path: "all-student-groups",
     icon: <BiGroup />,
   },
+  {
+    id: 7,
+    text: "staff members",
+    path: "staff-members",
+    icon: <BiGroup />,
+  },
+  {
+    id: 11,
+    text: "Submissions",
+    path: "submissions",
+    icon: <BiGroup />,
+  },
+  {
+    id: 12,
+    text: "create submissions",
+    path: "create-submissions",
+    icon: <BiGroup />,
+  },
 ];
 
 export default links;

@@ -30,6 +30,12 @@ import {
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
+  GET_ALL_SUBMISSIONS_BEGIN,
+  GET_ALL_SUBMISSIONS_SUCCESS,
+  CREATE_A_SUBMISSION_BEGIN,
+  CREATE_A_SUBMISSION_END,
+  CREATE_A_SUBMISSION_SUCCESS,
+  DELETE_A_SUBMISSION,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -51,6 +57,7 @@ export const initialState = {
   isUpdate: false,
   isDelete: false,
   StudentGroups: [],
+  submissions: [],
 };
 
 const AppContext = React.createContext();
@@ -285,6 +292,50 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //get all submissions
+  const getALlSubmissions = async () => {
+    let url = "/submissions";
+    dispatch({ type: GET_ALL_SUBMISSIONS_BEGIN });
+    try {
+      const { data } = await authFetch.get(url);
+      console.log(data);
+      dispatch({
+        type: GET_ALL_SUBMISSIONS_SUCCESS,
+        payload: { data },
+      });
+    } catch (error) {
+      console.log(error);
+      logoutUser();
+    }
+    clearAlert();
+  };
+  //create a new submission
+  const CreateSubmission = async (newSubmission) => {
+    dispatch({ type: CREATE_A_SUBMISSION_BEGIN });
+    try {
+      const response = await authFetch.post("/submissions", newSubmission);
+      console.log(response.data);
+      dispatch({ type: CREATE_A_SUBMISSION_SUCCESS });
+      getALlSubmissions();
+    } catch (error) {
+      dispatch({
+        type: CREATE_A_SUBMISSION_END,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+  //remove submission
+  const removeSubmission = async (sid) => {
+    console.log(sid);
+    dispatch({ type: DELETE_A_SUBMISSION });
+    try {
+      await authFetch.delete(`/submissions/${sid}`);
+      getALlSubmissions();
+    } catch (error) {
+      logoutUser();
+    }
+  };
   return (
     <AppContext.Provider
       value={{
@@ -302,6 +353,9 @@ const AppProvider = ({ children }) => {
         deleteUser,
         groupReg,
         getAllStudents,
+        CreateSubmission,
+        getALlSubmissions,
+        removeSubmission,
       }}
     >
       {children}

@@ -8,6 +8,10 @@ import Uploaddocs from "./Uploaddocs";
 import User from "./User";
 import StudnetGroup from "./StudnetGroup";
 import AllStudentGroups from "./AllStudentGroups";
+import StaffMembers from "./StaffMembers";
+import Submissions from "./Submissions";
+import CreateSubmission from "./CreateSubmission";
+import AddSubmissions from "./AddSubmissions";
 
 export {
   DownloadFile,
@@ -20,4 +24,8 @@ export {
   UpdateUser,
   StudnetGroup,
   AllStudentGroups,
+  StaffMembers,
+  Submissions,
+  CreateSubmission,
+  AddSubmissions,
 };

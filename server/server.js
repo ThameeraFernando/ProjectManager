@@ -5,6 +5,7 @@ const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
+const submissionRouter = require("./Routes/submissionRoute");
 
 const studentRouter = require("./Routes/studentRoute");
 
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/files", fileRouter);
+app.use("/api/v1/submissions", submissionRouter);
 
 //student routes
 app.use("/api/v1/students", studentRouter);

@@ -14,6 +14,10 @@ import {
   StudnetGroup,
   DownloadFile,
   AllStudentGroups,
+  StaffMembers,
+  Submissions,
+  CreateSubmission,
+  AddSubmissions,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -37,6 +41,10 @@ function App() {
               <Route path="all-users" element={<AllUsers />} />
               <Route path="all-student-groups" element={<AllStudentGroups />} />
               <Route path="upload-docs" element={<Uploaddocs />} />
+              <Route path="create-submissions" element={<CreateSubmission />} />
+              <Route path="student-submissions" element={<AddSubmissions />} />
+              <Route path="submissions" element={<Submissions />} />
+              <Route path="staff-members" element={<StaffMembers />} />
               <Route path="student-groups" element={<StudnetGroup />} />
             </Route>
             <Route path="/register" element={<Register />}></Route>
