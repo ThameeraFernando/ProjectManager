@@ -40,7 +40,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/files", fileRouter);
 
 //student routes
-app.use("/api/v1/student");
+// app.use("/api/v1/student");
 
 //setup not found middleware
 app.use(notFound);

@@ -1,5 +1,7 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Wrapper from "../../assets/wrappers/DashboardFormPage";
+
 // import { Link } from "react-router-dom";
 const Uploaddocs = () => {
   const [file, setFile] = useState("");
@@ -92,8 +94,8 @@ const Uploaddocs = () => {
     }
   };
   return (
-    <Fragment>
-      <form onSubmit={onSubmit}>
+    <Wrapper>
+      <form onSubmit={onSubmit} className="form">
         <div className="custom-file">
           <input
             type="file"
@@ -121,7 +123,7 @@ const Uploaddocs = () => {
           disabled={isLoading}
         />
       </form>
-    </Fragment>
+    </Wrapper>
   );
 };
 

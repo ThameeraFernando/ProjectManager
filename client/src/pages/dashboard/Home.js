@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "../../assets/wrappers/JobsContainer";
 import ItemWrapper from "../../assets/wrappers/Job";
-
+import { useAppContext } from "../../context/appContext";
 import axios from "axios";
 // import { Link } from "react-router-dom";
 const Home = () => {
@@ -12,6 +12,7 @@ const Home = () => {
   const [allDescriptions, setAllDescriptions] = useState([]);
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAppContext();
   const getAllFiles = async () => {
     try {
       const response = await axios.get("/api/v1/files");
@@ -32,8 +33,8 @@ const Home = () => {
     getAllFiles();
   }, []);
 
-  const download = async (filename) => {
-    // e.preventDefault();
+  const download = async ({ e, filename }) => {
+    e.preventDefault();
     setIsLoading(true);
     try {
       const res = await axios.get(`/api/v1/files/${filename}`);
@@ -71,12 +72,12 @@ const Home = () => {
   return (
     <Wrapper>
       <div className="jobs">
-          {allFiles &&
-            allFiles.map((file) => {
-              const { filename, _id } = file;
+        {allFiles &&
+          allFiles.map((file) => {
+            const { filename, _id } = file;
 
-              return (
-                <ItemWrapper>
+            return (
+              <ItemWrapper>
                 <div key={file._id}>
                   <header>
                     <h4>{file.filename}</h4>
@@ -94,22 +95,24 @@ const Home = () => {
                         <div className="actions">
                           <button
                             type="submit"
-                            onClick={(e) => download(filename)}
+                            onClick={(e) => download({ e, filename })}
                             className="btn btn-primary mr-1"
                             disabled={isLoading}
                           >
                             Get the file
                           </button>
-                          <button
-                            type="submit"
-                            onClick={(e) => Delete({ e, filename })}
-                            className="btn btn-primary"
-                            disabled={isLoading}
-                          >
-                            Delete
-                          </button>
+                          {user.type === "Admin" && (
+                            <button
+                              type="submit"
+                              onClick={(e) => Delete({ e, filename })}
+                              className="btn btn-primary mr-1"
+                              disabled={isLoading}
+                            >
+                              Delete
+                            </button>
+                          )}
                           <a
-                            className="btn btn-primary mt-1"
+                            className="btn btn-primary mt-1 mb-1"
                             id="gLink"
                             href={`/FOC/${file.filename}`}
                             download
@@ -121,9 +124,9 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-        </ItemWrapper>
-              );
-            })}
+              </ItemWrapper>
+            );
+          })}
       </div>
     </Wrapper>
   );
