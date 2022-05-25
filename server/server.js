@@ -46,7 +46,6 @@ app.use("/api/v1/files", fileRouter);
 //student routes
 app.use("/api/v1/students", studentRouter);
 
-
 //setup not found middleware
 app.use(notFound);
 app.use(errorHandler);
