@@ -5,6 +5,7 @@ const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
+const studentRouter = require("./Routes/studentRoute");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 //use morgan middleware
@@ -30,7 +31,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
 //student routes
-app.use("/api/v1/student");
+app.use("/api/v1/students", studentRouter);
 
 //setup not found middleware
 app.use(notFound);

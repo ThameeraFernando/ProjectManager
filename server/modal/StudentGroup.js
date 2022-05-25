@@ -84,5 +84,5 @@ const studentSchema = new Schema(
 );
 
 //Student model export
-const groups = mongoose.model("Groups", studentSchema);
-module.exports = groups;
+const Groups = mongoose.model("Groups", studentSchema);
+module.exports = Groups;
