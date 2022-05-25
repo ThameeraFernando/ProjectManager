@@ -40,15 +40,8 @@ const groupRegister = async (req, res) => {
 };
 
 const getGroupRegister = async (req, res) => {
-  const { email: email } = req.params;
-  const groups = await Groups.findOne({
-    $or: [
-      { emailOne: email },
-      { emailTwo: email },
-      { emailThree: email },
-      { emailFour: email },
-    ],
-  });
+  const { email: newemail } = req.params;
+  const groups = await Groups.findOne({ emailOne: newemail });
 
   res.status(StatusCodes.OK).json(groups);
   console.log(groups);

@@ -33,6 +33,7 @@ import {
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
+  SET_VIEW_SUPERVISOR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -286,7 +287,7 @@ const AppProvider = ({ children }) => {
 
   const getGroups = async () => {
     try {
-      const { data } = await authFetch.get(
+      const data = await authFetch.get(
         `/students/groupRegister/${state.user.email}`
       );
 
@@ -303,7 +304,8 @@ const AppProvider = ({ children }) => {
         supervisor,
         coSupervisor,
         isRegister,
-      } = data;
+      } = data.data;
+
       dispatch({
         type: GET_STUDENT_GROUP_SUCCESS,
         payload: {
@@ -321,14 +323,8 @@ const AppProvider = ({ children }) => {
           isRegister,
         },
       });
-      console.log(data);
     } catch (error) {}
   };
-
-  useEffect(() => {
-    getGroups();
-    console.log("HEllo");
-  }, []);
 
   //get all Student Groups
   const getAllStudents = async () => {
@@ -349,6 +345,11 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //view Supervisor Student
+  const setView = (id) => {
+    dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -365,10 +366,9 @@ const AppProvider = ({ children }) => {
         updateUserAdmin,
         deleteUser,
         groupReg,
-
         getGroups,
-
         getAllStudents,
+        setView,
       }}
     >
       {children}

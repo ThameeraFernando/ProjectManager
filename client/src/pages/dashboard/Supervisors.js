@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SearchContainer from "../../components/SearchContainer";
-import UserContainer from "../../components/UserContainer";
+import SupervisorContainer from "../../components/SupervisorContainer";
 import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const Supervisors = () => {
   return (
     <>
       <SearchContainer />
-      <UserContainer />
+      <SupervisorContainer />
     </>
   );
 };

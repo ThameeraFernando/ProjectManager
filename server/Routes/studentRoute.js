@@ -10,6 +10,5 @@ const {
 router.route("/groupRegister").post(groupRegister);
 router.route("/groupRegister/:email").get(getGroupRegister);
 
-router.route("/groupRegister").post(groupRegister);
 router.route("/").get(getAllStudentGroups);
 module.exports = router;
