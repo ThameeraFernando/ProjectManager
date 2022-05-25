@@ -12,6 +12,7 @@ import {
   UpdateUser,
   Uploaddocs,
   StudnetGroup,
+  Supervisors,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="all-users" element={<AllUsers />} />
               <Route path="upload-docs" element={<Uploaddocs />} />
               <Route path="student-groups" element={<StudnetGroup />} />
+              <Route path="supervisors" element={<Supervisors />} />
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>

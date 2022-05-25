@@ -27,7 +27,7 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member"
   ) {
     NewLinks = links.filter((link) => {
-      if (link.path !== "student-groups") {
+      if (link.path !== "student-groups" && link.path !== "supervisors") {
         return link;
       }
     });

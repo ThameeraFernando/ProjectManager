@@ -6,6 +6,7 @@ import UpdateUser from "./UpdateUser";
 import Uploaddocs from "./Uploaddocs";
 import User from "./User";
 import StudnetGroup from "./StudnetGroup";
+import Supervisors from "./Supervisors";
 
 export {
   Uploaddocs,
@@ -16,4 +17,5 @@ export {
   User,
   UpdateUser,
   StudnetGroup,
+  Supervisors,
 };

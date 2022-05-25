@@ -27,6 +27,9 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+  GET_STUDENT_GROUP_BEGIN,
+  GET_STUDENT_GROUP_SUCCESS,
+  GET_STUDENT_GROUP_ERROR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -47,6 +50,19 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
+  membergroupID: "",
+  membermember: "",
+  memberitNumOne: "",
+  memberemailOne: "",
+  memberitNumTwo: "",
+  memberemailTwo: "",
+  memberitNumThree: "",
+  memberemailThree: "",
+  memberitNumFour: "",
+  memberemailFour: "",
+  membersupervisor: "pending",
+  membercoSupervisor: "pending",
+  memberisRegister: false,
 };
 
 const AppContext = React.createContext();
@@ -245,6 +261,7 @@ const AppProvider = ({ children }) => {
   };
 
   //student group reg
+
   const groupReg = async ({ groupDetails }) => {
     dispatch({ type: STUDENT_GROUP_BEGIN });
     console.log(groupDetails);
@@ -262,6 +279,51 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getGroups = async () => {
+    try {
+      const { data } = await authFetch.get(
+        `/students/groupRegister/${state.user.email}`
+      );
+
+      const {
+        groupID,
+        itNumOne,
+        emailOne,
+        itNumTwo,
+        emailTwo,
+        itNumThree,
+        emailThree,
+        itNumFour,
+        emailFour,
+        supervisor,
+        coSupervisor,
+        isRegister,
+      } = data;
+      dispatch({
+        type: GET_STUDENT_GROUP_SUCCESS,
+        payload: {
+          groupID,
+          itNumOne,
+          emailOne,
+          itNumTwo,
+          emailTwo,
+          itNumThree,
+          emailThree,
+          itNumFour,
+          emailFour,
+          supervisor,
+          coSupervisor,
+          isRegister,
+        },
+      });
+      console.log(data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getGroups();
+    console.log("HEllo");
+  }, []);
   return (
     <AppContext.Provider
       value={{
@@ -278,6 +340,7 @@ const AppProvider = ({ children }) => {
         updateUserAdmin,
         deleteUser,
         groupReg,
+        getGroups,
       }}
     >
       {children}

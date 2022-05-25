@@ -24,6 +24,10 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+  CLEAR_VALUES_STUDENT,
+  GET_STUDENT_GROUP_BEGIN,
+  GET_STUDENT_GROUP_SUCCESS,
+  GET_STUDENT_GROUP_ERROR,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -245,6 +249,25 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === GET_STUDENT_GROUP_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      membergroupID: action.payload.groupID,
+      memberitNumOne: action.payload.itNumOne,
+      memberemailOne: action.payload.emailOne,
+      memberitNumTwo: action.payload.itNumTwo,
+      memberemailTwo: action.payload.emailTwo,
+      memberitNumThree: action.payload.itNumThree,
+      memberemailThree: action.payload.emailThree,
+      memberitNumFour: action.payload.itNumFour,
+      memberemailFour: action.payload.emailFour,
+      membersupervisor: action.payload.supervisor,
+      membercoSupervisor: action.payload.coSupervisor,
+      memberisRegister: action.payload.isRegister,
     };
   }
 
