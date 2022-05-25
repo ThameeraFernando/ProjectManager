@@ -24,6 +24,9 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  SUPERVISE_BEGIN,
+  SUPERVISE_SUCCESS,
+  SUPERVISE_ERROR,
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
@@ -34,6 +37,7 @@ import {
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
   SET_VIEW_SUPERVISOR,
+
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -266,6 +270,22 @@ const AppProvider = ({ children }) => {
     }
   };
 
+
+  // add supervisor type and field
+  const supervise = async ({name,email,type,field,userId}) => {
+    try { 
+      dispatch({type:SUPERVISE_BEGIN}) 
+      const response = await axios.post('/api/v1/supervisor', {name,email,type,field,userId})
+      dispatch({type:SUPERVISE_SUCCESS})
+    } catch (error) {
+      dispatch({
+        type: SUPERVISE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  }
+
   //student group reg
 
   const groupReg = async ({ groupDetails }) => {
@@ -350,6 +370,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
   };
 
+
   return (
     <AppContext.Provider
       value={{
@@ -365,10 +386,12 @@ const AppProvider = ({ children }) => {
         setUpdateUser,
         updateUserAdmin,
         deleteUser,
+        supervise
         groupReg,
         getGroups,
         getAllStudents,
         setView,
+
       }}
     >
       {children}

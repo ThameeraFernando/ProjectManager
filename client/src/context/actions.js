@@ -32,6 +32,11 @@ export const SET_DELETE_USER = "SET_DELETE_USER";
 //delete user
 export const DELETE_USER = "DELETE_USER";
 
+//supervise
+export const SUPERVISE_BEGIN = "SUPERVISE_BEGIN";
+export const SUPERVISE_SUCCESS = "SUPERVISE_SUCCESS";
+export const SUPERVISE_ERROR = "SUPERVISE_ERROR";
+
 //student group reg
 export const STUDENT_GROUP_BEGIN = "STUDENT_GROUP_BEGIN";
 export const STUDENT_GROUP_SUCCESS = "STUDENT_GROUP_SUCCESS";
@@ -50,3 +55,4 @@ export const GET_ALL_STUDENT_GROUPS_END = "GET_ALL_STUDENT_GROUPS_END";
 
 //view supervisor
 export const SET_VIEW_SUPERVISOR = "SET_VIEW_SUPERVISOR";
+

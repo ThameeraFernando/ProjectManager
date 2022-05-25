@@ -6,6 +6,9 @@ const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
 
+const supervisorRouter = require("./Routes/supervisorRoutes");
+
+
 const studentRouter = require("./Routes/studentRoute");
 
 const fileRouter = require("./Routes/docRoutes");
@@ -41,10 +44,14 @@ app.get("/", (req, res) => {
 //authentication routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+
+app.use("/api/v1/supervisor", supervisorRouter);
+
 app.use("/api/v1/files", fileRouter);
 
 //student routes
 app.use("/api/v1/students", studentRouter);
+
 
 //setup not found middleware
 app.use(notFound);

@@ -1,7 +1,9 @@
 import { AiTwotoneHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
+import { ImProfile, ImUserPlus, ImFilesEmpty, ImPlus } from "react-icons/im";
 import { ImProfile } from "react-icons/im";
 import { BiGroup } from "react-icons/bi";
+
 
 const links = [
   {
@@ -18,35 +20,53 @@ const links = [
   },
   {
     id: 3,
+    text: "Student Group Requests",
+    path: "studentrequsets",
+    icon: <ImUserPlus />,
+  },
+  {
+    id: 4,
+    text: "Report & Submissions",
+    path: "reportsubmissions",
+    icon: <ImFilesEmpty />,
+  },
+  {
+    id: 5,
     text: "profile",
     path: "profile",
     icon: <ImProfile />,
   },
   {
-    id: 4,
+    id: 6,
+    text: "supervise",
+    path: "supervise",
+    icon: <ImPlus />,
+
+    id: 7,
     text: "upload documents",
     path: "upload-docs",
     icon: <ImProfile />,
   },
   {
-    id: 5,
+    id: 8,
     text: "student groups",
     path: "student-groups",
     icon: <BiGroup />,
   },
 
   {
-    id: 6,
+    id: 9,
     text: "All student groups",
     path: "all-student-groups",
     icon: <BiGroup />,
   },
 
   {
-    id: 8,
+    id: 10,
     text: "supervisors",
     path: "supervisors",
     icon: <BiGroup />,
+
   },
 ];
 

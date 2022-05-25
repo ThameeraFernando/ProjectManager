@@ -21,6 +21,9 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  SUPERVISE_BEGIN,
+  SUPERVISE_SUCCESS,
+  SUPERVISE_ERROR,
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
@@ -31,6 +34,7 @@ import {
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
+
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -225,23 +229,50 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
+  
+  // supervise
+  if (action.type === SUPERVISE_BEGIN) {
+  return {
+      ...state,
+      isLoading: true,
+    };
+  }
 
   //student reducer section
-
   if (action.type === STUDENT_GROUP_BEGIN) {
     return {
       ...state,
       isLoading: true,
     };
   }
+    if (action.type === SUPERVISE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === SUPERVISE_SUCCESS) {
+  return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Success",
+    };
+  }
 
   if (action.type === STUDENT_GROUP_SUCCESS) {
+
     return {
       ...state,
       isLoading: false,
       showAlert: true,
       alertType: "success",
-      alertText: "Gropu Registration Successfull",
+      alertText: "Group Registration Successfull",
     };
   }
 

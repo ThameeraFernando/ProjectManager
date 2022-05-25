@@ -10,6 +10,9 @@ import {
   Home,
   User,
   UpdateUser,
+  StudentRequestList,
+  ReportSubmissions,
+  Supervise
   Uploaddocs,
   StudnetGroup,
   Supervisors,
@@ -36,6 +39,9 @@ function App() {
               <Route path="update-user" element={<UpdateUser />} />
               <Route path="user" element={<User />} />
               <Route path="all-users" element={<AllUsers />} />
+              <Route path="studentrequsets" element={<StudentRequestList />} />
+              <Route path="reportsubmissions" element={<ReportSubmissions />} />
+              <Route path="supervise" element={<Supervise />} />
               <Route path="all-student-groups" element={<AllStudentGroups />} />
               <Route path="upload-docs" element={<Uploaddocs />} />
               <Route path="student-groups" element={<StudnetGroup />} />
