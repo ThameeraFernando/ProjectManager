@@ -11,7 +11,6 @@ import Uploaddocs from "./Uploaddocs";
 import User from "./User";
 import StudnetGroup from "./StudnetGroup";
 
-
 import Supervisors from "./Supervisors";
 
 import AllStudentGroups from "./AllStudentGroups";
@@ -30,12 +29,13 @@ export {
   User,
   UpdateUser,
   StudnetGroup,
-  AllStudentGroups,
   StaffMembers,
   Submissions,
   CreateSubmission,
   AddSubmissions,
   Supervisors,
-  AllStudentGroups,StudentRequestList, ReportSubmissions, Supervise
-
+  AllStudentGroups,
+  StudentRequestList,
+  ReportSubmissions,
+  Supervise,
 };

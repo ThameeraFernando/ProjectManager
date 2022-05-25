@@ -441,7 +441,7 @@ const AppProvider = ({ children }) => {
         setUpdateUser,
         updateUserAdmin,
         deleteUser,
-        supervise
+        supervise,
         groupReg,
         getGroups,
         getAllStudents,

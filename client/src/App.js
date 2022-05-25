@@ -12,7 +12,7 @@ import {
   UpdateUser,
   StudentRequestList,
   ReportSubmissions,
-  Supervise
+  Supervise,
   Uploaddocs,
   StudnetGroup,
   Supervisors,
