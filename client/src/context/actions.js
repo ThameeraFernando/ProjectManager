@@ -31,3 +31,8 @@ export const UPDATE_USER_ADMIN_ERROR = "UPDATE_USER_ADMIN_ERROR";
 export const SET_DELETE_USER = "SET_DELETE_USER";
 //delete user
 export const DELETE_USER = "DELETE_USER";
+
+//supervise
+export const SUPERVISE_BEGIN = "SUPERVISE_BEGIN";
+export const SUPERVISE_SUCCESS = "SUPERVISE_SUCCESS";
+export const SUPERVISE_ERROR = "SUPERVISE_ERROR";

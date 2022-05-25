@@ -12,6 +12,7 @@ import {
   UpdateUser,
   StudentRequestList,
   ReportSubmissions,
+  Supervise
 
 } from "./pages/dashboard/index";
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path="all-users" element={<AllUsers />} />
               <Route path="studentrequsets" element={<StudentRequestList />} />
               <Route path="reportsubmissions" element={<ReportSubmissions />} />
+              <Route path="supervise" element={<Supervise />} />
 
             </Route>
             <Route path="/register" element={<Register />}></Route>

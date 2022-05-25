@@ -21,6 +21,9 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  SUPERVISE_BEGIN,
+  SUPERVISE_SUCCESS,
+  SUPERVISE_ERROR,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -213,6 +216,31 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+  // supervise
+  if (action.type === SUPERVISE_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === SUPERVISE_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Success",
+    };
+  }
+  if (action.type === SUPERVISE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
     };
   }
   throw new Error(`no such action :${action.type}`);

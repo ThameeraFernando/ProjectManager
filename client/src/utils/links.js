@@ -1,6 +1,6 @@
 import { AiTwotoneHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
-import { ImProfile, ImUserPlus, ImFilesEmpty } from "react-icons/im";
+import { ImProfile, ImUserPlus, ImFilesEmpty, ImPlus } from "react-icons/im";
 
 const links = [
   {
@@ -23,7 +23,7 @@ const links = [
   },
   {
     id: 4,
-    text: "Report Submissions",
+    text: "Report & Submissions",
     path: "reportsubmissions",
     icon: <ImFilesEmpty />,
   },
@@ -32,6 +32,12 @@ const links = [
     text: "profile",
     path: "profile",
     icon: <ImProfile />,
+  },
+  {
+    id: 6,
+    text: "supervise",
+    path: "supervise",
+    icon: <ImPlus />,
   },
 ];
 

@@ -24,6 +24,10 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  SUPERVISE_BEGIN,
+  SUPERVISE_SUCCESS,
+  SUPERVISE_ERROR,
+
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -239,6 +243,22 @@ const AppProvider = ({ children }) => {
       logoutUser();
     }
   };
+
+  // add supervisor type and field
+  const supervise = async ({name,email,type,field,userId}) => {
+    try { 
+      dispatch({type:SUPERVISE_BEGIN}) 
+      const response = await axios.post('/api/v1/supervisor', {name,email,type,field,userId})
+      dispatch({type:SUPERVISE_SUCCESS})
+    } catch (error) {
+      dispatch({
+        type: SUPERVISE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -254,6 +274,7 @@ const AppProvider = ({ children }) => {
         setUpdateUser,
         updateUserAdmin,
         deleteUser,
+        supervise
       }}
     >
       {children}
