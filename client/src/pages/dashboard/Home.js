@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../../assets/wrappers/JobsContainer";
 import ItemWrapper from "../../assets/wrappers/Job";
 import { useAppContext } from "../../context/appContext";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { Link } from "react-router-dom";
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAppContext();
+  const navigator = useNavigate();
   const getAllFiles = async () => {
     try {
       const response = await axios.get("/api/v1/files");
@@ -37,6 +39,7 @@ const Home = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
+      navigator(`download-file/${filename}`);
       const res = await axios.get(`/api/v1/files/${filename}`);
 
       const { fileName, filePath } = res.data;
@@ -111,14 +114,14 @@ const Home = () => {
                               Delete
                             </button>
                           )}
-                          <a
+                          {/* <a
                             className="btn btn-primary mt-1 mb-1"
                             id="gLink"
                             href={`/FOC/${file.filename}`}
                             download
                           >
                             download
-                          </a>
+                          </a> */}
                         </div>
                       </footer>
                     </div>
