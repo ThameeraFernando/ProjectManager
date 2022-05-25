@@ -18,12 +18,12 @@ const CreateSubmission = () => {
   }, []);
   const [startDate, setStartDate] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [submittedTo, setSubmittedTo] = useState("");
-  const [submittedBy, setSubmittedBy] = useState("");
+  const [submittedTo, setSubmittedTo] = useState("Student");
+  const [submittedBy, setSubmittedBy] = useState("Student");
   const [description, setDescription] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(startDate);
+    // console.log(startDate);
     setDueDate(startDate);
     if (!dueDate || !submittedBy || !submittedTo || !description) {
       displayAlert();
@@ -46,18 +46,50 @@ const CreateSubmission = () => {
               value={description}
               handleChange={(e) => setDescription(e.target.value)}
             />
-            <FormRow
+            {/* <FormRow
               type="text"
               name="submittedTo"
               value={submittedTo}
               handleChange={(e) => setSubmittedTo(e.target.value)}
-            />
-            <FormRow
+            /> */}
+            <div>
+              <label htmlFor="type" className="form-label">
+                Submitted To
+              </label>
+              <select
+                name="type"
+                value={submittedTo}
+                onChange={(e) => setSubmittedTo(e.target.value)}
+                className="form-input"
+              >
+                <option value="Student">Student</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Panel Member">Panel Member</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="type" className="form-label">
+                Submitted By
+              </label>
+              <select
+                name="type"
+                value={submittedBy}
+                onChange={(e) => setSubmittedBy(e.target.value)}
+                className="form-input"
+              >
+                <option value="Student">Student</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Panel Member">Panel Member</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            {/* <FormRow
               type="text"
               name="submittedBy"
               value={submittedBy}
               handleChange={(e) => setSubmittedBy(e.target.value)}
-            />{" "}
+            />{" "} */}
             <div className="form-row">
               <label htmlFor="date" className="form-label">
                 Due Date
