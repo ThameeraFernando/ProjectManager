@@ -1,24 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { Alert, FormRow } from "../../components/index";
 
 const StudnetGroup = () => {
-  const [groupID, setGroupID] = useState("");
-  const [itNumOne, setItNumOne] = useState("");
-  const [itNumTwo, setItNumTwo] = useState("");
-  const [itNumThree, setItNumThree] = useState("");
-  const [itNumFour, setItNumFour] = useState("");
-  const [emailOne, setEmailOne] = useState("");
-  const [emailTwo, setEmailTwo] = useState("");
-  const [emailThree, setEmailThree] = useState("");
-  const [emailFour, setEmailFour] = useState("");
+  const {
+    isLoading,
+    showAlert,
+    isEditing,
+    displayAlert,
+    groupReg,
+    getGroups,
+    membergroupID,
+    memberitNumOne,
+    memberemailOne,
+    memberitNumTwo,
+    memberemailTwo,
+    memberitNumThree,
+    memberemailThree,
+    memberitNumFour,
+    memberemailFour,
+    membersupervisor,
+    membercoSupervisor,
+    memberisRegister,
+  } = useAppContext();
+
+  const [groupID, setGroupID] = useState(membergroupID);
+  const [itNumOne, setItNumOne] = useState(memberitNumOne);
+  const [itNumTwo, setItNumTwo] = useState(memberitNumTwo);
+  const [itNumThree, setItNumThree] = useState(memberitNumThree);
+  const [itNumFour, setItNumFour] = useState(memberitNumFour);
+  const [emailOne, setEmailOne] = useState(memberemailOne);
+  const [emailTwo, setEmailTwo] = useState(memberemailTwo);
+  const [emailThree, setEmailThree] = useState(memberemailThree);
+  const [emailFour, setEmailFour] = useState(memberemailFour);
   const [supervisor, setSupervisor] = useState("pending");
   const [coSupervisor, setCoSupervisor] = useState("pending");
 
-  const { isLoading, showAlert, isEditing, displayAlert, groupReg } =
-    useAppContext();
+  useEffect(() => {
+    getGroups();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,6 +62,8 @@ const StudnetGroup = () => {
       return;
     }
 
+    const isRegister = true;
+
     const groupDetails = {
       groupID,
       itNumOne,
@@ -52,14 +76,8 @@ const StudnetGroup = () => {
       emailFour,
       supervisor,
       coSupervisor,
+      isRegister,
     };
-
-    // if (isEditing) {
-    //   editJob();
-    //   return;
-    // }
-
-    // createJob();
 
     groupReg({ groupDetails });
   };
@@ -67,15 +85,21 @@ const StudnetGroup = () => {
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
-        <h3>{isEditing ? "edit job" : "Resgister Student Group"}</h3>
+        <h3>
+          {memberisRegister ? "Group Details" : "Resgister Student Group"}
+        </h3>
+        <br />
+        <h5>You can submit your topic after the </h5>
         {showAlert && <Alert />}
+
         <div className="form-center">
           {/*Group ID*/}
           <FormRow
             type="text"
             labelText="Group ID"
             name="groupID"
-            value={groupID}
+            value={membergroupID || groupID}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setGroupID(e.target.value)}
           />
 
@@ -84,7 +108,8 @@ const StudnetGroup = () => {
             type="text"
             labelText="member One IT Nummber"
             name="itNumOne"
-            value={itNumOne}
+            value={memberitNumOne || itNumOne}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setItNumOne(e.target.value)}
           />
           {/*Email 1*/}
@@ -92,7 +117,8 @@ const StudnetGroup = () => {
             type="email"
             labelText="member One Email"
             name="emailOne"
-            value={emailOne}
+            value={memberemailOne || emailOne}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setEmailOne(e.target.value)}
           />
 
@@ -101,7 +127,8 @@ const StudnetGroup = () => {
             type="text"
             labelText="member Two IT Number"
             name="itNumTwo"
-            value={itNumTwo}
+            value={memberitNumTwo || itNumTwo}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setItNumTwo(e.target.value)}
           />
           {/*Email 2*/}
@@ -109,7 +136,8 @@ const StudnetGroup = () => {
             type="email"
             labelText="member Two Email"
             name="emailTwo"
-            value={emailTwo}
+            value={memberemailTwo || emailTwo}
+            iisReadOnly={memberisRegister}
             handleChange={(e) => setEmailTwo(e.target.value)}
           />
 
@@ -118,7 +146,8 @@ const StudnetGroup = () => {
             type="text"
             labelText="member Three IT Number"
             name="itNumThree"
-            value={itNumThree}
+            value={memberitNumThree || itNumThree}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setItNumThree(e.target.value)}
           />
           {/*Email 3*/}
@@ -126,7 +155,8 @@ const StudnetGroup = () => {
             type="email"
             labelText="member Three Email"
             name="emailThree"
-            value={emailThree}
+            value={memberemailThree || emailThree}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setEmailThree(e.target.value)}
           />
 
@@ -135,7 +165,8 @@ const StudnetGroup = () => {
             type="text"
             labelText="member Four IT Number"
             name="itNumFour"
-            value={itNumFour}
+            isReadOnly={memberisRegister}
+            value={memberitNumFour || itNumFour}
             handleChange={(e) => setItNumFour(e.target.value)}
           />
           {/*Email 4*/}
@@ -143,7 +174,8 @@ const StudnetGroup = () => {
             type="email"
             labelText="member Four Email"
             name="emailFour"
-            value={emailFour}
+            isReadOnly={memberisRegister}
+            value={memberemailFour || emailFour}
             handleChange={(e) => setEmailFour(e.target.value)}
           />
 
@@ -152,7 +184,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="Supervisor"
             name="supervisor"
-            isReadOnly={true}
+            isReadOnly={memberisRegister}
             value={supervisor}
             handleChange={(e) => setSupervisor(e.target.value)}
           />
@@ -162,7 +194,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="Co-supervisorour"
             name="coSupervisor"
-            isReadOnly={true}
+            isReadOnly={memberisRegister}
             value={coSupervisor}
             handleChange={(e) => setCoSupervisor(e.target.value)}
           />
@@ -170,12 +202,15 @@ const StudnetGroup = () => {
             <button
               type="submit"
               className="btn btn-block submit-btn"
-              disabled={isLoading}
+              disabled={isLoading || memberisRegister}
+              hidden={memberisRegister}
             >
               submit
             </button>
             <button
               className="btn btn-block clear-btn"
+              disabled={isLoading || memberisRegister}
+              hidden={memberisRegister}
               onClick={(e) => {
                 e.preventDefault();
                 // clearValues();

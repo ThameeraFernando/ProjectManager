@@ -24,9 +24,15 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  SUPERVISE_BEGIN,
+  SUPERVISE_SUCCESS,
+  SUPERVISE_ERROR,
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+  GET_STUDENT_GROUP_BEGIN,
+  GET_STUDENT_GROUP_SUCCESS,
+  GET_STUDENT_GROUP_ERROR,
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
@@ -36,6 +42,9 @@ import {
   CREATE_A_SUBMISSION_END,
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
+  SET_VIEW_SUPERVISOR,
+
+
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -56,6 +65,20 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
+
+  membergroupID: "",
+  membermember: "",
+  memberitNumOne: "",
+  memberemailOne: "",
+  memberitNumTwo: "",
+  memberemailTwo: "",
+  memberitNumThree: "",
+  memberemailThree: "",
+  memberitNumFour: "",
+  memberemailFour: "",
+  membersupervisor: "pending",
+  membercoSupervisor: "pending",
+  memberisRegister: false,
   StudentGroups: [],
   submissions: [],
 };
@@ -255,7 +278,24 @@ const AppProvider = ({ children }) => {
     }
   };
 
+
+  // add supervisor type and field
+  const supervise = async ({name,email,type,field,userId}) => {
+    try { 
+      dispatch({type:SUPERVISE_BEGIN}) 
+      const response = await axios.post('/api/v1/supervisor', {name,email,type,field,userId})
+      dispatch({type:SUPERVISE_SUCCESS})
+    } catch (error) {
+      dispatch({
+        type: SUPERVISE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  }
+
   //student group reg
+
   const groupReg = async ({ groupDetails }) => {
     dispatch({ type: STUDENT_GROUP_BEGIN });
     console.log(groupDetails);
@@ -271,6 +311,47 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+  };
+
+  const getGroups = async () => {
+    try {
+      const data = await authFetch.get(
+        `/students/groupRegister/${state.user.email}`
+      );
+
+      const {
+        groupID,
+        itNumOne,
+        emailOne,
+        itNumTwo,
+        emailTwo,
+        itNumThree,
+        emailThree,
+        itNumFour,
+        emailFour,
+        supervisor,
+        coSupervisor,
+        isRegister,
+      } = data.data;
+
+      dispatch({
+        type: GET_STUDENT_GROUP_SUCCESS,
+        payload: {
+          groupID,
+          itNumOne,
+          emailOne,
+          itNumTwo,
+          emailTwo,
+          itNumThree,
+          emailThree,
+          itNumFour,
+          emailFour,
+          supervisor,
+          coSupervisor,
+          isRegister,
+        },
+      });
+    } catch (error) {}
   };
 
   //get all Student Groups
@@ -291,6 +372,7 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
 
   //get all submissions
   const getALlSubmissions = async () => {
@@ -336,6 +418,14 @@ const AppProvider = ({ children }) => {
       logoutUser();
     }
   };
+
+  //view Supervisor Student
+  const setView = (id) => {
+    dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
+  };
+
+
+
   return (
     <AppContext.Provider
       value={{
@@ -351,11 +441,16 @@ const AppProvider = ({ children }) => {
         setUpdateUser,
         updateUserAdmin,
         deleteUser,
+        supervise
         groupReg,
+        getGroups,
         getAllStudents,
         CreateSubmission,
         getALlSubmissions,
         removeSubmission,
+        setView,
+
+
       }}
     >
       {children}

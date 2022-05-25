@@ -39,9 +39,24 @@ const groupRegister = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ studentGroup });
 };
 
+const getGroupRegister = async (req, res) => {
+  const { email: newemail } = req.params;
+  const groups = await Groups.findOne({
+    $or: [
+      { emailOne: newemail },
+      { emailTwo: newemail },
+      { emailThree: newemail },
+      { emailFour: newemail },
+    ],
+  });
+
+  res.status(StatusCodes.OK).json(groups);
+  console.log(groups);
+};
+
 const getAllStudentGroups = async (req, res) => {
   const studentgroups = await Groups.find({});
   res.status(StatusCodes.OK).json(studentgroups);
 };
 
-module.exports = { groupRegister, getAllStudentGroups };
+module.exports = { groupRegister, getAllStudentGroups, getGroupRegister };
