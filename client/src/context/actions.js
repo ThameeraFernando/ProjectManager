@@ -31,3 +31,8 @@ export const UPDATE_USER_ADMIN_ERROR = "UPDATE_USER_ADMIN_ERROR";
 export const SET_DELETE_USER = "SET_DELETE_USER";
 //delete user
 export const DELETE_USER = "DELETE_USER";
+
+//student group reg
+export const STUDENT_GROUP_BEGIN = "STUDENT_GROUP_BEGIN";
+export const STUDENT_GROUP_SUCCESS = "STUDENT_GROUP_SUCCESS";
+export const STUDENT_GROUP_ERROR = "STUDENT_GROUP_ERROR";

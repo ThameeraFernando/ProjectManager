@@ -1,6 +1,7 @@
 import { AiTwotoneHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
+import { BiGroup } from "react-icons/bi";
 
 const links = [
   {
@@ -26,6 +27,12 @@ const links = [
     text: "upload documents",
     path: "upload-docs",
     icon: <ImProfile />,
+  },
+  {
+    id: 5,
+    text: "student groups",
+    path: "student-groups",
+    icon: <BiGroup />,
   },
 ];
 
