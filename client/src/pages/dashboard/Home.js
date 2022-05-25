@@ -13,7 +13,7 @@ const Home = () => {
   const [allDescriptions, setAllDescriptions] = useState([]);
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAppContext();
+  const { user, getAllStudents } = useAppContext();
   const navigator = useNavigate();
   const getAllFiles = async () => {
     try {
@@ -33,6 +33,7 @@ const Home = () => {
   };
   useEffect(() => {
     getAllFiles();
+    getAllStudents();
   }, []);
 
   const download = async ({ e, filename }) => {
