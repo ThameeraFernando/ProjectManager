@@ -5,6 +5,7 @@ const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
+const submissionRouter = require("./Routes/submissionRoute");
 
 const supervisorRouter = require("./Routes/supervisorRoutes");
 
@@ -48,6 +49,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/supervisor", supervisorRouter);
 
 app.use("/api/v1/files", fileRouter);
+app.use("/api/v1/submissions", submissionRouter);
 
 //student routes
 app.use("/api/v1/students", studentRouter);

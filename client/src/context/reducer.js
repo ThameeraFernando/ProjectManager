@@ -34,8 +34,15 @@ import {
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
+  GET_ALL_SUBMISSIONS_BEGIN,
+  GET_ALL_SUBMISSIONS_SUCCESS,
+  CREATE_A_SUBMISSION_BEGIN,
+  CREATE_A_SUBMISSION_END,
+  CREATE_A_SUBMISSION_SUCCESS,
+  DELETE_A_SUBMISSION,
 
 } from "./actions";
+import Submission from "../components/Submission";
 const reducer = (state, action) => {
   //alert actions
   if (action.type === DISPLAY_ALERT) {
@@ -305,7 +312,6 @@ const reducer = (state, action) => {
     };
   }
   //get all student groups
-  //get all users
   if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
     return {
       ...state,
@@ -318,6 +324,54 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       StudentGroups: action.payload.data,
+    };
+  }
+
+  //create a submission
+  if (action.type === CREATE_A_SUBMISSION_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === CREATE_A_SUBMISSION_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "New Submission Created...",
+    };
+  }
+  if (action.type === CREATE_A_SUBMISSION_END) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      // alertText: action.payload.msg,
+    };
+  }
+  //get all student groups
+  if (action.type === GET_ALL_SUBMISSIONS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === GET_ALL_SUBMISSIONS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      submissions: action.payload.data,
+    };
+  }
+  //delete submission
+  if (action.type === DELETE_A_SUBMISSION) {
+    return {
+      ...state,
+      isLoading: true,
     };
   }
 

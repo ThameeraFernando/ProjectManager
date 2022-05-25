@@ -36,7 +36,14 @@ import {
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
+  GET_ALL_SUBMISSIONS_BEGIN,
+  GET_ALL_SUBMISSIONS_SUCCESS,
+  CREATE_A_SUBMISSION_BEGIN,
+  CREATE_A_SUBMISSION_END,
+  CREATE_A_SUBMISSION_SUCCESS,
+  DELETE_A_SUBMISSION,
   SET_VIEW_SUPERVISOR,
+
 
 } from "./actions";
 const user = localStorage.getItem("user");
@@ -73,6 +80,7 @@ export const initialState = {
   membercoSupervisor: "pending",
   memberisRegister: false,
   StudentGroups: [],
+  submissions: [],
 };
 
 const AppContext = React.createContext();
@@ -365,10 +373,57 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+
+  //get all submissions
+  const getALlSubmissions = async () => {
+    let url = "/submissions";
+    dispatch({ type: GET_ALL_SUBMISSIONS_BEGIN });
+    try {
+      const { data } = await authFetch.get(url);
+      console.log(data);
+      dispatch({
+        type: GET_ALL_SUBMISSIONS_SUCCESS,
+        payload: { data },
+      });
+    } catch (error) {
+      console.log(error);
+      logoutUser();
+    }
+    clearAlert();
+  };
+  //create a new submission
+  const CreateSubmission = async (newSubmission) => {
+    dispatch({ type: CREATE_A_SUBMISSION_BEGIN });
+    try {
+      const response = await authFetch.post("/submissions", newSubmission);
+      console.log(response.data);
+      dispatch({ type: CREATE_A_SUBMISSION_SUCCESS });
+      getALlSubmissions();
+    } catch (error) {
+      dispatch({
+        type: CREATE_A_SUBMISSION_END,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+  //remove submission
+  const removeSubmission = async (sid) => {
+    console.log(sid);
+    dispatch({ type: DELETE_A_SUBMISSION });
+    try {
+      await authFetch.delete(`/submissions/${sid}`);
+      getALlSubmissions();
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
   //view Supervisor Student
   const setView = (id) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
   };
+
 
 
   return (
@@ -390,7 +445,11 @@ const AppProvider = ({ children }) => {
         groupReg,
         getGroups,
         getAllStudents,
+        CreateSubmission,
+        getALlSubmissions,
+        removeSubmission,
         setView,
+
 
       }}
     >

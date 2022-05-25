@@ -41,7 +41,8 @@ const links = [
     text: "supervise",
     path: "supervise",
     icon: <ImPlus />,
-
+  },
+  {
     id: 7,
     text: "upload documents",
     path: "upload-docs",
@@ -53,20 +54,36 @@ const links = [
     path: "student-groups",
     icon: <BiGroup />,
   },
-
   {
     id: 9,
     text: "All student groups",
     path: "all-student-groups",
     icon: <BiGroup />,
   },
-
   {
     id: 10,
+    text: "staff members",
+    path: "staff-members",
+    icon: <BiGroup />,
+  },
+  {
+    id: 11,
+    text: "Submissions",
+    path: "submissions",
+    icon: <BiGroup />,
+  },
+  {
+    id: 12,
+    text: "create submissions",
+    path: "create-submissions",
+    icon: <BiGroup />,
+
+  },
+  {
+    id: 13,
     text: "supervisors",
     path: "supervisors",
     icon: <BiGroup />,
-
   },
 ];
 
