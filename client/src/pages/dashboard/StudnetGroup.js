@@ -1,24 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { Alert, FormRow } from "../../components/index";
 
 const StudnetGroup = () => {
-  const [groupID, setGroupID] = useState("");
-  const [itNumOne, setItNumOne] = useState("");
-  const [itNumTwo, setItNumTwo] = useState("");
-  const [itNumThree, setItNumThree] = useState("");
-  const [itNumFour, setItNumFour] = useState("");
-  const [emailOne, setEmailOne] = useState("");
-  const [emailTwo, setEmailTwo] = useState("");
-  const [emailThree, setEmailThree] = useState("");
-  const [emailFour, setEmailFour] = useState("");
-  const [supervisor, setSupervisor] = useState("pending");
-  const [coSupervisor, setCoSupervisor] = useState("pending");
+  const {
+    isLoading,
+    showAlert,
+    isEditing,
+    displayAlert,
+    groupReg,
+    getGroups,
+    membergroupID,
+    memberitNumOne,
+    memberemailOne,
+    memberitNumTwo,
+    memberemailTwo,
+    memberitNumThree,
+    memberemailThree,
+    memberitNumFour,
+    memberemailFour,
+    membersupervisor,
+    membercoSupervisor,
+    memberisRegister,
+  } = useAppContext();
 
-  const { isLoading, showAlert, isEditing, displayAlert, groupReg } =
-    useAppContext();
+  const [groupID, setGroupID] = useState(membergroupID);
+  const [itNumOne, setItNumOne] = useState(memberitNumOne);
+  const [itNumTwo, setItNumTwo] = useState(memberitNumTwo);
+  const [itNumThree, setItNumThree] = useState(memberitNumThree);
+  const [itNumFour, setItNumFour] = useState(memberitNumFour);
+  const [emailOne, setEmailOne] = useState(memberemailOne);
+  const [emailTwo, setEmailTwo] = useState(memberemailTwo);
+  const [emailThree, setEmailThree] = useState(memberemailThree);
+  const [emailFour, setEmailFour] = useState(memberemailFour);
+  const [supervisor, setSupervisor] = useState(membersupervisor);
+  const [coSupervisor, setCoSupervisor] = useState(membercoSupervisor);
+
+  useEffect(() => {
+    getGroups();
+    console.log("HEllo");
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,6 +63,8 @@ const StudnetGroup = () => {
       return;
     }
 
+    const isRegister = true;
+
     const groupDetails = {
       groupID,
       itNumOne,
@@ -52,14 +77,8 @@ const StudnetGroup = () => {
       emailFour,
       supervisor,
       coSupervisor,
+      isRegister,
     };
-
-    // if (isEditing) {
-    //   editJob();
-    //   return;
-    // }
-
-    // createJob();
 
     groupReg({ groupDetails });
   };

@@ -12,6 +12,7 @@ import {
   UpdateUser,
   Uploaddocs,
   StudnetGroup,
+  Supervisors,
   DownloadFile,
   AllStudentGroups,
 } from "./pages/dashboard/index";
@@ -38,6 +39,7 @@ function App() {
               <Route path="all-student-groups" element={<AllStudentGroups />} />
               <Route path="upload-docs" element={<Uploaddocs />} />
               <Route path="student-groups" element={<StudnetGroup />} />
+              <Route path="supervisors" element={<Supervisors />} />
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>

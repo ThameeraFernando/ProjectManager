@@ -24,6 +24,10 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+  CLEAR_VALUES_STUDENT,
+  GET_STUDENT_GROUP_BEGIN,
+  GET_STUDENT_GROUP_SUCCESS,
+  GET_STUDENT_GROUP_ERROR,
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
@@ -251,23 +255,41 @@ const reducer = (state, action) => {
     };
   }
 
-  //get all student groups
-  //get all users
-  if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-      showAlert: false,
-    };
-  }
-  if (action.type === GET_ALL_STUDENT_GROUPS_SUCCESS) {
+  if (action.type === GET_STUDENT_GROUP_SUCCESS) {
     return {
       ...state,
       isLoading: false,
-      StudentGroups: action.payload.data,
+      membergroupID: action.payload.groupID,
+      memberitNumOne: action.payload.itNumOne,
+      memberemailOne: action.payload.emailOne,
+      memberitNumTwo: action.payload.itNumTwo,
+      memberemailTwo: action.payload.emailTwo,
+      memberitNumThree: action.payload.itNumThree,
+      memberemailThree: action.payload.emailThree,
+      memberitNumFour: action.payload.itNumFour,
+      memberemailFour: action.payload.emailFour,
+      membersupervisor: action.payload.supervisor,
+      membercoSupervisor: action.payload.coSupervisor,
+      memberisRegister: action.payload.isRegister,
     };
-  }
+    //get all student groups
+    //get all users
+    if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
+      return {
+        ...state,
+        isLoading: true,
+        showAlert: false,
+      };
+    }
+    if (action.type === GET_ALL_STUDENT_GROUPS_SUCCESS) {
+      return {
+        ...state,
+        isLoading: false,
+        StudentGroups: action.payload.data,
+      };
+    }
 
-  throw new Error(`no such action :${action.type}`);
+    throw new Error(`no such action :${action.type}`);
+  }
 };
 export default reducer;

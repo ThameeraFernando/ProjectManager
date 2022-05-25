@@ -27,9 +27,15 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+<<<<<<< HEAD
+  GET_STUDENT_GROUP_BEGIN,
+  GET_STUDENT_GROUP_SUCCESS,
+  GET_STUDENT_GROUP_ERROR,
+=======
   GET_ALL_STUDENT_GROUPS_BEGIN,
   GET_ALL_STUDENT_GROUPS_SUCCESS,
   GET_ALL_STUDENT_GROUPS_END,
+>>>>>>> master
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -50,7 +56,23 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
+<<<<<<< HEAD
+  membergroupID: "",
+  membermember: "",
+  memberitNumOne: "",
+  memberemailOne: "",
+  memberitNumTwo: "",
+  memberemailTwo: "",
+  memberitNumThree: "",
+  memberemailThree: "",
+  memberitNumFour: "",
+  memberemailFour: "",
+  membersupervisor: "pending",
+  membercoSupervisor: "pending",
+  memberisRegister: false,
+=======
   StudentGroups: [],
+>>>>>>> master
 };
 
 const AppContext = React.createContext();
@@ -249,6 +271,7 @@ const AppProvider = ({ children }) => {
   };
 
   //student group reg
+
   const groupReg = async ({ groupDetails }) => {
     dispatch({ type: STUDENT_GROUP_BEGIN });
     console.log(groupDetails);
@@ -265,6 +288,52 @@ const AppProvider = ({ children }) => {
       });
     }
   };
+
+  const getGroups = async () => {
+    try {
+      const { data } = await authFetch.get(
+        `/students/groupRegister/${state.user.email}`
+      );
+
+      const {
+        groupID,
+        itNumOne,
+        emailOne,
+        itNumTwo,
+        emailTwo,
+        itNumThree,
+        emailThree,
+        itNumFour,
+        emailFour,
+        supervisor,
+        coSupervisor,
+        isRegister,
+      } = data;
+      dispatch({
+        type: GET_STUDENT_GROUP_SUCCESS,
+        payload: {
+          groupID,
+          itNumOne,
+          emailOne,
+          itNumTwo,
+          emailTwo,
+          itNumThree,
+          emailThree,
+          itNumFour,
+          emailFour,
+          supervisor,
+          coSupervisor,
+          isRegister,
+        },
+      });
+      console.log(data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getGroups();
+    console.log("HEllo");
+  }, []);
 
   //get all Student Groups
   const getAllStudents = async () => {
@@ -285,6 +354,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+
   return (
     <AppContext.Provider
       value={{
@@ -301,7 +371,11 @@ const AppProvider = ({ children }) => {
         updateUserAdmin,
         deleteUser,
         groupReg,
+
+        getGroups,
+
         getAllStudents,
+
       }}
     >
       {children}

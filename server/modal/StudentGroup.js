@@ -97,6 +97,11 @@ const studentSchema = new Schema(
       type: String,
       default: "pending",
     },
+
+    isRegister: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
