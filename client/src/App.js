@@ -13,7 +13,11 @@ import {
   StudentRequestList,
   ReportSubmissions,
   Supervise
-
+  Uploaddocs,
+  StudnetGroup,
+  Supervisors,
+  DownloadFile,
+  AllStudentGroups,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -31,13 +35,17 @@ function App() {
             >
               <Route index element={<Home />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="download-file/:id" element={<DownloadFile />} />
               <Route path="update-user" element={<UpdateUser />} />
               <Route path="user" element={<User />} />
               <Route path="all-users" element={<AllUsers />} />
               <Route path="studentrequsets" element={<StudentRequestList />} />
               <Route path="reportsubmissions" element={<ReportSubmissions />} />
               <Route path="supervise" element={<Supervise />} />
-
+              <Route path="all-student-groups" element={<AllStudentGroups />} />
+              <Route path="upload-docs" element={<Uploaddocs />} />
+              <Route path="student-groups" element={<StudnetGroup />} />
+              <Route path="supervisors" element={<Supervisors />} />
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>

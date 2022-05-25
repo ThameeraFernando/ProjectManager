@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import Loading from "./Loading";
-import User from "./User";
+import Supervisor from "./Supervisor";
 import Wrapper from "../assets/wrappers/JobsContainer";
-const UserContainer = () => {
+
+const SupervisorContainer = () => {
   const { getUsers, users, page, totalUsers, isLoading } = useAppContext();
   useEffect(() => {
     getUsers();
@@ -21,15 +22,17 @@ const UserContainer = () => {
   return (
     <Wrapper>
       <h4>
-        {totalUsers} user{users.length > 1 && "s"}
+        {totalUsers} Supervisor{users.length > 1 && "s"}
       </h4>
       <div className="jobs">
         {users.map((user) => {
-          return <User key={user._id} {...user} />;
+          if (user.type === "Supervisor") {
+            return <Supervisor key={user._id} {...user} />;
+          }
         })}
       </div>
     </Wrapper>
   );
 };
 
-export default UserContainer;
+export default SupervisorContainer;
