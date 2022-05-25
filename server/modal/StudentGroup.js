@@ -4,7 +4,15 @@ const validator = require("validator");
 
 const studentSchema = new Schema(
   {
-    memberOneITNum: {
+    groupID: {
+      type: String,
+      required: [true, "please provide Group ID."],
+      maxlength: 10,
+      minlength: 3,
+      unique: true,
+    },
+
+    itNumOne: {
       type: String,
       required: [true, "please provide IT Number."],
       trim: true,
@@ -12,7 +20,7 @@ const studentSchema = new Schema(
       minlength: 5,
     },
 
-    memberOneEmail: {
+    emailOne: {
       type: String,
       required: [true, "please provide email."],
       trim: true,
@@ -23,7 +31,7 @@ const studentSchema = new Schema(
       unique: true,
     },
 
-    memberTwoITNum: {
+    itNumTwo: {
       type: String,
       required: [true, "please provide IT Number."],
       trim: true,
@@ -31,7 +39,7 @@ const studentSchema = new Schema(
       minlength: 5,
     },
 
-    memberTwoEmail: {
+    emailTwo: {
       type: String,
       required: [true, "please provide email."],
       trim: true,
@@ -42,7 +50,7 @@ const studentSchema = new Schema(
       unique: true,
     },
 
-    memberThreeITNum: {
+    itNumThree: {
       type: String,
       required: [true, "please provide IT Number."],
       trim: true,
@@ -50,7 +58,7 @@ const studentSchema = new Schema(
       minlength: 5,
     },
 
-    memberThreeEmail: {
+    emailThree: {
       type: String,
       required: [true, "please provide email."],
       trim: true,
@@ -61,7 +69,7 @@ const studentSchema = new Schema(
       unique: true,
     },
 
-    memberFourITNum: {
+    itNumFour: {
       type: String,
       required: [true, "please provide IT Number."],
       trim: true,
@@ -69,7 +77,7 @@ const studentSchema = new Schema(
       minlength: 5,
     },
 
-    memberFourEmail: {
+    emailFour: {
       type: String,
       required: [true, "please provide email."],
       trim: true,
@@ -78,6 +86,16 @@ const studentSchema = new Schema(
         message: "Please provide a valid email address.",
       },
       unique: true,
+    },
+
+    supervisor: {
+      type: String,
+      default: "pending",
+    },
+
+    coSupervisor: {
+      type: String,
+      default: "pending",
     },
   },
   { timestamps: true }

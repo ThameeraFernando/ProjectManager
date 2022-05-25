@@ -21,6 +21,9 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  STUDENT_GROUP_BEGIN,
+  STUDENT_GROUP_SUCCESS,
+  STUDENT_GROUP_ERROR,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -215,6 +218,36 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
+
+  //student reducer section
+
+  if (action.type === STUDENT_GROUP_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === STUDENT_GROUP_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Gropu Registration Successfull",
+    };
+  }
+
+  if (action.type === STUDENT_GROUP_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+
   throw new Error(`no such action :${action.type}`);
 };
 export default reducer;

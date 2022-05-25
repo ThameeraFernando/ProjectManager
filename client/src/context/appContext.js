@@ -24,11 +24,15 @@ import {
   UPDATE_USER_ADMIN_ERROR,
   SET_DELETE_USER,
   DELETE_USER,
+  STUDENT_GROUP_BEGIN,
+  STUDENT_GROUP_SUCCESS,
+  STUDENT_GROUP_ERROR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 export const initialState = {
   isLoading: false,
+  isEditing: false,
   showAlert: true,
   alertText: "",
   alertType: "",
@@ -239,6 +243,25 @@ const AppProvider = ({ children }) => {
       logoutUser();
     }
   };
+
+  //student group reg
+  const groupReg = async ({ groupDetails }) => {
+    dispatch({ type: STUDENT_GROUP_BEGIN });
+    console.log(groupDetails);
+    try {
+      const group = await authFetch.post(
+        "/students/groupRegister",
+        groupDetails
+      );
+      dispatch({ type: STUDENT_GROUP_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: STUDENT_GROUP_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -254,6 +277,7 @@ const AppProvider = ({ children }) => {
         setUpdateUser,
         updateUserAdmin,
         deleteUser,
+        groupReg,
       }}
     >
       {children}
