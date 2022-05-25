@@ -81,12 +81,20 @@ const links = [
     id: 12,
     text: "create submissions",
     path: "create-submissions",
+    
     icon: <AiOutlineFileAdd />,
+
   },
   {
     id: 13,
     text: "supervisors",
     path: "supervisors",
+    icon: <BiGroup />,
+  },
+  {
+    id: 14,
+    text: "requests",
+    path: "student-research-request",
     icon: <BiGroup />,
   },
 ];
