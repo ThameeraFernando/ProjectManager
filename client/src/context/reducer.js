@@ -24,6 +24,9 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+  GET_ALL_STUDENT_GROUPS_BEGIN,
+  GET_ALL_STUDENT_GROUPS_SUCCESS,
+  GET_ALL_STUDENT_GROUPS_END,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -245,6 +248,23 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+
+  //get all student groups
+  //get all users
+  if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === GET_ALL_STUDENT_GROUPS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      StudentGroups: action.payload.data,
     };
   }
 

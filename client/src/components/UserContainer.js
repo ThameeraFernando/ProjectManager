@@ -14,7 +14,7 @@ const UserContainer = () => {
   if (users.length === 0) {
     return (
       <Wrapper>
-        <h2>No Jobs to display.</h2>
+        <h2>No Users to display.</h2>
       </Wrapper>
     );
   }

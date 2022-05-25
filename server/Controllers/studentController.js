@@ -39,4 +39,9 @@ const groupRegister = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ studentGroup });
 };
 
-module.exports = { groupRegister };
+const getAllStudentGroups = async (req, res) => {
+  const studentgroups = await Groups.find({});
+  res.status(StatusCodes.OK).json(studentgroups);
+};
+
+module.exports = { groupRegister, getAllStudentGroups };
