@@ -45,11 +45,13 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member"
   ) {
 
+
     NewLinks = NewLinks.filter((link) => {
       if (
         link.path !== "studentrequsets" &&
         link.path !== "reportsubmissions"
       ) {
+
         return link;
       }
     });
