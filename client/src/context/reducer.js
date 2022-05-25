@@ -28,6 +28,9 @@ import {
   GET_STUDENT_GROUP_BEGIN,
   GET_STUDENT_GROUP_SUCCESS,
   GET_STUDENT_GROUP_ERROR,
+  GET_ALL_STUDENT_GROUPS_BEGIN,
+  GET_ALL_STUDENT_GROUPS_SUCCESS,
+  GET_ALL_STUDENT_GROUPS_END,
 } from "./actions";
 const reducer = (state, action) => {
   //alert actions
@@ -269,8 +272,24 @@ const reducer = (state, action) => {
       membercoSupervisor: action.payload.coSupervisor,
       memberisRegister: action.payload.isRegister,
     };
-  }
+    //get all student groups
+    //get all users
+    if (action.type === GET_ALL_STUDENT_GROUPS_BEGIN) {
+      return {
+        ...state,
+        isLoading: true,
+        showAlert: false,
+      };
+    }
+    if (action.type === GET_ALL_STUDENT_GROUPS_SUCCESS) {
+      return {
+        ...state,
+        isLoading: false,
+        StudentGroups: action.payload.data,
+      };
+    }
 
-  throw new Error(`no such action :${action.type}`);
+    throw new Error(`no such action :${action.type}`);
+  }
 };
 export default reducer;

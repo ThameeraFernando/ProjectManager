@@ -27,9 +27,15 @@ import {
   STUDENT_GROUP_BEGIN,
   STUDENT_GROUP_SUCCESS,
   STUDENT_GROUP_ERROR,
+<<<<<<< HEAD
   GET_STUDENT_GROUP_BEGIN,
   GET_STUDENT_GROUP_SUCCESS,
   GET_STUDENT_GROUP_ERROR,
+=======
+  GET_ALL_STUDENT_GROUPS_BEGIN,
+  GET_ALL_STUDENT_GROUPS_SUCCESS,
+  GET_ALL_STUDENT_GROUPS_END,
+>>>>>>> master
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -50,6 +56,7 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
+<<<<<<< HEAD
   membergroupID: "",
   membermember: "",
   memberitNumOne: "",
@@ -63,6 +70,9 @@ export const initialState = {
   membersupervisor: "pending",
   membercoSupervisor: "pending",
   memberisRegister: false,
+=======
+  StudentGroups: [],
+>>>>>>> master
 };
 
 const AppContext = React.createContext();
@@ -324,6 +334,27 @@ const AppProvider = ({ children }) => {
     getGroups();
     console.log("HEllo");
   }, []);
+
+  //get all Student Groups
+  const getAllStudents = async () => {
+    let url = "/students";
+    dispatch({ type: GET_ALL_STUDENT_GROUPS_BEGIN });
+    try {
+      const { data } = await authFetch.get(url);
+      console.log(data);
+      // const { users, totalUsers, numOfPages } = data;
+      dispatch({
+        type: GET_ALL_STUDENT_GROUPS_SUCCESS,
+        payload: { data },
+      });
+    } catch (error) {
+      console.log(error);
+      logoutUser();
+    }
+    clearAlert();
+  };
+
+
   return (
     <AppContext.Provider
       value={{
@@ -340,7 +371,11 @@ const AppProvider = ({ children }) => {
         updateUserAdmin,
         deleteUser,
         groupReg,
+
         getGroups,
+
+        getAllStudents,
+
       }}
     >
       {children}
