@@ -38,8 +38,8 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Admin" ||
     user.type === "Panel Member"
   ) {
-    NewLinks = links.filter((link) => {
-      if (link.path !== "studentrequsets" && link.path !== "reportsubmissions") {
+    NewLl = NewLinks.filter((link) => {
+      if (link.path !== "studentrequsets" && link.path !== "reportsubmissions" ) {
         return link;
       }
     });
