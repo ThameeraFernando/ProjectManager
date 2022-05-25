@@ -35,12 +35,11 @@ const StudnetGroup = () => {
   const [emailTwo, setEmailTwo] = useState(memberemailTwo);
   const [emailThree, setEmailThree] = useState(memberemailThree);
   const [emailFour, setEmailFour] = useState(memberemailFour);
-  const [supervisor, setSupervisor] = useState(membersupervisor);
-  const [coSupervisor, setCoSupervisor] = useState(membercoSupervisor);
+  const [supervisor, setSupervisor] = useState("pending");
+  const [coSupervisor, setCoSupervisor] = useState("pending");
 
   useEffect(() => {
     getGroups();
-    console.log("HEllo");
   }, []);
 
   const handleSubmit = (e) => {
@@ -86,7 +85,9 @@ const StudnetGroup = () => {
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
-        <h3>{isEditing ? "edit job" : "Resgister Student Group"}</h3>
+        <h3>
+          {memberisRegister ? "Group Details" : "Resgister Student Group"}
+        </h3>
         {showAlert && <Alert />}
         <div className="form-center">
           {/*Group ID*/}
@@ -95,6 +96,7 @@ const StudnetGroup = () => {
             labelText="Group ID"
             name="groupID"
             value={groupID}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setGroupID(e.target.value)}
           />
 
@@ -104,6 +106,7 @@ const StudnetGroup = () => {
             labelText="member One IT Nummber"
             name="itNumOne"
             value={itNumOne}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setItNumOne(e.target.value)}
           />
           {/*Email 1*/}
@@ -112,6 +115,7 @@ const StudnetGroup = () => {
             labelText="member One Email"
             name="emailOne"
             value={emailOne}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setEmailOne(e.target.value)}
           />
 
@@ -121,6 +125,7 @@ const StudnetGroup = () => {
             labelText="member Two IT Number"
             name="itNumTwo"
             value={itNumTwo}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setItNumTwo(e.target.value)}
           />
           {/*Email 2*/}
@@ -129,6 +134,7 @@ const StudnetGroup = () => {
             labelText="member Two Email"
             name="emailTwo"
             value={emailTwo}
+            iisReadOnly={memberisRegister}
             handleChange={(e) => setEmailTwo(e.target.value)}
           />
 
@@ -138,6 +144,7 @@ const StudnetGroup = () => {
             labelText="member Three IT Number"
             name="itNumThree"
             value={itNumThree}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setItNumThree(e.target.value)}
           />
           {/*Email 3*/}
@@ -146,6 +153,7 @@ const StudnetGroup = () => {
             labelText="member Three Email"
             name="emailThree"
             value={emailThree}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setEmailThree(e.target.value)}
           />
 
@@ -154,6 +162,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="member Four IT Number"
             name="itNumFour"
+            isReadOnly={memberisRegister}
             value={itNumFour}
             handleChange={(e) => setItNumFour(e.target.value)}
           />
@@ -162,6 +171,7 @@ const StudnetGroup = () => {
             type="email"
             labelText="member Four Email"
             name="emailFour"
+            isReadOnly={memberisRegister}
             value={emailFour}
             handleChange={(e) => setEmailFour(e.target.value)}
           />
@@ -171,7 +181,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="Supervisor"
             name="supervisor"
-            isReadOnly={true}
+            isReadOnly={memberisRegister}
             value={supervisor}
             handleChange={(e) => setSupervisor(e.target.value)}
           />
@@ -181,7 +191,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="Co-supervisorour"
             name="coSupervisor"
-            isReadOnly={true}
+            isReadOnly={memberisRegister}
             value={coSupervisor}
             handleChange={(e) => setCoSupervisor(e.target.value)}
           />
@@ -189,12 +199,13 @@ const StudnetGroup = () => {
             <button
               type="submit"
               className="btn btn-block submit-btn"
-              disabled={isLoading}
+              disabled={isLoading || memberisRegister}
             >
               submit
             </button>
             <button
               className="btn btn-block clear-btn"
+              disabled={isLoading || memberisRegister}
               onClick={(e) => {
                 e.preventDefault();
                 // clearValues();

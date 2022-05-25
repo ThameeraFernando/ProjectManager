@@ -1,13 +1,13 @@
-// import React from "react";
-// import Wrapper from "../assets/wrappers/Job";
+import React from "react";
+import Wrapper from "../assets/wrappers/JobInfo";
 
-// const SupervisorInfo = ({ icon, text }) => {
-//   return (
-//     <Wrapper>
-//       <span className="icon">{icon}</span>
-//       <span className="text">{text}</span>
-//     </Wrapper>
-//   );
-// };
+const SupervisorInfo = ({ icon, text }) => {
+  return (
+    <Wrapper>
+      <span className="icon">{icon}</span>
+      <span className="text">{text}</span>
+    </Wrapper>
+  );
+};
 
-// export default SupervisorInfo;
+export default SupervisorInfo;
