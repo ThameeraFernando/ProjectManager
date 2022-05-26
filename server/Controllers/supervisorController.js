@@ -117,6 +117,7 @@ const UpdateSupervisor = async (req, res) => {
   res.status(200).send("update supervisor");
 };
 
+
 const deleteSupervisor = async (req, res) => {
 
     const { id: sid } = req.params;
@@ -145,3 +146,4 @@ module.exports = {
   getSpecificSupervisor,
   getCoSupervisors,
 }
+

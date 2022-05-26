@@ -29,4 +29,11 @@ router.delete("/:id", async (req, res) => {
   await Sub.findOneAndDelete({ _id: sid });
   res.status(200).json({ msg: "delete successful" });
 });
+
+
+
+
+
+
+
 module.exports = router;
