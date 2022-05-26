@@ -3,7 +3,11 @@ import axios from "axios";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useAppContext } from "../../context/appContext";
 import { useLocation } from "react-router-dom";
+import Loading from "../../components/Loading";
+import { Alert } from "../../components";
 
+// import Popup from "reactjs-popup";
+// import "reactjs-popup/dist/index.css";
 const AddSubmissions = () => {
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("Choose file");
@@ -12,7 +16,7 @@ const AddSubmissions = () => {
   const [allDescriptions, setAllDescriptions] = useState([]);
   // const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAppContext();
+  const { user, displaySuccessUpload } = useAppContext();
   const location = useLocation();
   const {
     _id,
@@ -46,6 +50,10 @@ const AddSubmissions = () => {
       );
       console.log(res);
       setIsLoading(false);
+      if (res.status === 201) {
+        // alert("success");
+        displaySuccessUpload();
+      }
     } catch (error) {
       if (error.response.status === 500) {
         console.log("There was a problem in the server.");
@@ -55,28 +63,41 @@ const AddSubmissions = () => {
     }
   };
   return (
-    <Wrapper>
-      <h2>{description}</h2>
-      <form onSubmit={onSubmit} className="form">
-        <div className="custom-file">
-          <input
-            type="file"
-            className="custom-file-input"
-            id="customFile"
-            onChange={onChange}
-          />
-          <label className="custom-file-label" htmlFor="customFile">
-            {fileName}
-          </label>
-        </div>
-        <input
-          type="submit"
-          value="upload"
-          className="btn btn-primary btn-block mt-4"
-          disabled={isLoading}
-        />
-      </form>
-    </Wrapper>
+    <>
+      {isLoading ? (
+        <Wrapper>
+          <center>
+            <h4>We are uploading your file please wait.</h4>
+          </center>
+          <br />
+          <Loading center />
+        </Wrapper>
+      ) : (
+        <Wrapper>
+          <Alert />
+          <h2>{description}</h2>
+          <form onSubmit={onSubmit} className="form">
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                id="customFile"
+                onChange={onChange}
+              />
+              <label className="custom-file-label" htmlFor="customFile">
+                {fileName}
+              </label>
+            </div>
+            <input
+              type="submit"
+              value="upload"
+              className="btn btn-primary btn-block mt-4"
+              disabled={isLoading}
+            />
+          </form>
+        </Wrapper>
+      )}
+    </>
   );
 };
 
