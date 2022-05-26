@@ -40,6 +40,7 @@ import {
   CREATE_A_SUBMISSION_END,
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
+  DISPLAY_UPLOAD_SUCCESS_ALERT,
   GET_ALL_SUPERVISORS_BEGIN,
   GET_ALL_SUPERVISORS_SUCCESS,
   GET_ALL_SUPERVISORS_ERROR,
@@ -49,6 +50,7 @@ import {
   STUDENT_SUPERVISOR_REQUEST_BEGIN,
   STUDENT_SUPERVISOR_REQUEST_SUCCESS,
   STUDENT_SUPERVISOR_REQUEST_ERROR,
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -382,6 +384,17 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
+
+  //DISPLAY_UPLOAD_SUCCESS_ALERT
+  if (action.type === DISPLAY_UPLOAD_SUCCESS_ALERT) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Document uploaded Successfully...",
+    };
+  }
+
 
   if (action.type === GET_ALL_SUPERVISORS_BEGIN) {
     return {

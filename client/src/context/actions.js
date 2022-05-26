@@ -85,3 +85,9 @@ export const DELETE_A_SUBMISSION = "CREATE_A_SUBMISSION_END";
 
 //view supervisor
 export const SET_VIEW_SUPERVISOR = "SET_VIEW_SUPERVISOR";
+
+
+//display success upload alert
+export const DISPLAY_UPLOAD_SUCCESS_ALERT = "DISPLAY_UPLOAD_SUCCESS_ALERT";
+
+

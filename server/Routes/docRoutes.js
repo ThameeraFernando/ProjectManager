@@ -64,9 +64,23 @@ router.post(
       submittedBy: subName,
       submittedTo: subTo,
     });
-    res.json({ file: req.file });
+    res.status(201).json({ file: req.file });
   }
 );
+//Upload file admin
+router.post("/:des/:subName", upload.single("file"), async (req, res) => {
+  const NewDescription = req.params.des;
+  // const subTo = req.params.subTo;
+  const subName = req.params.subName;
+
+  const docs = await Doc.create({
+    docName: filename,
+    description: NewDescription,
+    submittedBy: subName,
+    // submittedTo: subTo,
+  });
+  res.status(201).json({ file: req.file });
+});
 //get doc details
 router.get("/docs", async (req, res) => {
   const docs = await Doc.find({});
@@ -120,6 +134,23 @@ router.delete("/:filename", async (req, res, next) => {
     if (err) return next(err);
     res.status(200).end();
   });
+});
+
+router.delete("/docs/:filename", async (req, res, next) => {
+  const newFileName = req.params.filename;
+  const newPath = path.join(
+    __dirname,
+    `../../client/public/FOC/${newFileName}`
+  );
+  if (!newPath) {
+    throw new BadRequestError("no such a file");
+  }
+  console.log(newPath);
+  fs.unlink(newPath, (err) => {
+    if (err) throw err;
+    console.log(`client/public/FOC/${newFileName}`);
+  });
+  res.json({ filename: req.params.filename });
 });
 
 module.exports = router;
