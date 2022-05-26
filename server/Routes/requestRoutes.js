@@ -5,12 +5,14 @@ const {
   UpdateRequest,
   createRequest,
   studentGetRequest,
-  supervisorGetRequest
+  supervisorGetRequest,
+  getGroupDetails,
 } = require("../Controllers/requestController");
 
 router.route("/").post(createRequest);
 router.route("/:id").patch(UpdateRequest).delete(deleteRequest);
-router.route('/supervisors/:sid').get(supervisorGetRequest);
-router.route('/:gid').get(studentGetRequest);
+router.route("/supervisors/:sid").get(supervisorGetRequest);
+router.route("/:gid").get(studentGetRequest);
+router.route("groupdetails/:gid").get(getGroupDetails);
 
 module.exports = router;

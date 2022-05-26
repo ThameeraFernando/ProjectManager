@@ -5,10 +5,16 @@ const {
   UpdateSupervisor,
   getAllSupervisor,
   createSupervisor,
-  getSpecificSupervisor
+  getSpecificSupervisor,
+  getCoSupervisors,
 } = require("../Controllers/supervisorController");
 
 router.route("/").get(getAllSupervisor).post(createSupervisor);
-router.route("/:id").get(getSpecificSupervisor).patch(UpdateSupervisor).delete(deleteSupervisor);
+router
+  .route("/:id")
+  .get(getSpecificSupervisor)
+  .patch(UpdateSupervisor)
+  .delete(deleteSupervisor);
+router.route("/cosupervisors/:type").get(getCoSupervisors);
 
 module.exports = router;

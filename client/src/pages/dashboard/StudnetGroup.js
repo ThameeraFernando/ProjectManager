@@ -65,7 +65,7 @@ const StudnetGroup = () => {
       return;
     }
 
-    const isRegister = true;
+    const isRegister = false;
 
     const groupDetails = {
       groupID,

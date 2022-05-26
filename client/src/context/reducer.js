@@ -49,6 +49,8 @@ import {
   STUDENT_SUPERVISOR_REQUEST_BEGIN,
   STUDENT_SUPERVISOR_REQUEST_SUCCESS,
   STUDENT_SUPERVISOR_REQUEST_ERROR,
+  GET_ALL_COSUPERVISORS_BEGIN,
+  GET_ALL_COSUPERVISORS_SUCCESS,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -397,6 +399,23 @@ const reducer = (state, action) => {
       isLoading: false,
       supervisors: action.payload.supervisors,
       totalSupervisors: action.payload.totalSupervisors,
+    };
+  }
+
+  if (action.type === GET_ALL_COSUPERVISORS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_ALL_COSUPERVISORS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      coSupervisors: action.payload.coSupervisors,
+      totalCoSupervisors: action.payload.totalCoSupervisors,
     };
   }
 

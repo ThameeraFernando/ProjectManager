@@ -3,61 +3,77 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors/index");
 
 const createSupervisor = async (req, res) => {
+  const { name, email, field, userId } = req.body;
 
-    const {name,email,field,userId} = req.body 
+  if (!name || !email || !field || !userId) {
+    throw new BadRequestError("Please provide all values");
+  }
 
-    if(!name || !email || !field || !userId){
-        throw new BadRequestError('Please provide all values')
+  const uid = { id: userId };
+  const supervisor = await Supervisor.find({ uid });
+
+  if (supervisor) {
+    if (supervisor.length >= 2) {
+      res
+        .status(StatusCodes.METHOD_NOT_ALLOWED)
+        .json({ msg: "You cannot supervise more than 2 groups" });
+    } else {
+      const supervisor = await Supervisor.create(req.body);
+      res.status(StatusCodes.CREATED).json({ supervisor });
     }
-
-    const uid = {id:userId}
-    const supervisor = await Supervisor.find({uid});
-
-    if (supervisor) {
-        if(supervisor.length >= 2){
-            res.status(StatusCodes.METHOD_NOT_ALLOWED).json({msg:'You cannot supervise more than 2 groups'});
-        }else{
-            const supervisor = await Supervisor.create(req.body);
-            res.status(StatusCodes.CREATED).json({supervisor});
-        }
-    }else{
-        const supervisor = await Supervisor.create(req.body);
-        res.status(StatusCodes.CREATED).json({supervisor});
-    }
-    
-    
+  } else {
+    const supervisor = await Supervisor.create(req.body);
+    res.status(StatusCodes.CREATED).json({ supervisor });
+  }
 };
 
 const getAllSupervisor = async (req, res) => {
-    const supervisors = await Supervisor.find();
-    res.status(StatusCodes.OK).json({supervisors, totalSupervisors:supervisors.length});
+  const supervisors = await Supervisor.find();
+
+  if (!supervisors) {
+    throw new NotFoundError();
+  }
+  res
+    .status(StatusCodes.OK)
+    .json({ supervisors, totalSupervisors: supervisors.length });
+};
+
+//get core supervisors to the student page
+const getCoSupervisors = async (req, res) => {
+  const { type: worktype } = req.params;
+  const coSupervisors = await Supervisor.find({ type: worktype });
+
+  if (!coSupervisors) {
+    throw new NotFoundError();
+  }
+
+  res
+    .status(StatusCodes.OK)
+    .json({ coSupervisors, totalCoSupervisors: coSupervisors.length });
 };
 
 const getSpecificSupervisor = async (req, res) => {
-    let uid = req.params;
-    console.log(uid);
-    
-    if(!uid){
-        
-        throw new BadRequestError('Please provide all values')
-    }
+  let uid = req.params;
+  console.log(uid);
 
-    const supervisor = await Supervisor.find({uid});
-    
-    if(!supervisor){
-        res.status(StatusCodes.NOT_FOUND).json({msg:'Supervisors not found'});  
-    }
-    res.status(StatusCodes.OK).json({supervisor});
+  if (!uid) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const supervisor = await Supervisor.find({ uid });
+
+  if (!supervisor) {
+    res.status(StatusCodes.NOT_FOUND).json({ msg: "Supervisors not found" });
+  }
+  res.status(StatusCodes.OK).json({ supervisor });
 };
 
 const UpdateSupervisor = async (req, res) => {
-
-    res.status(200).send('update supervisor');
-
+  res.status(200).send("update supervisor");
 };
 
 const deleteSupervisor = async (req, res) => {
-    const { id: sid } = req.params;
+  const { id: sid } = req.params;
   const supervisor = await Supervisor.findOne({ _id: sid });
   if (!supervisor) {
     throw new NotFoundError();
@@ -65,7 +81,16 @@ const deleteSupervisor = async (req, res) => {
   //check permissions
 
   await supervisor.remove();
-  return res.status(StatusCodes.OK).send({ msg: "Success! Supervisor Removed" });
+  return res
+    .status(StatusCodes.OK)
+    .send({ msg: "Success! Supervisor Removed" });
 };
-  
-module.exports = { getAllSupervisor, UpdateSupervisor, deleteSupervisor, createSupervisor, getSpecificSupervisor };
+
+module.exports = {
+  getAllSupervisor,
+  UpdateSupervisor,
+  deleteSupervisor,
+  createSupervisor,
+  getSpecificSupervisor,
+  getCoSupervisors,
+};

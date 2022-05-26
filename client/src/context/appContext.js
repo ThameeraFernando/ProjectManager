@@ -52,6 +52,8 @@ import {
   STUDENT_SUPERVISOR_REQUEST_BEGIN,
   STUDENT_SUPERVISOR_REQUEST_SUCCESS,
   STUDENT_SUPERVISOR_REQUEST_ERROR,
+  GET_ALL_COSUPERVISORS_BEGIN,
+  GET_ALL_COSUPERVISORS_SUCCESS,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -94,6 +96,8 @@ export const initialState = {
   supervisors: [],
   totalSupervisors: [],
   requestGroups: [],
+  coSupervisors: [],
+  totalCoSupervisors: [],
 };
 
 const AppContext = React.createContext();
@@ -125,6 +129,10 @@ const AppProvider = ({ children }) => {
 
   const addStudentDetailsToLocalStorage = ({ membergroupID }) => {
     localStorage.setItem("groupid", membergroupID);
+  };
+
+  const removeStudentDetailsToLocalStorage = () => {
+    localStorage.removeItem("groupid");
   };
 
   //register user
@@ -180,6 +188,7 @@ const AppProvider = ({ children }) => {
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
+    removeStudentDetailsToLocalStorage();
   };
   //Axios setup instance
   const authFetch = axios.create({
@@ -327,6 +336,26 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: GET_ALL_SUPERVISORS_SUCCESS,
         payload: { supervisors, totalSupervisors },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
+
+  //get all co-supervisor
+  const getAllCoSupervisor = async () => {
+    dispatch({ type: GET_ALL_COSUPERVISORS_BEGIN });
+    let cosup = "co-supervisor";
+    try {
+      const { data } = await authFetch.get(
+        `/supervisor/cosupervisors/${cosup}`
+      );
+      const { coSupervisors, totalCoSupervisors } = data;
+      console.log(coSupervisors);
+      dispatch({
+        type: GET_ALL_COSUPERVISORS_SUCCESS,
+        payload: { coSupervisors, totalCoSupervisors },
       });
     } catch (error) {
       logoutUser();
@@ -543,6 +572,7 @@ const AppProvider = ({ children }) => {
         requestSupervisor,
         getRequestSupervisor,
         editTopic,
+        getAllCoSupervisor,
       }}
     >
       {children}
