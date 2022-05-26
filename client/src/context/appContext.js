@@ -43,8 +43,7 @@ import {
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
   SET_VIEW_SUPERVISOR,
-
-
+  DISPLAY_UPLOAD_SUCCESS_ALERT,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -278,13 +277,18 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
   // add supervisor type and field
-  const supervise = async ({name,email,type,field,userId}) => {
-    try { 
-      dispatch({type:SUPERVISE_BEGIN}) 
-      const response = await axios.post('/api/v1/supervisor', {name,email,type,field,userId})
-      dispatch({type:SUPERVISE_SUCCESS})
+  const supervise = async ({ name, email, type, field, userId }) => {
+    try {
+      dispatch({ type: SUPERVISE_BEGIN });
+      const response = await axios.post("/api/v1/supervisor", {
+        name,
+        email,
+        type,
+        field,
+        userId,
+      });
+      dispatch({ type: SUPERVISE_SUCCESS });
     } catch (error) {
       dispatch({
         type: SUPERVISE_ERROR,
@@ -292,7 +296,7 @@ const AppProvider = ({ children }) => {
       });
     }
     clearAlert();
-  }
+  };
 
   //student group reg
 
@@ -373,7 +377,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   //get all submissions
   const getALlSubmissions = async () => {
     let url = "/submissions";
@@ -423,8 +426,11 @@ const AppProvider = ({ children }) => {
   const setView = (id) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
   };
-
-
+  //DISPLAY_UPLOAD_SUCCESS_ALERT
+  const displaySuccessUpload = () => {
+    dispatch({ type: DISPLAY_UPLOAD_SUCCESS_ALERT });
+    clearAlert();
+  };
 
   return (
     <AppContext.Provider
@@ -449,8 +455,7 @@ const AppProvider = ({ children }) => {
         getALlSubmissions,
         removeSubmission,
         setView,
-
-
+        displaySuccessUpload,
       }}
     >
       {children}

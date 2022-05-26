@@ -9,7 +9,6 @@ const submissionRouter = require("./Routes/submissionRoute");
 
 const supervisorRouter = require("./Routes/supervisorRoutes");
 
-
 const studentRouter = require("./Routes/studentRoute");
 
 const fileRouter = require("./Routes/docRoutes");
@@ -53,7 +52,6 @@ app.use("/api/v1/submissions", submissionRouter);
 
 //student routes
 app.use("/api/v1/students", studentRouter);
-
 
 //setup not found middleware
 app.use(notFound);

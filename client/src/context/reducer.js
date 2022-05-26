@@ -40,7 +40,7 @@ import {
   CREATE_A_SUBMISSION_END,
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
-
+  DISPLAY_UPLOAD_SUCCESS_ALERT,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -236,10 +236,10 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
-  
+
   // supervise
   if (action.type === SUPERVISE_BEGIN) {
-  return {
+    return {
       ...state,
       isLoading: true,
     };
@@ -252,7 +252,7 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
-    if (action.type === SUPERVISE_ERROR) {
+  if (action.type === SUPERVISE_ERROR) {
     return {
       ...state,
       isLoading: false,
@@ -263,7 +263,7 @@ const reducer = (state, action) => {
   }
 
   if (action.type === SUPERVISE_SUCCESS) {
-  return {
+    return {
       ...state,
       isLoading: false,
       showAlert: true,
@@ -273,7 +273,6 @@ const reducer = (state, action) => {
   }
 
   if (action.type === STUDENT_GROUP_SUCCESS) {
-
     return {
       ...state,
       isLoading: false,
@@ -374,7 +373,15 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
-
+  //DISPLAY_UPLOAD_SUCCESS_ALERT
+  if (action.type === DISPLAY_UPLOAD_SUCCESS_ALERT) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Document uploaded Successfully...",
+    };
+  }
   throw new Error(`no such action :${action.type}`);
 };
 export default reducer;
