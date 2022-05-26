@@ -36,6 +36,23 @@ const studentGetRequest = async (req, res) => {
   //}
 };
 
+//student
+const getGroupDetails = async () => {
+  let { gid: groupID } = req.params;
+  if (!groupID) {
+    throw new BadRequestError("Please provide all values");
+  }
+  const getGroups = await Request.find({ groupID });
+  let rouStatusg;
+  if (getGroups) {
+    rouStatusg = true;
+    res.status(StatusCodes.OK).json({ rouStatusg });
+  } else {
+    rouStatusg = false;
+    res.status(StatusCodes.OK).json({ rouStatusg });
+  }
+};
+
 const supervisorGetRequest = async (req, res) => {
   let { sid: supervisorEmail } = req.params;
 
@@ -89,4 +106,5 @@ module.exports = {
   createRequest,
   studentGetRequest,
   supervisorGetRequest,
+  getGroupDetails,
 };

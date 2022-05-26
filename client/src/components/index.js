@@ -6,6 +6,7 @@ import Alert from "./Alert";
 import SupervisorContainer from "./SupervisorContainer";
 import SearchContainer from "./SearchContainer";
 import StudentResearchReqContainer from "./StudentResearchReqContainer";
+import CoSupervisorContainer from "./CoSupervisorContainer";
 export {
   Alert,
   FormRow,
@@ -15,4 +16,5 @@ export {
   SupervisorContainer,
   SearchContainer,
   StudentResearchReqContainer,
+  CoSupervisorContainer,
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import SupervisorInfo from "./SupervisorInfo";
+import CoSupervisorInfo from "./CoSupervisorInfo";
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Job";
 import { useAppContext } from "../context/appContext";
@@ -9,8 +9,7 @@ import { IoPerson, IoTime } from "react-icons/io5";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
 
-const Supervisor = (props) => {
-  const { name, type, email, availability, field } = props;
+const CoSupervisor = ({ name, type, email, availability, field }) => {
   const { requestSupervisor } = useAppContext();
 
   return (
@@ -24,19 +23,15 @@ const Supervisor = (props) => {
       </header>
       <div className="content">
         <div className="content-center">
-          <SupervisorInfo icon={<IoPerson />} text={name} topic="Name" />
-          <SupervisorInfo icon={<MdEmail />} text={email} />
-          <SupervisorInfo icon={<MdEmail />} text={availability} />
-          <SupervisorInfo icon={<MdEmail />} text={field} />
-          <SupervisorInfo icon={<BsFillBagCheckFill />} text={type} />
+          <CoSupervisorInfo icon={<IoPerson />} text={name} topic="Name" />
+          <CoSupervisorInfo icon={<MdEmail />} text={email} />
+          <CoSupervisorInfo icon={<MdEmail />} text={availability} />
+          <CoSupervisorInfo icon={<MdEmail />} text={field} />
+          <CoSupervisorInfo icon={<BsFillBagCheckFill />} text={type} />
         </div>
 
         <footer>
-          <button
-            type="button"
-            className="btn edit-btn"
-            onClick={() => requestSupervisor(email, name)}
-          >
+          <button type="button" className="btn edit-btn">
             Request
           </button>
         </footer>
@@ -45,4 +40,4 @@ const Supervisor = (props) => {
   );
 };
 
-export default Supervisor;
+export default CoSupervisor;

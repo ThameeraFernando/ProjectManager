@@ -29,12 +29,14 @@ const StudentResearchReq = ({
   const [newTopic, setNewTopic] = useState("");
 
   let statusText = "";
-  let isRejected = false;
+  let isRejected;
 
   if (status === "pending") {
+    isRejected = true;
     statusText = "your requst is still pending";
   } else if (status === "accepted") {
     statusText = "your requst accept";
+    isRejected = true;
   } else {
     statusText = "your requst rejected";
     isRejected = false;
@@ -61,6 +63,7 @@ const StudentResearchReq = ({
             labelText="Group ID"
             name="groupID"
             value={groupID}
+            isReadOnly={true}
           />
 
           {/*IT NUM 1*/}
@@ -69,6 +72,7 @@ const StudentResearchReq = ({
             labelText="Topic"
             name="itNumOne"
             value={topic}
+            isReadOnly={true}
           />
 
           {/*IT NUM 2*/}
@@ -77,18 +81,21 @@ const StudentResearchReq = ({
             labelText="Status"
             name="itNumTwo"
             value={status}
+            isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="Super name"
             name="itNumTwo"
             value={supervisorName}
+            isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="suoer email"
             name="itNumTwo"
             value={supervisorEmail}
+            isReadOnly={true}
           />
 
           <FormRow
@@ -101,8 +108,8 @@ const StudentResearchReq = ({
           />
 
           <div className="btn-container">
-            <button className="btn btn-block" type="submit">
-              Submit
+            <button className="btn btn-block" type="submit" hidden={isRejected}>
+              Re-submit Topic
             </button>
           </div>
         </div>
