@@ -37,19 +37,19 @@ const studentGetRequest = async (req, res) => {
 };
 
 //student
-const getGroupDetails = async () => {
+const getGroupDetails = async (req, res) => {
   let { gid: groupID } = req.params;
   if (!groupID) {
     throw new BadRequestError("Please provide all values");
   }
   const getGroups = await Request.find({ groupID });
-  let rouStatusg;
+  let rouStatus;
   if (getGroups) {
-    rouStatusg = true;
-    res.status(StatusCodes.OK).json({ rouStatusg });
+    rouStatus = true;
+    res.status(StatusCodes.OK).json({ rouStatus });
   } else {
-    rouStatusg = false;
-    res.status(StatusCodes.OK).json({ rouStatusg });
+    rouStatus = false;
+    res.status(StatusCodes.OK).json({ rouStatus });
   }
 };
 

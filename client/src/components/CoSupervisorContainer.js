@@ -5,11 +5,18 @@ import CoSupervisor from "./CoSupervisor";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const CoSupervisorContainer = () => {
-  const { getAllCoSupervisor, totalCoSupervisors, isLoading, coSupervisors } =
-    useAppContext();
+  const {
+    getAllCoSupervisor,
+    totalCoSupervisors,
+    isLoading,
+    coSupervisors,
+    getRequestGroupDetails,
+  } = useAppContext();
 
+  var reqStatus;
   useEffect(() => {
     getAllCoSupervisor();
+    // getRequestGroupDetails();
   }, []);
 
   if (isLoading) {
@@ -30,7 +37,17 @@ const CoSupervisorContainer = () => {
       </h4>
       <div className="jobs">
         {coSupervisors.map((coSupervisorlk) => {
-          return <CoSupervisor key={coSupervisorlk._id} {...coSupervisorlk} />;
+          return (
+            <CoSupervisor
+              key={coSupervisorlk._id}
+              name={coSupervisorlk.name}
+              type={coSupervisorlk.type}
+              email={coSupervisorlk.email}
+              availability={coSupervisorlk.availability}
+              field={coSupervisorlk.coSupervisorlk}
+              // reqNewStatus={reqStatus}
+            />
+          );
         })}
       </div>
     </Wrapper>

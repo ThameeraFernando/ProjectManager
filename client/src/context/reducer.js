@@ -62,7 +62,10 @@ import {
   STUDENT_SUPERVISOR_REQUEST_ERROR,
   GET_ALL_COSUPERVISORS_BEGIN,
   GET_ALL_COSUPERVISORS_SUCCESS,
-
+  STUDENT_REQUEST_STATUS,
+  GET_COSUPERVISOR_REQUEST_BEGIN,
+  GET_COSUPERVISOR_REQUEST_SUCCESS,
+  GET_COSUPERVISOR_REQUEST_ERROR,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -322,9 +325,7 @@ const reducer = (state, action) => {
       ...state,
       alertType: "success",
       showAlert: true,
-      alertText: 'deleting',
-
-
+      alertText: "deleting",
     };
   }
   if (action.type === DELETE_SUPERVISE_SUCCESS) {
@@ -345,39 +346,36 @@ const reducer = (state, action) => {
   }
   if (action.type === SET_UPDATE_SUPERVISE) {
     return {
-        ...state,
-        isEditing: true,
-        editSuperviseId: action.payload.id,
+      ...state,
+      isEditing: true,
+      editSuperviseId: action.payload.id,
     };
   }
 
   if (action.type === UPDATE_SUPERVISE_BEGIN) {
     return {
       ...state,
-      isLoading:true
+      isLoading: true,
     };
   }
   if (action.type === UPDATE_SUPERVISE_SUCCESS) {
     return {
       ...state,
-      showAlert:true,
+      showAlert: true,
       alertType: "success",
       isLoading: false,
-      alertText: 'Updated'
+      alertText: "Updated",
     };
   }
   if (action.type === UPDATE_SUPERVISE_ERROR) {
     return {
       ...state,
-      isLoading:false,
+      isLoading: false,
       alertType: "danger",
       showAlert: true,
       alertText: action.payload.msg,
     };
   }
-
-
-  
 
   if (action.type === STUDENT_GROUP_SUCCESS) {
     return {
@@ -467,6 +465,7 @@ const reducer = (state, action) => {
       showAlert: false,
     };
   }
+
   if (action.type === GET_ALL_SUBMISSIONS_SUCCESS) {
     return {
       ...state,
@@ -491,7 +490,6 @@ const reducer = (state, action) => {
       alertText: "Document uploaded Successfully...",
     };
   }
-
 
   if (action.type === GET_ALL_SUPERVISORS_BEGIN) {
     return {
@@ -542,6 +540,27 @@ const reducer = (state, action) => {
   }
 
   if (action.type === GET_SUPERVISOR_REQUEST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_COSUPERVISOR_REQUEST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === GET_COSUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_COSUPERVISOR_REQUEST_ERROR) {
     return {
       ...state,
       isLoading: false,
