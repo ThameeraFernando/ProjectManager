@@ -101,6 +101,12 @@ const links = [
     text: "co-supervisors",
     path: "co-supervisors",
     icon: <BiGroup />,
+  },  
+  {
+    id: 16,
+    text: "Supervisor Home",
+    path: "supervisorhome",
+    icon: <AiTwotoneHome />,
   },
 ];
 
