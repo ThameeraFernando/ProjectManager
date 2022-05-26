@@ -40,9 +40,20 @@ import {
   CREATE_A_SUBMISSION_END,
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
+  DISPLAY_UPLOAD_SUCCESS_ALERT,
   GET_ALL_SUPERVISORS_BEGIN,
   GET_ALL_SUPERVISORS_SUCCESS,
   GET_ALL_SUPERVISORS_ERROR,
+  GET_SUPERVISE_BEGIN,
+  GET_SUPERVISE_SUCCESS,
+  GET_SUPERVISE_ERROR,
+  DELETE_SUPERVISE_BEGIN,
+  DELETE_SUPERVISE_SUCCESS,
+  DELETE_SUPERVISE_ERROR,
+  SET_UPDATE_SUPERVISE,
+  UPDATE_SUPERVISE_BEGIN,
+  UPDATE_SUPERVISE_SUCCESS,
+  UPDATE_SUPERVISE_ERROR,
   GET_SUPERVISOR_REQUEST_BEGIN,
   GET_SUPERVISOR_REQUEST_SUCCESS,
   GET_SUPERVISOR_REQUEST_ERROR,
@@ -286,6 +297,86 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === GET_SUPERVISE_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_SUPERVISE_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      specificSupervise: action.payload.supervisor,
+    };
+  }
+  if (action.type === GET_SUPERVISE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === DELETE_SUPERVISE_BEGIN) {
+    return {
+      ...state,
+      alertType: "success",
+      showAlert: true,
+      alertText: "deleting",
+    };
+  }
+  if (action.type === DELETE_SUPERVISE_SUCCESS) {
+    return {
+      ...state,
+      alertType: "success",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === DELETE_SUPERVISE_ERROR) {
+    return {
+      ...state,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === SET_UPDATE_SUPERVISE) {
+    return {
+      ...state,
+      isEditing: true,
+      editSuperviseId: action.payload.id,
+    };
+  }
+
+  if (action.type === UPDATE_SUPERVISE_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_SUPERVISE_SUCCESS) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "success",
+      isLoading: false,
+      alertText: "Updated",
+    };
+  }
+  if (action.type === UPDATE_SUPERVISE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+
   if (action.type === STUDENT_GROUP_SUCCESS) {
     return {
       ...state,
@@ -387,6 +478,16 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+
+  //DISPLAY_UPLOAD_SUCCESS_ALERT
+  if (action.type === DISPLAY_UPLOAD_SUCCESS_ALERT) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Document uploaded Successfully...",
     };
   }
 
