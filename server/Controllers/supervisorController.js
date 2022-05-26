@@ -78,6 +78,7 @@ const UpdateSupervisor = async (req, res) => {
 
 };
 
+
 const deleteSupervisor = async (req, res) => {
     const { id: sid } = req.params;
     const supervisor = await Supervisor.findOne({ _id: sid });
@@ -137,3 +138,4 @@ const getCoSupervisors = async (req, res) => {
 
 
 module.exports = { getAllSupervisor, UpdateSupervisor, deleteSupervisor, createSupervisor, getSpecificSupervisor, getCoSupervisors };
+
