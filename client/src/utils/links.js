@@ -97,6 +97,12 @@ const links = [
     path: "student-research-request",
     icon: <BiGroup />,
   },
+  {
+    id: 15,
+    text: "Supervisor Home",
+    path: "supervisorhome",
+    icon: <AiTwotoneHome />,
+  },
 ];
 
 export default links;

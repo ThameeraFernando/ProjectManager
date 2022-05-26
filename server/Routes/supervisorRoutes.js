@@ -5,7 +5,7 @@ const {
   UpdateSupervisor,
   getAllSupervisor,
   createSupervisor,
-  getSpecificSupervisor
+  getSpecificSupervisor,
 } = require("../Controllers/supervisorController");
 
 router.route("/").get(getAllSupervisor).post(createSupervisor);

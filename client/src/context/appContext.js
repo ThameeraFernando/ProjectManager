@@ -47,6 +47,16 @@ import {
   GET_ALL_SUPERVISORS_BEGIN,
   GET_ALL_SUPERVISORS_SUCCESS,
   GET_ALL_SUPERVISORS_ERROR,
+  GET_SUPERVISE_BEGIN,
+  GET_SUPERVISE_SUCCESS,
+  GET_SUPERVISE_ERROR,
+  DELETE_SUPERVISE_BEGIN,
+  DELETE_SUPERVISE_SUCCESS,
+  SET_UPDATE_SUPERVISE,
+  DELETE_SUPERVISE_ERROR,
+  UPDATE_SUPERVISE_BEGIN,
+  UPDATE_SUPERVISE_SUCCESS,
+  UPDATE_SUPERVISE_ERROR,
   GET_SUPERVISOR_REQUEST_BEGIN,
   GET_SUPERVISOR_REQUEST_SUCCESS,
   GET_SUPERVISOR_REQUEST_ERROR,
@@ -75,6 +85,8 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
+  deleteSuperviseId:'',
+  editSuperviseId:'',
   editTopic: false,
 
   membergroupID: grpID,
@@ -95,6 +107,8 @@ export const initialState = {
   submissions: [],
   supervisors: [],
   totalSupervisors: [],
+
+  specificSupervise: [],
   requestGroups: [],
 };
 
@@ -309,7 +323,7 @@ const AppProvider = ({ children }) => {
         field,
         userId,
       });
-      dispatch({ type: SUPERVISE_SUCCESS });
+      dispatch({ type: SUPERVISE_SUCCESS,payload: { msg: response.data.msg }, });
     } catch (error) {
       dispatch({
         type: SUPERVISE_ERROR,
@@ -319,6 +333,70 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //get specific supervise
+  const getSupervise = async (uid) => {
+    dispatch({ type: GET_SUPERVISE_BEGIN });
+    try {
+      const response = await axios.get(`/api/v1/supervisor/${uid}`);
+      const supervisor = response.data
+      // console.log(supervisor);
+      dispatch({
+        type: GET_SUPERVISE_SUCCESS,
+        payload: {supervisor },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_SUPERVISE_ERROR,
+        payload: { msg: error.response.data.msg },
+      })
+      // console.log(error);
+    }
+    clearAlert();
+  };
+  const setEditSupervise = (id) => {
+    dispatch({type:SET_UPDATE_SUPERVISE,payload:{id}})
+  }
+
+
+  //edit specific supervise
+  const editSupervise = async ({ name, email, type, field, userId }) => {
+    dispatch({ type: UPDATE_SUPERVISE_BEGIN })
+    try {
+      await axios.patch(`/api/v1/supervisor/${state.editSuperviseId}`, {
+        name, email, type, field, userId
+      })
+
+      dispatch({type: UPDATE_SUPERVISE_SUCCESS})
+
+    } catch (error) {
+        if (error.response.status === 401) return
+          dispatch({
+          type: UPDATE_SUPERVISE_ERROR,
+          payload: { msg: error.response.data.msg },
+        })
+    }
+    clearAlert()
+  }
+
+  //delete specific supervise
+  const nav = useNavigate();
+  const deleteSupervise = async (sid,user) => { 
+    dispatch({ type: DELETE_SUPERVISE_BEGIN });
+    try {
+      const response = await axios.delete(`/api/v1/supervisor/${sid}`);
+      const msg = response.data.msg
+      console.log(msg);
+      dispatch({ type: DELETE_SUPERVISE_SUCCESS, payload:msg });
+      getSupervise(user)
+      nav("/supervisorhome");
+    } catch (error) {
+      dispatch({
+        type: GET_SUPERVISE_ERROR,
+        payload: { msg: error.response.data.msg },
+      })
+      console.log(error);
+    }
+  }
 
   //get all supervisor
   const getAllSupervisor = async () => {
@@ -559,6 +637,10 @@ const AppProvider = ({ children }) => {
         displaySuccessUpload,
         getAllSupervisor,
         requestSupervisor,
+        getSupervise,
+        setEditSupervise,
+        editSupervise,
+        deleteSupervise,
         getRequestSupervisor,
         editTopic,
 

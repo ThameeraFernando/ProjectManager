@@ -13,7 +13,7 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Supervisor" ||
     user.type === "Panel Member"
   ) {
-    NewLinks = NewLinks.filter((link) => {
+    NewLinks = links.filter((link) => {
       if (
         link.path !== "all-users" &&
         link.path !== "upload-docs" &&
@@ -32,7 +32,7 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member"
   ) {
 
-    NewLinks = NewLinks.filter((link) => {
+    NewLinks = links.filter((link) => {
       if (link.path !== "student-groups" && link.path !== "supervisors" && link.path !== "student-research-request") {
         return link;
       }
@@ -49,9 +49,9 @@ const NavLinks = ({ toggleSideBar }) => {
     NewLinks = NewLinks.filter((link) => {
       if (
         link.path !== "studentrequsets" &&
-        link.path !== "reportsubmissions"
+        link.path !== "reportsubmissions" &&
+        link.path !== "supervisorhome"
       ) {
-
         return link;
       }
     });

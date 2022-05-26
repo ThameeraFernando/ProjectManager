@@ -8,7 +8,7 @@ import Wrapper from "../../assets/wrappers/DashboardFormPage";
 
 const Supervise = () => {
 
-    const { isLoading, showAlert, displayAlert, registerUser, user, loginUser,supervise } = useAppContext();
+    const { isLoading, showAlert, displayAlert, isEditing, user, editSupervise,supervise } = useAppContext();
     const [name, setName] = useState(user?.name)
     const [email, setEmail] = useState(user?.email)
     
@@ -20,6 +20,10 @@ const Supervise = () => {
         if(!values.name || !values.email || !values.type || !values.field || !values.userId ){
             displayAlert()
             return
+        }
+        if(isEditing){
+          editSupervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId}) 
+          return
         }
         // console.log({name:name,email:email,type:values.type,field:values.field,userId:values.userId});
         supervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId})
@@ -34,6 +38,7 @@ const Supervise = () => {
     <div>
       <Wrapper>
       <form className="form" onSubmit={onSubmit}>
+      <h3>{isEditing ? 'edit details' : 'Supervise'} </h3>
         {showAlert && <Alert />}
         <div className='form-center'>
         <FormRow
@@ -87,7 +92,7 @@ const Supervise = () => {
         
 
         <button type="submit" className="btn btn-block" disabled={isLoading}>
-          Submit
+          {isEditing?'Update':'Submit'}
         </button>
         </div>
       </form>
