@@ -3,6 +3,9 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors/index");
 const Request = require('../modal/Request');
 
+// meka thami elakiri wage wada eka
+//poornage part eka naa habai
+
 const createSupervisor = async (req, res) => {
 
     const {name,email,field,userId} = req.body 
