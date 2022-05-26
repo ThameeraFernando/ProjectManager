@@ -43,6 +43,12 @@ import {
   GET_ALL_SUPERVISORS_BEGIN,
   GET_ALL_SUPERVISORS_SUCCESS,
   GET_ALL_SUPERVISORS_ERROR,
+  GET_SUPERVISOR_REQUEST_BEGIN,
+  GET_SUPERVISOR_REQUEST_SUCCESS,
+  GET_SUPERVISOR_REQUEST_ERROR,
+  STUDENT_SUPERVISOR_REQUEST_BEGIN,
+  STUDENT_SUPERVISOR_REQUEST_SUCCESS,
+  STUDENT_SUPERVISOR_REQUEST_ERROR,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -391,6 +397,36 @@ const reducer = (state, action) => {
       isLoading: false,
       supervisors: action.payload.supervisors,
       totalSupervisors: action.payload.totalSupervisors,
+    };
+  }
+
+  if (action.type === GET_SUPERVISOR_REQUEST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === GET_SUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_SUPERVISOR_REQUEST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  //get SUPERVISOR request from student
+  if (action.type === STUDENT_SUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      requestGroups: action.payload.requestGroups,
     };
   }
 
