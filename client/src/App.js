@@ -23,7 +23,9 @@ import {
   CreateSubmission,
   AddSubmissions,
   StudentResearchRequest,
+  CoSupervisors,
   SupervisorHome
+
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -56,7 +58,11 @@ function App() {
               <Route path="staff-members" element={<StaffMembers />} />
               <Route path="student-groups" element={<StudnetGroup />} />
               <Route path="supervisors" element={<Supervisors />} />
+
+              <Route path="co-supervisors" element={<CoSupervisors />} />
+
               <Route path="supervisorhome" element={<SupervisorHome />} />
+
               <Route
                 path="student-research-request"
                 element={<StudentResearchRequest />}
