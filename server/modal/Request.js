@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-const requestSchema =new mongoose.Schema(
+const requestSchema = new mongoose.Schema(
   {
     groupID: {
       type: String,
@@ -17,16 +17,21 @@ const requestSchema =new mongoose.Schema(
       },
       unique: true,
     },
+
+    supervisorName: {
+      type: String,
+      required: [true, "please provide supervisor's Name."],
+    },
     topic: {
       type: String,
       required: [true, "please provide research topic."],
       trim: true,
     },
     status: {
-        type: String,
-        enum: ['pending', 'accepted','declined'],
-        default: 'pending',
-    }
+      type: String,
+      enum: ["pending", "accepted", "declined"],
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

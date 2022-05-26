@@ -43,12 +43,21 @@ import {
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
   SET_VIEW_SUPERVISOR,
+  DISPLAY_UPLOAD_SUCCESS_ALERT,
   GET_ALL_SUPERVISORS_BEGIN,
   GET_ALL_SUPERVISORS_SUCCESS,
   GET_ALL_SUPERVISORS_ERROR,
+  GET_SUPERVISOR_REQUEST_BEGIN,
+  GET_SUPERVISOR_REQUEST_SUCCESS,
+  GET_SUPERVISOR_REQUEST_ERROR,
+  STUDENT_SUPERVISOR_REQUEST_BEGIN,
+  STUDENT_SUPERVISOR_REQUEST_SUCCESS,
+  STUDENT_SUPERVISOR_REQUEST_ERROR,
+
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
+const grpID = localStorage.getItem("groupid");
 export const initialState = {
   isLoading: false,
   isEditing: false,
@@ -66,8 +75,9 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
+  editTopic: false,
 
-  membergroupID: "",
+  membergroupID: grpID,
   membermember: "",
   memberitNumOne: "",
   memberemailOne: "",
@@ -85,6 +95,7 @@ export const initialState = {
   submissions: [],
   supervisors: [],
   totalSupervisors: [],
+  requestGroups: [],
 };
 
 const AppContext = React.createContext();
@@ -106,11 +117,16 @@ const AppProvider = ({ children }) => {
   const addUserToLocalStorage = ({ user, token }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
+    localStorage.setItem("token", token);
   };
   //remove user from local storage
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+  };
+
+  const addStudentDetailsToLocalStorage = ({ membergroupID }) => {
+    localStorage.setItem("groupid", membergroupID);
   };
 
   //register user
@@ -303,6 +319,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+
   //get all supervisor
   const getAllSupervisor = async () => {
     dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
@@ -319,6 +336,7 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
 
   //student group reg
 
@@ -381,12 +399,60 @@ const AppProvider = ({ children }) => {
           isRegister,
         },
       });
+      addStudentDetailsToLocalStorage({ membergroupID: groupID });
     } catch (error) {}
   };
 
   //request supervisor
-  const requestSupervisor = async () => {
+  const requestSupervisor = async (email, name) => {
     getGroups();
+    dispatch({ type: GET_SUPERVISOR_REQUEST_BEGIN });
+    try {
+      const { membergroupID, memberTopic } = state;
+      let groupID = membergroupID;
+      let topic = memberTopic;
+      let supervisorEmail = email;
+      let supervisorName = name;
+      const studentReequest = await authFetch.post("/requests", {
+        groupID,
+        supervisorEmail,
+        supervisorName,
+        topic,
+      });
+      dispatch({ type: GET_SUPERVISOR_REQUEST_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: GET_SUPERVISOR_REQUEST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+
+  //get request supervisor from student
+
+  const getRequestSupervisor = async () => {
+    getGroups();
+
+    try {
+      const response = await authFetch.get(`/requests/${state.membergroupID}`);
+      const { requestGroups } = response.data;
+      dispatch({
+        type: STUDENT_SUPERVISOR_REQUEST_SUCCESS,
+        payload: { requestGroups },
+      });
+    } catch (error) {}
+  };
+
+  //set edit topic when rejected
+
+  const editTopic = async ({ groupID, topic }) => {
+    console.log(groupID, topic);
+    try {
+      const { response } = await authFetch.patch(
+        `/students/groupRegister/${groupID}`,
+        { topic }
+      );
+    } catch (error) {}
   };
 
   //get all Student Groups
@@ -455,10 +521,17 @@ const AppProvider = ({ children }) => {
     }
   };
 
+
   //view Supervisor Student
   const setView = (id) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
   };
+  //DISPLAY_UPLOAD_SUCCESS_ALERT
+  const displaySuccessUpload = () => {
+    dispatch({ type: DISPLAY_UPLOAD_SUCCESS_ALERT });
+    clearAlert();
+  };
+
 
   return (
     <AppContext.Provider
@@ -483,8 +556,12 @@ const AppProvider = ({ children }) => {
         getALlSubmissions,
         removeSubmission,
         setView,
+        displaySuccessUpload,
         getAllSupervisor,
         requestSupervisor,
+        getRequestSupervisor,
+        editTopic,
+
       }}
     >
       {children}

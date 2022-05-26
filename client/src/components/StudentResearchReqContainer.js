@@ -6,35 +6,35 @@ import StudentResearchReq from "./StudentResearchReq";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const StudentResearchReqContainer = () => {
-  const { getJobs, jobs, isLoading, page, totalJobs } = useAppContext();
+  const { getRequestSupervisor, requestGroups, isLoading, getGroups } =
+    useAppContext();
 
   useEffect(() => {
-    getJobs();
+    getRequestSupervisor();
   }, []);
 
   if (isLoading) {
     return <Loading center />;
   }
 
-  if (StudentResearchReq.length === 0) {
+  if (requestGroups.length === 0) {
     return (
       <Wrapper>
-        <h2>No Jobs to display...</h2>
+        <h2>No Requestes to display...</h2>
       </Wrapper>
     );
   }
 
   return (
-    <Wrapper>
-      <h5>
-        {totalJobs} job{jobs.length > 1 && "s"} found
-      </h5>
+    <>
       <div className="jobs">
-        {jobs.map((job) => {
-          return <StudentResearchReq key={job._id} {...job} />;
+        {requestGroups.map((requestGroup) => {
+          return (
+            <StudentResearchReq key={requestGroup._id} {...requestGroup} />
+          );
         })}
       </div>
-    </Wrapper>
+    </>
   );
 };
 

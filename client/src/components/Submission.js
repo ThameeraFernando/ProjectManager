@@ -66,7 +66,7 @@ const Submission = ({
             {user.type === "Student" && (
               <Link
                 to="/student-submissions"
-                className="btn edit-btn"
+                className={days < 0 ? "btn delete-btn" : "btn edit-btn"}
                 state={{
                   _id,
                   createdAt,

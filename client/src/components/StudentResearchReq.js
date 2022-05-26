@@ -1,63 +1,112 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
-import Wrapper from "../assets/wrappers/Job";
+import Wrapper from "../assets/wrappers/DashboardFormPage";
 import StudentResearchReqInfo from "./StudentResearchReqInfo";
+import { Alert, FormRow } from "./index";
 
 const StudentResearchReq = ({
-  _id,
-  position,
-  company,
-  jobLocation,
-  jobType,
-  createdAt,
+  groupID,
+  supervisorEmail,
+  supervisorName,
+  topic,
   status,
 }) => {
-  const { setEdit, deleteJob } = useAppContext();
+  const {
+    isLoading,
+    showAlert,
+    isEditing,
+    displayAlert,
+    user,
+    supervisors,
+    setEditTopic,
+    editTopic,
+  } = useAppContext();
+  // const [statusText, setStatusText] = useState("");
 
-  let date = moment(createdAt);
-  date = date.format("MMM Do, YYYY");
+  const [newTopic, setNewTopic] = useState("");
+
+  let statusText = "";
+  let isRejected = false;
+
+  if (status === "pending") {
+    statusText = "your requst is still pending";
+  } else if (status === "accepted") {
+    statusText = "your requst accept";
+  } else {
+    statusText = "your requst rejected";
+    isRejected = false;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const topic = newTopic;
+    editTopic({ groupID, topic });
+    console.log(groupID, topic);
+  };
+
   return (
     <Wrapper>
-      <header>
-        <div className="main-icon">{company.charAt(0)}</div>
-        <div className="info">
-          <h5>{position}</h5>
-          <p>{company}</p>
-        </div>
-      </header>
-      <div className="content">
-        <div className="content-center">
-          <StudentResearchReqInfo
-            icon={<FaLocationArrow />}
-            text={jobLocation}
-          />
-          <StudentResearchReqInfo icon={<FaCalendarAlt />} text={date} />
-          <StudentResearchReqInfo icon={<FaBriefcase />} text={jobType} />
-          <div className={`status ${status}`}>{status}</div>
-        </div>
+      <form className="form" onSubmit={handleSubmit}>
+        <br />
+        <h5>{statusText}</h5>
+        {showAlert && <Alert />}
 
-        <footer>
-          <div className="actions">
-            <Link
-              to="/add-job"
-              className="btn edit-btn"
-              onClick={() => setEdit(_id)}
-            >
-              Edit
-            </Link>
-            <button
-              type="button"
-              className="btn delete-btn"
-              onClick={() => deleteJob(_id)}
-            >
-              Delete
+        <div className="form-center">
+          {/*Group ID*/}
+          <FormRow
+            type="text"
+            labelText="Group ID"
+            name="groupID"
+            value={groupID}
+          />
+
+          {/*IT NUM 1*/}
+          <FormRow
+            type="text"
+            labelText="Topic"
+            name="itNumOne"
+            value={topic}
+          />
+
+          {/*IT NUM 2*/}
+          <FormRow
+            type="text"
+            labelText="Status"
+            name="itNumTwo"
+            value={status}
+          />
+          <FormRow
+            type="text"
+            labelText="Super name"
+            name="itNumTwo"
+            value={supervisorName}
+          />
+          <FormRow
+            type="text"
+            labelText="suoer email"
+            name="itNumTwo"
+            value={supervisorEmail}
+          />
+
+          <FormRow
+            type="text"
+            labelText="Re-enter Topic"
+            name="newTopic"
+            value={newTopic}
+            isHidden={isRejected}
+            handleChange={(e) => setNewTopic(e.target.value)}
+          />
+
+          <div className="btn-container">
+            <button className="btn btn-block" type="submit">
+              Submit
             </button>
           </div>
-        </footer>
-      </div>
+        </div>
+      </form>
     </Wrapper>
   );
 };
