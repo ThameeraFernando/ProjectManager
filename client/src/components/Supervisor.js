@@ -34,7 +34,7 @@ const Supervisor = ({ name, type, email, availability, field }) => {
           <button
             type="button"
             className="btn edit-btn"
-            onClick={() => requestSupervisor()}
+            onClick={() => requestSupervisor(email, name)}
           >
             Request
           </button>
