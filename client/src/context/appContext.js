@@ -54,6 +54,9 @@ import {
   STUDENT_SUPERVISOR_REQUEST_ERROR,
   GET_ALL_COSUPERVISORS_BEGIN,
   GET_ALL_COSUPERVISORS_SUCCESS,
+  GET_COSUPERVISOR_REQUEST_BEGIN,
+  GET_COSUPERVISOR_REQUEST_SUCCESS,
+  GET_COSUPERVISOR_REQUEST_ERROR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -98,6 +101,7 @@ export const initialState = {
   requestGroups: [],
   coSupervisors: [],
   totalCoSupervisors: [],
+  studentReqStatus: "",
 };
 
 const AppContext = React.createContext();
@@ -352,7 +356,7 @@ const AppProvider = ({ children }) => {
         `/supervisor/cosupervisors/${cosup}`
       );
       const { coSupervisors, totalCoSupervisors } = data;
-      console.log(coSupervisors);
+
       dispatch({
         type: GET_ALL_COSUPERVISORS_SUCCESS,
         payload: { coSupervisors, totalCoSupervisors },
@@ -453,6 +457,31 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  //request co-supervisor
+  const requestCoSupervisor = async (email, name) => {
+    getGroups();
+    dispatch({ type: GET_COSUPERVISOR_REQUEST_BEGIN });
+    try {
+      const { membergroupID, memberTopic } = state;
+      let groupID = membergroupID;
+      let topic = memberTopic;
+      let supervisorEmail = email;
+      let supervisorName = name;
+      const studentCoReequest = await authFetch.post("/requests", {
+        groupID,
+        supervisorEmail,
+        supervisorName,
+        topic,
+      });
+      dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: GET_COSUPERVISOR_REQUEST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+
   //get request supervisor from student
 
   const getRequestSupervisor = async () => {
@@ -480,13 +509,25 @@ const AppProvider = ({ children }) => {
     } catch (error) {}
   };
 
+  // //student group request check
+  // const getRequestGroupDetails = async () => {
+  //   getGroups();
+  //   const response = await authFetch.get(
+  //     `/requests/groupdetails/${state.membergroupID}`
+  //   );
+  //   const { rouStatus } = response.data;
+  //   return rouStatus;
+
+  //   // dispatch({ type: STUDENT_REQUEST_STATUS, payload: { rouStatus } });
+  // };
+
   //get all Student Groups
   const getAllStudents = async () => {
     let url = "/students";
     dispatch({ type: GET_ALL_STUDENT_GROUPS_BEGIN });
     try {
       const { data } = await authFetch.get(url);
-      console.log(data);
+
       // const { users, totalUsers, numOfPages } = data;
       dispatch({
         type: GET_ALL_STUDENT_GROUPS_SUCCESS,
@@ -573,6 +614,7 @@ const AppProvider = ({ children }) => {
         getRequestSupervisor,
         editTopic,
         getAllCoSupervisor,
+        requestCoSupervisor,
       }}
     >
       {children}

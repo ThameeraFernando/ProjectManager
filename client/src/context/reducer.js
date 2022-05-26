@@ -51,6 +51,10 @@ import {
   STUDENT_SUPERVISOR_REQUEST_ERROR,
   GET_ALL_COSUPERVISORS_BEGIN,
   GET_ALL_COSUPERVISORS_SUCCESS,
+  STUDENT_REQUEST_STATUS,
+  GET_COSUPERVISOR_REQUEST_BEGIN,
+  GET_COSUPERVISOR_REQUEST_SUCCESS,
+  GET_COSUPERVISOR_REQUEST_ERROR,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -370,6 +374,7 @@ const reducer = (state, action) => {
       showAlert: false,
     };
   }
+
   if (action.type === GET_ALL_SUBMISSIONS_SUCCESS) {
     return {
       ...state,
@@ -434,6 +439,27 @@ const reducer = (state, action) => {
   }
 
   if (action.type === GET_SUPERVISOR_REQUEST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_COSUPERVISOR_REQUEST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === GET_COSUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_COSUPERVISOR_REQUEST_ERROR) {
     return {
       ...state,
       isLoading: false,

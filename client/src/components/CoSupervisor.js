@@ -9,8 +9,9 @@ import { IoPerson, IoTime } from "react-icons/io5";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
 
-const CoSupervisor = ({ name, type, email, availability, field }) => {
-  const { requestSupervisor } = useAppContext();
+const CoSupervisor = (props) => {
+  const { name, type, email, availability, field, reqNewStatus } = props;
+  const { requestCoSupervisor } = useAppContext();
 
   return (
     <Wrapper>
@@ -31,7 +32,11 @@ const CoSupervisor = ({ name, type, email, availability, field }) => {
         </div>
 
         <footer>
-          <button type="button" className="btn edit-btn">
+          <button
+            type="button"
+            className="btn edit-btn"
+            onClick={() => requestCoSupervisor(email, name)}
+          >
             Request
           </button>
         </footer>

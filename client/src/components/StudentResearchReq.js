@@ -32,7 +32,7 @@ const StudentResearchReq = ({
   let isRejected;
 
   if (status === "pending") {
-    isRejected = true;
+    isRejected = false;
     statusText = "your requst is still pending";
   } else if (status === "accepted") {
     statusText = "your requst accept";
@@ -108,7 +108,7 @@ const StudentResearchReq = ({
           />
 
           <div className="btn-container">
-            <button className="btn btn-block" type="submit" hidden={isRejected}>
+            <button className="btn btn-block" type="submit" hidden={false}>
               Re-submit Topic
             </button>
           </div>
