@@ -97,4 +97,43 @@ const deleteSupervisor = async (req, res) => {
     } 
 };
   
-module.exports = { getAllSupervisor, UpdateSupervisor, deleteSupervisor, createSupervisor, getSpecificSupervisor };
+
+
+
+
+//get core supervisors to the student page
+
+const getCoSupervisors = async (req, res) => {
+
+  const { type: worktype } = req.params;
+
+  const coSupervisors = await Supervisor.find({ type: worktype });
+
+
+
+  if (!coSupervisors) {
+
+    throw new NotFoundError();
+
+  }
+
+
+
+  res
+
+    .status(StatusCodes.OK)
+
+    .json({ coSupervisors, totalCoSupervisors: coSupervisors.length });
+
+};
+
+
+
+
+
+
+
+
+
+
+module.exports = { getAllSupervisor, UpdateSupervisor, deleteSupervisor, createSupervisor, getSpecificSupervisor, getCoSupervisors };
