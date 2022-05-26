@@ -5,6 +5,7 @@ import FormRow from "./FormRow";
 import Alert from "./Alert";
 import SupervisorContainer from "./SupervisorContainer";
 import SearchContainer from "./SearchContainer";
+import StudentResearchReqContainer from "./StudentResearchReqContainer";
 export {
   Alert,
   FormRow,
@@ -13,4 +14,5 @@ export {
   BigSideBar,
   SupervisorContainer,
   SearchContainer,
+  StudentResearchReqContainer,
 };

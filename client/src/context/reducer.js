@@ -41,6 +41,16 @@ import {
   CREATE_A_SUBMISSION_SUCCESS,
   DELETE_A_SUBMISSION,
   DISPLAY_UPLOAD_SUCCESS_ALERT,
+  GET_ALL_SUPERVISORS_BEGIN,
+  GET_ALL_SUPERVISORS_SUCCESS,
+  GET_ALL_SUPERVISORS_ERROR,
+  GET_SUPERVISOR_REQUEST_BEGIN,
+  GET_SUPERVISOR_REQUEST_SUCCESS,
+  GET_SUPERVISOR_REQUEST_ERROR,
+  STUDENT_SUPERVISOR_REQUEST_BEGIN,
+  STUDENT_SUPERVISOR_REQUEST_SUCCESS,
+  STUDENT_SUPERVISOR_REQUEST_ERROR,
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -307,6 +317,7 @@ const reducer = (state, action) => {
       memberemailFour: action.payload.emailFour,
       membersupervisor: action.payload.supervisor,
       membercoSupervisor: action.payload.coSupervisor,
+      memberTopic: action.payload.topic,
       memberisRegister: action.payload.isRegister,
     };
   }
@@ -373,6 +384,7 @@ const reducer = (state, action) => {
       isLoading: true,
     };
   }
+
   //DISPLAY_UPLOAD_SUCCESS_ALERT
   if (action.type === DISPLAY_UPLOAD_SUCCESS_ALERT) {
     return {
@@ -382,6 +394,55 @@ const reducer = (state, action) => {
       alertText: "Document uploaded Successfully...",
     };
   }
+
+
+  if (action.type === GET_ALL_SUPERVISORS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === GET_ALL_SUPERVISORS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      supervisors: action.payload.supervisors,
+      totalSupervisors: action.payload.totalSupervisors,
+    };
+  }
+
+  if (action.type === GET_SUPERVISOR_REQUEST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === GET_SUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  if (action.type === GET_SUPERVISOR_REQUEST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+
+  //get SUPERVISOR request from student
+  if (action.type === STUDENT_SUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      requestGroups: action.payload.requestGroups,
+    };
+  }
+
   throw new Error(`no such action :${action.type}`);
 };
 export default reducer;

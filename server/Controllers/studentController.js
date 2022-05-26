@@ -15,6 +15,7 @@ const groupRegister = async (req, res) => {
     emailFour,
     supervisor,
     coSupervisor,
+    topic,
   } = req.body;
 
   console.log(req.body);
@@ -30,7 +31,8 @@ const groupRegister = async (req, res) => {
     !emailThree ||
     !emailFour ||
     !supervisor ||
-    !coSupervisor
+    !coSupervisor ||
+    !topic
   ) {
     throw new BadRequestError("Please provide all values");
   }
@@ -59,4 +61,26 @@ const getAllStudentGroups = async (req, res) => {
   res.status(StatusCodes.OK).json(studentgroups);
 };
 
-module.exports = { groupRegister, getAllStudentGroups, getGroupRegister };
+const updateTopic = async (req, res) => {
+  const { groupID: Gid } = req.params;
+  const { topic } = req.body;
+  console.log(Gid);
+  if (!Gid || !topic) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const groups = await Groups.findOne({ groupID: Gid });
+
+  groups.topic = topic;
+
+  await groups.save();
+
+  res.status(StatusCodes.OK).json({ groups });
+};
+
+module.exports = {
+  groupRegister,
+  getAllStudentGroups,
+  getGroupRegister,
+  updateTopic,
+};

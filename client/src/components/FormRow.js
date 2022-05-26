@@ -7,10 +7,11 @@ const FormRow = ({
   handleChange,
   labelText,
   isReadOnly,
+  isHidden,
 }) => {
   return (
     <div className="form-row">
-      <label htmlFor={name} className="form-label">
+      <label htmlFor={name} className="form-label" hidden={isHidden}>
         {labelText || name}
       </label>
       <input
@@ -20,6 +21,7 @@ const FormRow = ({
         onChange={handleChange}
         className="form-input"
         readOnly={isReadOnly}
+        hidden={isHidden}
       />
     </div>
   );

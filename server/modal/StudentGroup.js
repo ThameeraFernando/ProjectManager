@@ -102,6 +102,11 @@ const studentSchema = new Schema(
       type: Boolean,
       default: false,
     },
+
+    topic: {
+      type: String,
+      required: [true, "please provide topic."],
+    },
   },
   { timestamps: true }
 );
