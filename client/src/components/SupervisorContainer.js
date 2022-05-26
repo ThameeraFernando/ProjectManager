@@ -11,6 +11,7 @@ const SupervisorContainer = () => {
     supervisors,
     totalUsers,
     isLoading,
+    requestGroups,
   } = useAppContext();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const SupervisorContainer = () => {
       </Wrapper>
     );
   }
+
   return (
     <Wrapper>
       <h4>
@@ -34,7 +36,17 @@ const SupervisorContainer = () => {
       </h4>
       <div className="jobs">
         {supervisors.map((supervisor) => {
-          return <Supervisor key={supervisors._id} {...supervisor} />;
+          return (
+            <Supervisor
+              key={supervisors._id}
+              name={supervisor.name}
+              type={supervisor.type}
+              email={supervisor.email}
+              availability={supervisor.availability}
+              field={supervisor.field}
+              status={requestGroups.status}
+            />
+          );
         })}
       </div>
     </Wrapper>
