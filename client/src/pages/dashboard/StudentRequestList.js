@@ -2,7 +2,7 @@ import React from "react";
 import { useAppContext } from "../../context/appContext";
 import { useEffect } from "react";
 import Loading from "../../components/Loading";
-import StudentResearchReq from "../../components/StudentResearchReq";
+import StudentReqForSupervisor from "../../components/StudentReqForSupervisor";
 import Wrapper from "../../assets/wrappers/JobsContainer";
 
 const StudentRequestList = () => {
@@ -31,7 +31,7 @@ const StudentRequestList = () => {
       <div className="jobs">
         {studentRequests.map((request) => {
           return (
-            <StudentResearchReq key={request._id} {...request} />
+            <StudentReqForSupervisor key={request._id} {...request} />
           );
         })}
       </div>
