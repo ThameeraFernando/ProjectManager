@@ -19,7 +19,7 @@ const StudentResearchReqContainer = () => {
   if (requestGroups.length === 0) {
     return (
       <Wrapper>
-        <h2>No Requestes to display...</h2>
+        <h2>No Supervisor Requestes to display...</h2>
       </Wrapper>
     );
   }

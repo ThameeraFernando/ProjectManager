@@ -11,8 +11,12 @@ import { GrValidate } from "react-icons/gr";
 
 const Supervisor = (props) => {
   const { name, type, email, availability, field } = props;
-  const { requestSupervisor, getRequestSupervisor, requestGroups } =
-    useAppContext();
+  const {
+    requestSupervisor,
+    getRequestSupervisor,
+    requestGroups,
+    membergroupID,
+  } = useAppContext();
 
   useEffect(() => {
     getRequestSupervisor();
@@ -41,6 +45,7 @@ const Supervisor = (props) => {
             <button
               type="button"
               className="btn edit-btn"
+              hidden={membergroupID === null}
               onClick={() => requestSupervisor(email, name)}
             >
               Request
