@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SearchContainer from "../../components/SearchContainer";
-import SupervisorContainer from "../../components/SupervisorContainer";
+import CoSupervisorContainer from "../../components/CoSupervisorContainer";
 import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
 
-const Supervisors = () => {
+const CoSupervisors = () => {
   const navigator = useNavigate();
   const { user } = useAppContext();
 
   return (
     <>
       <SearchContainer />
-      <SupervisorContainer />
+      <CoSupervisorContainer />
     </>
   );
 };
 
-export default Supervisors;
+export default CoSupervisors;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment";
 import SupervisorInfo from "./SupervisorInfo";
 import { Link } from "react-router-dom";
@@ -8,25 +8,15 @@ import { MdEmail, MdUpdate } from "react-icons/md";
 import { IoPerson, IoTime } from "react-icons/io5";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
+import Alert from "./Alert";
 
-const Supervisor = (props) => {
-  const { name, type, email, availability, field } = props;
-  const {
-    requestSupervisor,
-    getRequestSupervisor,
-    requestGroups,
-    membergroupID,
-    showAlert,
-  } = useAppContext();
 
-  // useEffect(() => {
-  //   getRequestSupervisor();
-  //   getAllSupervisor();
-  // }, []);
-
+const MySupervise = ({_id, name, type, email, availability, field, count }) => {
+  const { setEditSupervise, deleteSupervise, user, showAlert } = useAppContext();
   return (
     <Wrapper>
       <header>
+        {showAlert && <Alert />}
         <div className="main-icon">{name.charAt(0)}</div>
         <div className="info">
           <h5>{type}</h5>
@@ -40,25 +30,29 @@ const Supervisor = (props) => {
           <SupervisorInfo icon={<MdEmail />} text={availability} />
           <SupervisorInfo icon={<MdEmail />} text={field} />
           <SupervisorInfo icon={<BsFillBagCheckFill />} text={type} />
+          <SupervisorInfo icon={<BsFillBagCheckFill />} text={count} />
         </div>
 
         <footer>
-          {!requestGroups.length >= 1 && (
-            <button
-              type="button"
-              className="btn edit-btn"
-              hidden={
-                membergroupID === null || availability === "not-available"
-              }
-              onClick={() => requestSupervisor(email, name)}
-            >
-              Request
-            </button>
-          )}
+          <Link
+            to='/supervise'
+            className="btn edit-btn"
+            onClick={() => {setEditSupervise({_id, name, type, email, availability, field, count }) }}
+          >
+            Edit
+          </Link>
+
+          <button
+            type="button"
+            className="btn delete-btn"
+            onClick={() => deleteSupervise(_id,user._id)}
+          >
+            Delete
+          </button>
         </footer>
       </div>
     </Wrapper>
   );
 };
 
-export default Supervisor;
+export default MySupervise;

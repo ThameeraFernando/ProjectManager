@@ -20,9 +20,27 @@ const createRequest = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ request });
 };
 
+//topic update
+const topicUpdate = async (req, res) => {
+  const { groupID: Gid } = req.params;
+  const { topic } = req.body;
+  if (!Gid || !topic) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const groupsRequest = await Request.findOne({ groupID: Gid });
+
+  groupsRequest.topic = topic;
+  groupsRequest.status = "pending";
+
+  await groupsRequest.save();
+
+  res.status(StatusCodes.OK).json({ groupsRequest });
+};
+
 const studentGetRequest = async (req, res) => {
   let { gid: groupID } = req.params;
-  console.log(groupID);
+
   if (!groupID) {
     throw new BadRequestError("Please provide all values");
   }
@@ -31,9 +49,26 @@ const studentGetRequest = async (req, res) => {
   // if (requestGroups.length <= 0) {
   //   res.status(StatusCodes.NOT_FOUND).json({ msg: "You have no requests" });
   // } else {
-  console.log(requestGroups);
+
   res.status(StatusCodes.OK).json({ requestGroups });
   //}
+};
+
+//student
+const getGroupDetails = async (req, res) => {
+  let { gid: groupID } = req.params;
+  if (!groupID) {
+    throw new BadRequestError("Please provide all values");
+  }
+  const getGroups = await Request.find({ groupID });
+  let rouStatus;
+  if (getGroups) {
+    rouStatus = true;
+    res.status(StatusCodes.OK).json({ rouStatus });
+  } else {
+    rouStatus = false;
+    res.status(StatusCodes.OK).json({ rouStatus });
+  }
 };
 
 const supervisorGetRequest = async (req, res) => {
@@ -89,4 +124,6 @@ module.exports = {
   createRequest,
   studentGetRequest,
   supervisorGetRequest,
+  getGroupDetails,
+  topicUpdate,
 };

@@ -19,6 +19,10 @@ import Submissions from "./Submissions";
 import CreateSubmission from "./CreateSubmission";
 import AddSubmissions from "./AddSubmissions";
 import StudentResearchRequest from "./StudentResearchRequest";
+import CoSupervisors from "./CoSupervisors";
+import SupervisorHome from "./SupervisorHome";
+import SupervisorGroup from "./SupervisorGroup";
+
 
 export {
   DownloadFile,
@@ -40,4 +44,8 @@ export {
   ReportSubmissions,
   Supervise,
   StudentResearchRequest,
+  CoSupervisors,
+  SupervisorHome,
+  SupervisorGroup
+
 };

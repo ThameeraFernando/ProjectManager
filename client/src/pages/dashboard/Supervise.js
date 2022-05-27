@@ -8,18 +8,24 @@ import Wrapper from "../../assets/wrappers/DashboardFormPage";
 
 const Supervise = () => {
 
-    const { isLoading, showAlert, displayAlert, registerUser, user, loginUser,supervise } = useAppContext();
+    const { isLoading, showAlert, displayAlert, isEditing, user, editSupervise,supervise, specificSupervise } = useAppContext();
     const [name, setName] = useState(user?.name)
     const [email, setEmail] = useState(user?.email)
-    
-    const initialState = {name:name, email:email, type: "supervisor", field: "AI", count:0, userId: user._id };
+    const [specif, setspecifstate] = useState(specificSupervise);
+
+    const initialState = {name:name, email:email, type: specif.type||"supervisor", field: specif.field||"AI", userId: user._id };
     const [values, setValues] = useState(initialState);
 
+    // console.log(specif.type||'hi');
     const onSubmit = (e) => {
         e.preventDefault();
         if(!values.name || !values.email || !values.type || !values.field || !values.userId ){
             displayAlert()
             return
+        }
+        if(isEditing){
+          editSupervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId}) 
+          return
         }
         // console.log({name:name,email:email,type:values.type,field:values.field,userId:values.userId});
         supervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId})
@@ -34,6 +40,7 @@ const Supervise = () => {
     <div>
       <Wrapper>
       <form className="form" onSubmit={onSubmit}>
+      <h3>{isEditing ? 'edit details' : 'Supervise'} </h3>
         {showAlert && <Alert />}
         <div className='form-center'>
         <FormRow
@@ -78,16 +85,10 @@ const Supervise = () => {
                 <option value="SoftwareEngineering">Software Engineering</option>
             </select>
         </div>
-        <FormRow
-          type="number"
-          name="Groups"
-          value={values.count}
-          isReadOnly
-        />
         
 
         <button type="submit" className="btn btn-block" disabled={isLoading}>
-          Submit
+          {isEditing?'Update':'Submit'}
         </button>
         </div>
       </form>
