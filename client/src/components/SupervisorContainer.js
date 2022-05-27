@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import Loading from "./Loading";
 import Supervisor from "./Supervisor";
+import Alert from "./Alert";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const SupervisorContainer = () => {
@@ -12,9 +13,12 @@ const SupervisorContainer = () => {
     totalUsers,
     isLoading,
     requestGroups,
+    showAlert,
+    getRequestSupervisor,
   } = useAppContext();
 
   useEffect(() => {
+    getRequestSupervisor();
     getAllSupervisor();
   }, []);
 
@@ -33,6 +37,7 @@ const SupervisorContainer = () => {
     <Wrapper>
       <h4>
         {totalSupervisors} Supervisor{supervisors.length > 1 && "s"}
+        <h3>{showAlert && <Alert />}</h3>
       </h4>
       <div className="jobs">
         {supervisors.map((supervisor) => {

@@ -19,10 +19,10 @@ const CoSupervisor = (props) => {
     getRequestSupervisor,
   } = useAppContext();
 
-  useEffect(() => {
-    getRequestCoSupervisor();
-    getRequestSupervisor();
-  }, []);
+  // useEffect(() => {
+  //   getRequestCoSupervisor();
+  //   getRequestSupervisor();
+  // }, []);
 
   const status = requestGroups.map((group) => {
     return group.status;

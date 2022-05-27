@@ -13,14 +13,10 @@ const StudentResearchCoReqContanier = () => {
     getRequestCoSupervisor();
   }, []);
 
-  if (isLoading) {
-    return <Loading center />;
-  }
-
   if (requestCoGroups.length === 0) {
     return (
       <Wrapper>
-        <h2>No Requestes to display...</h2>
+        <h5>No Requestes to display...</h5>
       </Wrapper>
     );
   }

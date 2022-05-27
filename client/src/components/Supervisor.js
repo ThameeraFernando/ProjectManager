@@ -16,11 +16,13 @@ const Supervisor = (props) => {
     getRequestSupervisor,
     requestGroups,
     membergroupID,
+    showAlert,
   } = useAppContext();
 
-  useEffect(() => {
-    getRequestSupervisor();
-  }, []);
+  // useEffect(() => {
+  //   getRequestSupervisor();
+  //   getAllSupervisor();
+  // }, []);
 
   return (
     <Wrapper>
@@ -45,7 +47,9 @@ const Supervisor = (props) => {
             <button
               type="button"
               className="btn edit-btn"
-              hidden={membergroupID === null}
+              hidden={
+                membergroupID === null || availability === "not-available"
+              }
               onClick={() => requestSupervisor(email, name)}
             >
               Request

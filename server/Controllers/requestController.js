@@ -40,7 +40,7 @@ const topicUpdate = async (req, res) => {
 
 const studentGetRequest = async (req, res) => {
   let { gid: groupID } = req.params;
-  console.log(groupID);
+
   if (!groupID) {
     throw new BadRequestError("Please provide all values");
   }
@@ -49,7 +49,7 @@ const studentGetRequest = async (req, res) => {
   // if (requestGroups.length <= 0) {
   //   res.status(StatusCodes.NOT_FOUND).json({ msg: "You have no requests" });
   // } else {
-  console.log(requestGroups);
+
   res.status(StatusCodes.OK).json({ requestGroups });
   //}
 };
