@@ -53,7 +53,6 @@ import {
   STUDENT_SUPERVISOR_REQUEST_BEGIN,
   STUDENT_SUPERVISOR_REQUEST_SUCCESS,
   STUDENT_SUPERVISOR_REQUEST_ERROR,
-
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -319,7 +318,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   //get all supervisor
   const getAllSupervisor = async () => {
     dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
@@ -336,7 +334,6 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
-
 
   //student group reg
 
@@ -521,7 +518,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
   //view Supervisor Student
   const setView = (id) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
@@ -531,7 +527,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: DISPLAY_UPLOAD_SUCCESS_ALERT });
     clearAlert();
   };
-
 
   return (
     <AppContext.Provider
@@ -561,7 +556,6 @@ const AppProvider = ({ children }) => {
         requestSupervisor,
         getRequestSupervisor,
         editTopic,
-
       }}
     >
       {children}

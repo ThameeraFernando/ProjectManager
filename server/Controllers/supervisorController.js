@@ -67,5 +67,5 @@ const deleteSupervisor = async (req, res) => {
   await supervisor.remove();
   return res.status(StatusCodes.OK).send({ msg: "Success! Supervisor Removed" });
 };
-  //
+  
 module.exports = { getAllSupervisor, UpdateSupervisor, deleteSupervisor, createSupervisor, getSpecificSupervisor };
