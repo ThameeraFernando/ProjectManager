@@ -550,20 +550,20 @@ const AppProvider = ({ children }) => {
       const { membergroupID, memberTopic } = state;
       let groupID = membergroupID;
       let topic = memberTopic;
-      let supervisorEmail = email;
-      let supervisorName = name;
-      const studentCoReequest = await authFetch.post("/requests", {
+      let coSupervisorEmail = email;
+      let coSupervisorName = name;
+      const studentCoRequest = await authFetch.post("/corequests", {
         groupID,
-        supervisorEmail,
-        supervisorName,
+        coSupervisorEmail,
+        coSupervisorName,
         topic,
       });
-      dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
+      //  dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
     } catch (error) {
-      dispatch({
-        type: GET_COSUPERVISOR_REQUEST_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+      // dispatch({
+      //   type: GET_COSUPERVISOR_REQUEST_ERROR,
+      //   payload: { msg: error.response.data.msg },
+      // });
     }
   };
 

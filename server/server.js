@@ -6,13 +6,15 @@ const errorHandler = require("./middleware/error-handler");
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require("./Routes/userRoutes");
 const submissionRouter = require("./Routes/submissionRoute");
-const requestRouter = require("./Routes/requestRoutes")
+const requestRouter = require("./Routes/requestRoutes");
 
 const supervisorRouter = require("./Routes/supervisorRoutes");
 
 const studentRouter = require("./Routes/studentRoute");
 
 const fileRouter = require("./Routes/docRoutes");
+
+const CoRequestRouter = require("./Routes/coRequestRoutes");
 
 const dotenv = require("dotenv");
 const morgan = require("morgan");
@@ -51,6 +53,7 @@ app.use("/api/v1/supervisor", supervisorRouter);
 app.use("/api/v1/files", fileRouter);
 app.use("/api/v1/submissions", submissionRouter);
 app.use("/api/v1/requests", requestRouter);
+app.use("/api/v1/corequests", CoRequestRouter); //coSupervisor request
 
 //student routes
 app.use("/api/v1/students", studentRouter);
