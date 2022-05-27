@@ -75,9 +75,44 @@ const updateTopic = async (req, res) => {
   res.status(StatusCodes.OK).json({ groups });
 };
 
+//by supervisor
+const updateSupervisor = async (req, res) => {
+  const { groupID: Gid } = req.params;
+  const { supervisor } = req.body;
+  // console.log(supervisor);
+
+  if (!Gid || !supervisor) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const groups = await Groups.findOne({ groupID: Gid });
+
+  groups.supervisor = supervisor;
+
+  await groups.save();
+
+  res.status(StatusCodes.OK).json({ groups });
+};
+
+const getSupervisorGroup = async (req,res)=>{
+  const { groupID:supervisor } = req.params;
+ 
+  console.log(supervisor);
+
+  if (!supervisor) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const group = await Groups.findOne({ supervisor: supervisor });
+
+  res.status(StatusCodes.OK).json({ group });
+}
+
 module.exports = {
   groupRegister,
   getAllStudentGroups,
   getGroupRegister,
   updateTopic,
+  updateSupervisor,
+  getSupervisorGroup
 };

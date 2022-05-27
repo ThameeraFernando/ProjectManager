@@ -62,6 +62,12 @@ import {
   STUDENT_SUPERVISOR_REQUEST_ERROR,
   GET_ALL_COSUPERVISORS_BEGIN,
   GET_ALL_COSUPERVISORS_SUCCESS,
+  REQUEST_FOR_SUPERVISOR_SUCCESS,
+  ACCEPT_REQUEST_SUCCESS,
+  ACCEPT_REQUEST_ERROR,
+  DECLINED_REQUEST_SUCCESS,
+  GET_SUPERVISOR_GROUP_BEGIN,
+  GET_SUPERVISOR_GROUP_SUCCESS,
   STUDENT_REQUEST_STATUS,
   GET_COSUPERVISOR_REQUEST_BEGIN,
   GET_COSUPERVISOR_REQUEST_SUCCESS,
@@ -70,6 +76,7 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_BEGIN,
   STUDENT_SUPERVISOR_EDIT_TOPIC_SUCCESS,
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -361,9 +368,11 @@ const reducer = (state, action) => {
   }
   if (action.type === SET_UPDATE_SUPERVISE) {
     return {
-      ...state,
-      isEditing: true,
-      editSuperviseId: action.payload.id,
+        ...state,
+        isEditing: true,
+        editSuperviseId: action.payload._id,
+        specificSupervise: action.payload
+
     };
   }
 
@@ -379,7 +388,9 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       isLoading: false,
-      alertText: "Updated",
+      alertText: 'Updated',
+      isEditing:false
+
     };
   }
   if (action.type === UPDATE_SUPERVISE_ERROR) {
@@ -389,6 +400,7 @@ const reducer = (state, action) => {
       alertType: "danger",
       showAlert: true,
       alertText: action.payload.msg,
+      isEditing:false
     };
   }
 
@@ -627,12 +639,62 @@ const reducer = (state, action) => {
     };
   }
 
+  //get student requests in supervisor dashboard
+  if (action.type === REQUEST_FOR_SUPERVISOR_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      studentRequests: action.payload.request,
+    };
+  }
+
+  //supervisor accept requests
+  if (action.type === ACCEPT_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "success",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === ACCEPT_REQUEST_ERROR) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === DECLINED_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "success",
+      alertText: action.payload.msg,
+    };
+  }
+
+  //get supervisor group(supervisor dashboard)
+  if (action.type === GET_SUPERVISOR_GROUP_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_SUPERVISOR_GROUP_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      supervisorGroup: action.payload.group,
+    };
+  }
   //get CO-SUPERVISOR request from student
   if (action.type === STUDENT_COSUPERVISOR_REQUEST_SUCCESS) {
     return {
       ...state,
       isLoading: false,
       requestCoGroups: action.payload.requestCoGroups,
+
     };
   }
 

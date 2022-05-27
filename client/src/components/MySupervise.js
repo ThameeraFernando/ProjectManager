@@ -11,7 +11,7 @@ import { GrValidate } from "react-icons/gr";
 import Alert from "./Alert";
 
 
-const MySupervise = ({_id, name, type, email, availability, field }) => {
+const MySupervise = ({_id, name, type, email, availability, field, count }) => {
   const { setEditSupervise, deleteSupervise, user, showAlert } = useAppContext();
   return (
     <Wrapper>
@@ -30,13 +30,14 @@ const MySupervise = ({_id, name, type, email, availability, field }) => {
           <SupervisorInfo icon={<MdEmail />} text={availability} />
           <SupervisorInfo icon={<MdEmail />} text={field} />
           <SupervisorInfo icon={<BsFillBagCheckFill />} text={type} />
+          <SupervisorInfo icon={<BsFillBagCheckFill />} text={count} />
         </div>
 
         <footer>
           <Link
             to='/supervise'
             className="btn edit-btn"
-            onClick={() => {setEditSupervise(_id) }}
+            onClick={() => {setEditSupervise({_id, name, type, email, availability, field, count }) }}
           >
             Edit
           </Link>

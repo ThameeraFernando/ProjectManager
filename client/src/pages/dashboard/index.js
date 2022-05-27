@@ -21,6 +21,7 @@ import AddSubmissions from "./AddSubmissions";
 import StudentResearchRequest from "./StudentResearchRequest";
 import CoSupervisors from "./CoSupervisors";
 import SupervisorHome from "./SupervisorHome";
+import SupervisorGroup from "./SupervisorGroup";
 
 
 export {
@@ -44,6 +45,7 @@ export {
   Supervise,
   StudentResearchRequest,
   CoSupervisors,
-  SupervisorHome
+  SupervisorHome,
+  SupervisorGroup
 
 };
