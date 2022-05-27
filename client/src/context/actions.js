@@ -107,14 +107,15 @@ export const STUDENT_SUPERVISOR_REQUEST_SUCCESS =
 export const STUDENT_SUPERVISOR_REQUEST_ERROR =
   "STUDENT_SUPERVISOR_REQUEST_ERROR";
 
+//co-supervisor group details
+export const STUDENT_COSUPERVISOR_REQUEST_SUCCESS =
+  "STUDENT_COSUPERVISOR_REQUEST_SUCCESS";
+
 //delete a submission
 export const DELETE_A_SUBMISSION = "CREATE_A_SUBMISSION_END";
 
 //view supervisor
 export const SET_VIEW_SUPERVISOR = "SET_VIEW_SUPERVISOR";
 
-
 //display success upload alert
 export const DISPLAY_UPLOAD_SUCCESS_ALERT = "DISPLAY_UPLOAD_SUCCESS_ALERT";
-
-

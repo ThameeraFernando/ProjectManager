@@ -1,55 +1,43 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppContext } from "../context/appContext";
+import { useEffect } from "react";
 import Loading from "./Loading";
-import StudentResearchCoReq from "./Supervisor";
+import StudentResearchCoReq from "./StudentResearchCoReq";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const StudentResearchCoReqContanier = () => {
-  const {
-    getAllSupervisor,
-    totalSupervisors,
-    supervisors,
-    totalUsers,
-    isLoading,
-    requestGroups,
-  } = useAppContext();
+  const { getRequestCoSupervisor, requestCoGroups, isLoading } =
+    useAppContext();
 
   useEffect(() => {
-    getAllSupervisor();
+    getRequestCoSupervisor();
   }, []);
 
   if (isLoading) {
     return <Loading center />;
   }
-  if (supervisors.length === 0) {
+
+  if (requestCoGroups.length === 0) {
     return (
       <Wrapper>
-        <h2>No Users to display.</h2>
+        <h2>No Requestes to display...</h2>
       </Wrapper>
     );
   }
 
   return (
-    <Wrapper>
-      <h4>
-        {totalSupervisors} Supervisor{supervisors.length > 1 && "s"}
-      </h4>
+    <>
       <div className="jobs">
-        {supervisors.map((supervisor) => {
+        {requestCoGroups.map((requestCoGroup) => {
           return (
             <StudentResearchCoReq
-              key={supervisors._id}
-              name={supervisor.name}
-              type={supervisor.type}
-              email={supervisor.email}
-              availability={supervisor.availability}
-              field={supervisor.field}
-              status={requestGroups.status}
+              key={requestCoGroup._id}
+              {...requestCoGroup}
             />
           );
         })}
       </div>
-    </Wrapper>
+    </>
   );
 };
 

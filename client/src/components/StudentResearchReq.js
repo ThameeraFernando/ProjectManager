@@ -32,13 +32,13 @@ const StudentResearchReq = ({
   let isRejected;
 
   if (status === "pending") {
-    isRejected = false;
-    statusText = "your requst is still pending";
+    isRejected = true;
+    statusText = "** your supervisor request is still pending **";
   } else if (status === "accepted") {
-    statusText = "your requst accept";
+    statusText = "your supervisor request accepted";
     isRejected = true;
   } else {
-    statusText = "your requst rejected";
+    statusText = "your requst is rejected try another topic";
     isRejected = false;
   }
 
@@ -108,7 +108,7 @@ const StudentResearchReq = ({
           />
 
           <div className="btn-container">
-            <button className="btn btn-block" type="submit" hidden={false}>
+            <button className="btn btn-block" type="submit" hidden={isRejected}>
               Re-submit Topic
             </button>
           </div>

@@ -1,11 +1,16 @@
 import React from "react";
-import { StudentResearchReqContainer, SearchContainer } from "../../components";
+import {
+  StudentResearchReqContainer,
+  SearchContainer,
+  StudentResearchCoReqContanier,
+} from "../../components";
 
 const StudentResearchRequest = () => {
   return (
     <>
       <SearchContainer />
       <StudentResearchReqContainer />
+      <StudentResearchCoReqContanier />
     </>
   );
 };
