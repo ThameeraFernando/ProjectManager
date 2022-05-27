@@ -23,6 +23,7 @@ const StudentResearchReq = ({
     supervisors,
     setEditTopic,
     editTopic,
+    editTopicRequest,
   } = useAppContext();
   // const [statusText, setStatusText] = useState("");
 
@@ -46,6 +47,7 @@ const StudentResearchReq = ({
     e.preventDefault();
     const topic = newTopic;
     editTopic({ groupID, topic });
+    editTopicRequest({ groupID, topic });
     console.log(groupID, topic);
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import CoSupervisorInfo from "./CoSupervisorInfo";
 import { Link } from "react-router-dom";
@@ -10,8 +10,23 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
 
 const CoSupervisor = (props) => {
-  const { name, type, email, availability, field, reqNewStatus } = props;
-  const { requestCoSupervisor } = useAppContext();
+  const { name, type, email, availability, field } = props;
+  const {
+    requestCoSupervisor,
+    getRequestCoSupervisor,
+    requestGroups,
+    requestCoGroups,
+    getRequestSupervisor,
+  } = useAppContext();
+
+  useEffect(() => {
+    getRequestCoSupervisor();
+    getRequestSupervisor();
+  }, []);
+
+  const status = requestGroups.map((group) => {
+    return group.status;
+  });
 
   return (
     <Wrapper>
@@ -32,13 +47,19 @@ const CoSupervisor = (props) => {
         </div>
 
         <footer>
-          <button
-            type="button"
-            className="btn edit-btn"
-            onClick={() => requestCoSupervisor(email, name)}
-          >
-            Request
-          </button>
+          {status[0] === "accepted" && (
+            <>
+              {!requestCoGroups.length >= 1 && (
+                <button
+                  type="button"
+                  className="btn edit-btn"
+                  onClick={() => requestCoSupervisor(email, name)}
+                >
+                  Request
+                </button>
+              )}
+            </>
+          )}
         </footer>
       </div>
     </Wrapper>
