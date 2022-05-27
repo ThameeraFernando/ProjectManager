@@ -13,7 +13,7 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Supervisor" ||
     user.type === "Panel Member"
   ) {
-    NewLinks = links.filter((link) => {
+    NewLinks = NewLinks.filter((link) => {
       if (
         link.path !== "all-users" &&
         link.path !== "upload-docs" &&
@@ -54,7 +54,8 @@ const NavLinks = ({ toggleSideBar }) => {
       if (
         link.path !== "studentrequsets" &&
         link.path !== "reportsubmissions" &&
-        link.path !== "supervisorhome"
+        link.path !== "supervisorhome" &&
+        link.path !== "supervisorgroup"
       ) {
         return link;
       }

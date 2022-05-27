@@ -108,6 +108,12 @@ const links = [
     path: "supervisorhome",
     icon: <AiTwotoneHome />,
   },
+  {
+    id: 16,
+    text: "Supervisor Group",
+    path: "supervisorgroup",
+    icon: <FaUsers />,
+  },
 ];
 
 export default links;

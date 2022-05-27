@@ -24,7 +24,9 @@ import {
   AddSubmissions,
   StudentResearchRequest,
   CoSupervisors,
-  SupervisorHome
+  SupervisorHome,
+  SupervisorGroup,
+
 
 } from "./pages/dashboard/index";
 function App() {
@@ -62,6 +64,7 @@ function App() {
               <Route path="co-supervisors" element={<CoSupervisors />} />
 
               <Route path="supervisorhome" element={<SupervisorHome />} />
+              <Route path="supervisorgroup" element={<SupervisorGroup />} />
 
               <Route
                 path="student-research-request"

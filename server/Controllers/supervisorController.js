@@ -57,25 +57,31 @@ const getSpecificSupervisor = async (req, res) => {
 const UpdateSupervisor = async (req, res) => {
 
     const { id: sid } = req.params;
-    const {name,email,field,type} = req.body 
+    const {name,email,field,type,count} = req.body 
     
-    if(!type || !field ){
-        throw new BadRequestError('Please provide all values')
-    }
+    // if(!type || !field ){
+    //     throw new BadRequestError('Please provide all values')
+    // }
 
     const supervise = await Supervisor.findOne({_id:sid})
 
     if(!supervise){
         throw new NotFoundError(`No supervisor with id :${sid}`)
     }
+
+    const isRequested = await Request.find({supervisorEmail:email}) 
+    // console.log(isRequested);    
+    if(isRequested.length>0){
+        return res.status(StatusCodes.METHOD_NOT_ALLOWED).send({ msg: "You are requested!" });
+    }else{
+        const updateSupervise = await Supervisor.findOneAndUpdate({_id:sid},req.body,{
+            new: true,
+            runValidators:true
+        })
     
-    const updateSupervise = await Supervisor.findOneAndUpdate({_id:sid},req.body,{
-        new: true,
-        runValidators:true
-    })
-
-    res.status(StatusCodes.OK).json({updateSupervise})
-
+        res.status(StatusCodes.OK).json({updateSupervise})
+    }
+    
 };
 
 

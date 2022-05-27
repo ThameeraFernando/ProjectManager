@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -8,11 +8,12 @@ import StudentResearchReqInfo from "./StudentResearchReqInfo";
 import { Alert, FormRow } from "./index";
 
 const StudentResearchReq = ({
-  groupID,
-  supervisorEmail,
-  supervisorName,
-  topic,
-  status,
+_id,
+groupID,
+status,
+supervisorEmail,
+supervisorName,
+topic,
 }) => {
   const {
     isLoading,
@@ -23,37 +24,46 @@ const StudentResearchReq = ({
     supervisors,
     setEditTopic,
     editTopic,
+    rejectStudentGroupReq,
+    acceptStudentGroupReq,
+
   } = useAppContext();
-  // const [statusText, setStatusText] = useState("");
 
-  const [newTopic, setNewTopic] = useState("");
+  const [isAccepted, setIsAccepted] = useState(false);
+  const [isRejected, setIsRejected] = useState(false);
+  
+  useEffect(() => {
+    if(status==='accepted'){
+      setIsAccepted(true)
+    }
+    if(status==='declined'){
+      setIsRejected(true)
+    }
+  }, []);
+  
+ 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // const topic = newTopic;
+  //   // editTopic({ groupID, topic });
+  //   // console.log(groupID, topic);
+  // };
 
-  let statusText = "";
-  let isRejected;
-
-  if (status === "pending") {
-    isRejected = true;
-    statusText = "your requst is still pending";
-  } else if (status === "accepted") {
-    statusText = "your requst accept";
-    isRejected = true;
-  } else {
-    statusText = "your requst rejected";
-    isRejected = false;
+  const handleAccept = (e) => {
+    e.preventDefault()
+    acceptStudentGroupReq(groupID,_id)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const topic = newTopic;
-    editTopic({ groupID, topic });
-    console.log(groupID, topic);
-  };
+  const handleReject =(e)  => {
+    rejectStudentGroupReq(_id)
+  }
+
 
   return (
     <Wrapper>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form">
         <br />
-        <h5>{statusText}</h5>
+        <h5>Request</h5>
         {showAlert && <Alert />}
 
         <div className="form-center">
@@ -85,31 +95,25 @@ const StudentResearchReq = ({
           />
           <FormRow
             type="text"
-            labelText="Super name"
+            labelText="Supervisor name"
             name="itNumTwo"
             value={supervisorName}
             isReadOnly={true}
           />
           <FormRow
             type="text"
-            labelText="suoer email"
+            labelText="supervisor email"
             name="itNumTwo"
             value={supervisorEmail}
             isReadOnly={true}
           />
 
-          <FormRow
-            type="text"
-            labelText="Re-enter Topic"
-            name="newTopic"
-            value={newTopic}
-            isHidden={isRejected}
-            handleChange={(e) => setNewTopic(e.target.value)}
-          />
-
           <div className="btn-container">
-            <button className="btn btn-block" type="submit" hidden={isRejected}>
-              Re-submit Topic
+            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} disabled={isAccepted}>
+              Accept
+            </button>
+            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject} disabled={isRejected}>
+              Reject
             </button>
           </div>
         </div>
