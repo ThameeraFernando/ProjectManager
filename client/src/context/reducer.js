@@ -66,6 +66,7 @@ import {
   GET_COSUPERVISOR_REQUEST_BEGIN,
   GET_COSUPERVISOR_REQUEST_SUCCESS,
   GET_COSUPERVISOR_REQUEST_ERROR,
+  STUDENT_COSUPERVISOR_REQUEST_SUCCESS,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -573,6 +574,15 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       requestGroups: action.payload.requestGroups,
+    };
+  }
+
+  //get CO-SUPERVISOR request from student
+  if (action.type === STUDENT_COSUPERVISOR_REQUEST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      requestCoGroups: action.payload.requestCoGroups,
     };
   }
 

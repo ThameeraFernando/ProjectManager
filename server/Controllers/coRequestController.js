@@ -20,23 +20,24 @@ const createCoRequest = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ corequest });
 };
 
-const coSupervisorGetRequest = async (req, res) => {
-  let { sid: supervisorEmail } = req.params;
-
-  if (!supervisorEmail) {
+//get student co-supervisor group
+const studentGetCoRequest = async (req, res) => {
+  let { gid: groupID } = req.params;
+  console.log(groupID);
+  if (!groupID) {
     throw new BadRequestError("Please provide all values");
   }
+  const requestCoGroups = await CoRequest.find({ groupID });
 
-  const request = await Request.find({ supervisorEmail });
-
-  if (request.length <= 0) {
-    res.status(StatusCodes.NOT_FOUND).json({ msg: "Group Request not found" });
-  } else {
-    res.status(StatusCodes.OK).json({ request });
-  }
+  // if (requestGroups.length <= 0) {
+  //   res.status(StatusCodes.NOT_FOUND).json({ msg: "You have no requests" });
+  // } else {
+  console.log(requestCoGroups);
+  res.status(StatusCodes.OK).json({ requestCoGroups });
+  //}
 };
 
 module.exports = {
   createCoRequest,
-  coSupervisorGetRequest,
+  studentGetCoRequest,
 };

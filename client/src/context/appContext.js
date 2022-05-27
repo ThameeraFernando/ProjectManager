@@ -68,6 +68,7 @@ import {
   GET_COSUPERVISOR_REQUEST_BEGIN,
   GET_COSUPERVISOR_REQUEST_SUCCESS,
   GET_COSUPERVISOR_REQUEST_ERROR,
+  STUDENT_COSUPERVISOR_REQUEST_SUCCESS,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -114,6 +115,7 @@ export const initialState = {
 
   specificSupervise: [],
   requestGroups: [],
+  requestCoGroups: [],
   coSupervisors: [],
   totalCoSupervisors: [],
   studentReqStatus: "",
@@ -583,6 +585,23 @@ const AppProvider = ({ children }) => {
     } catch (error) {}
   };
 
+  //get request co-supervisor from student
+
+  const getRequestCoSupervisor = async () => {
+    getGroups();
+
+    try {
+      const response = await authFetch.get(
+        `/corequests/${state.membergroupID}`
+      );
+      const { requestCoGroups } = response.data;
+      dispatch({
+        type: STUDENT_COSUPERVISOR_REQUEST_SUCCESS,
+        payload: { requestCoGroups },
+      });
+    } catch (error) {}
+  };
+
   //set edit topic when rejected
 
   const editTopic = async ({ groupID, topic }) => {
@@ -717,6 +736,7 @@ const AppProvider = ({ children }) => {
         editTopic,
         getAllCoSupervisor,
         requestCoSupervisor,
+        getRequestCoSupervisor,
       }}
     >
       {children}
