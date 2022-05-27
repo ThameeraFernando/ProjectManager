@@ -23,7 +23,7 @@ const createCoRequest = async (req, res) => {
 //get student co-supervisor group
 const studentGetCoRequest = async (req, res) => {
   let { gid: groupID } = req.params;
-  console.log(groupID);
+
   if (!groupID) {
     throw new BadRequestError("Please provide all values");
   }
@@ -32,7 +32,7 @@ const studentGetCoRequest = async (req, res) => {
   // if (requestGroups.length <= 0) {
   //   res.status(StatusCodes.NOT_FOUND).json({ msg: "You have no requests" });
   // } else {
-  console.log(requestCoGroups);
+
   res.status(StatusCodes.OK).json({ requestCoGroups });
   //}
 };

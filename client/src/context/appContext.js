@@ -69,6 +69,9 @@ import {
   GET_COSUPERVISOR_REQUEST_SUCCESS,
   GET_COSUPERVISOR_REQUEST_ERROR,
   STUDENT_COSUPERVISOR_REQUEST_SUCCESS,
+  STUDENT_SUPERVISOR_EDIT_TOPIC_BEGIN,
+  STUDENT_SUPERVISOR_EDIT_TOPIC_SUCCESS,
+  STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -457,11 +460,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  //student group reg
+  //student group register
 
   const groupReg = async ({ groupDetails }) => {
     dispatch({ type: STUDENT_GROUP_BEGIN });
-    console.log(groupDetails);
     try {
       const group = await authFetch.post(
         "/students/groupRegister",
@@ -546,12 +548,13 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+    clearAlert();
   };
 
   //request co-supervisor
   const requestCoSupervisor = async (email, name) => {
     getGroups();
-    //dispatch({ type: GET_COSUPERVISOR_REQUEST_BEGIN });
+    dispatch({ type: GET_COSUPERVISOR_REQUEST_BEGIN });
     try {
       const { membergroupID, memberTopic } = state;
       let groupID = membergroupID;
@@ -565,18 +568,20 @@ const AppProvider = ({ children }) => {
         topic,
       });
 
-      //  dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
+      dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
     } catch (error) {
-      // dispatch({
-      //   type: GET_COSUPERVISOR_REQUEST_ERROR,
-      //   payload: { msg: error.response.data.msg },
-      // });
+      dispatch({
+        type: GET_COSUPERVISOR_REQUEST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
+    clearAlert();
   };
 
   //get request supervisor from student
 
   const getRequestSupervisor = async () => {
+    dispatch({ type: STUDENT_SUPERVISOR_REQUEST_BEGIN });
     getGroups();
 
     try {
@@ -586,8 +591,9 @@ const AppProvider = ({ children }) => {
         type: STUDENT_SUPERVISOR_REQUEST_SUCCESS,
         payload: { requestGroups },
       });
-      console.log(state.membergroupID);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //get request co-supervisor from student
@@ -610,19 +616,25 @@ const AppProvider = ({ children }) => {
   //set edit topic when rejected this will be updated in Group collection
 
   const editTopic = async ({ groupID, topic }) => {
-    console.log(groupID, topic);
+    dispatch({ type: STUDENT_SUPERVISOR_EDIT_TOPIC_BEGIN });
     try {
       const { response } = await authFetch.patch(
         `/students/groupRegister/${groupID}`,
         { topic }
       );
-    } catch (error) {}
+      dispatch({ type: STUDENT_SUPERVISOR_EDIT_TOPIC_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   //set edit topic when rejected this will be updated in request collection
 
   const editTopicRequest = async ({ groupID, topic }) => {
-    console.log(groupID, topic);
     try {
       const { response } = await authFetch.patch(
         `requests/groupRegister/${groupID}`,
@@ -630,18 +642,6 @@ const AppProvider = ({ children }) => {
       );
     } catch (error) {}
   };
-
-  // //student group request check
-  // const getRequestGroupDetails = async () => {
-  //   getGroups();
-  //   const response = await authFetch.get(
-  //     `/requests/groupdetails/${state.membergroupID}`
-  //   );
-  //   const { rouStatus } = response.data;
-  //   return rouStatus;
-
-  //   // dispatch({ type: STUDENT_REQUEST_STATUS, payload: { rouStatus } });
-  // };
 
   //get all Student Groups
   const getAllStudents = async () => {

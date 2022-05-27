@@ -65,7 +65,7 @@ const StudnetGroup = () => {
       return;
     }
 
-    const isRegister = false;
+    const isRegister = true;
 
     const groupDetails = {
       groupID,
@@ -141,7 +141,7 @@ const StudnetGroup = () => {
             labelText="member Two Email"
             name="emailTwo"
             value={memberemailTwo || emailTwo}
-            iisReadOnly={memberisRegister}
+            isReadOnly={memberisRegister}
             handleChange={(e) => setEmailTwo(e.target.value)}
           />
 
@@ -197,7 +197,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="Supervisor"
             name="supervisor"
-            isReadOnly={memberisRegister}
+            isReadOnly={true}
             value={supervisor}
             handleChange={(e) => setSupervisor(e.target.value)}
           />
@@ -207,7 +207,7 @@ const StudnetGroup = () => {
             type="text"
             labelText="Co-supervisorour"
             name="coSupervisor"
-            isReadOnly={memberisRegister}
+            isReadOnly={true}
             value={coSupervisor}
             handleChange={(e) => setCoSupervisor(e.target.value)}
           />
