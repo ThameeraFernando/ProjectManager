@@ -26,7 +26,7 @@ topic,
     editTopic,
     rejectStudentGroupReq,
     acceptStudentGroupReq,
-
+    editTopicRequest,
   } = useAppContext();
 
   const [isAccepted, setIsAccepted] = useState(false);
@@ -54,9 +54,30 @@ topic,
     acceptStudentGroupReq(groupID,_id)
   }
 
+
   const handleReject =(e)  => {
     rejectStudentGroupReq(_id)
   }
+
+
+  if (status === "pending") {
+    isRejected = true;
+    statusText = "** your supervisor request is still pending **";
+  } else if (status === "accepted") {
+    statusText = "your supervisor request accepted";
+    isRejected = true;
+  } else {
+    statusText = "your requst is rejected try another topic";
+    isRejected = false;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const topic = newTopic;
+    editTopic({ groupID, topic });
+    editTopicRequest({ groupID, topic });
+    console.log(groupID, topic);
+  };
 
 
   return (

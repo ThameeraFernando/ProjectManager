@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import SearchContainer from "../../components/SearchContainer";
 import SupervisorContainer from "../../components/SupervisorContainer";
 import { useAppContext } from "../../context/appContext";

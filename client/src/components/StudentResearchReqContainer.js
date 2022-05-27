@@ -6,8 +6,7 @@ import StudentResearchReq from "./StudentResearchReq";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const StudentResearchReqContainer = () => {
-  const { getRequestSupervisor, requestGroups, isLoading, getGroups } =
-    useAppContext();
+  const { getRequestSupervisor, requestGroups, isLoading } = useAppContext();
 
   useEffect(() => {
     getRequestSupervisor();
@@ -20,7 +19,7 @@ const StudentResearchReqContainer = () => {
   if (requestGroups.length === 0) {
     return (
       <Wrapper>
-        <h2>No Requestes to display...</h2>
+        <h5>No Supervisor Requestes to display...</h5>
       </Wrapper>
     );
   }
