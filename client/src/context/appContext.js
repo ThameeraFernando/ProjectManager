@@ -474,6 +474,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+    clearAlert();
   };
 
   //get specific student group
@@ -585,6 +586,7 @@ const AppProvider = ({ children }) => {
         type: STUDENT_SUPERVISOR_REQUEST_SUCCESS,
         payload: { requestGroups },
       });
+      console.log(state.membergroupID);
     } catch (error) {}
   };
 
