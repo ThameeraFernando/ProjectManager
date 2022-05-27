@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -8,12 +8,11 @@ import StudentResearchReqInfo from "./StudentResearchReqInfo";
 import { Alert, FormRow } from "./index";
 
 const StudentResearchReq = ({
-_id,
-groupID,
-status,
-supervisorEmail,
-supervisorName,
-topic,
+  groupID,
+  supervisorEmail,
+  supervisorName,
+  topic,
+  status,
 }) => {
   const {
     isLoading,
@@ -24,41 +23,14 @@ topic,
     supervisors,
     setEditTopic,
     editTopic,
-    rejectStudentGroupReq,
-    acceptStudentGroupReq,
     editTopicRequest,
   } = useAppContext();
+  // const [statusText, setStatusText] = useState("");
 
-  const [isAccepted, setIsAccepted] = useState(false);
-  const [isRejected, setIsRejected] = useState(false);
-  
-  useEffect(() => {
-    if(status==='accepted'){
-      setIsAccepted(true)
-    }
-    if(status==='declined'){
-      setIsRejected(true)
-    }
-  }, []);
-  
- 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // const topic = newTopic;
-  //   // editTopic({ groupID, topic });
-  //   // console.log(groupID, topic);
-  // };
+  const [newTopic, setNewTopic] = useState("");
 
-  const handleAccept = (e) => {
-    e.preventDefault()
-    acceptStudentGroupReq(groupID,_id)
-  }
-
-
-  const handleReject =(e)  => {
-    rejectStudentGroupReq(_id)
-  }
-
+  let statusText = "";
+  let isRejected;
 
   if (status === "pending") {
     isRejected = true;
@@ -79,12 +51,11 @@ topic,
     console.log(groupID, topic);
   };
 
-
   return (
     <Wrapper>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <br />
-        <h5>Request</h5>
+        <h5>{statusText}</h5>
         {showAlert && <Alert />}
 
         <div className="form-center">
@@ -116,25 +87,31 @@ topic,
           />
           <FormRow
             type="text"
-            labelText="Supervisor name"
+            labelText="Super name"
             name="itNumTwo"
             value={supervisorName}
             isReadOnly={true}
           />
           <FormRow
             type="text"
-            labelText="supervisor email"
+            labelText="suoer email"
             name="itNumTwo"
             value={supervisorEmail}
             isReadOnly={true}
           />
 
+          <FormRow
+            type="text"
+            labelText="Re-enter Topic"
+            name="newTopic"
+            value={newTopic}
+            isHidden={isRejected}
+            handleChange={(e) => setNewTopic(e.target.value)}
+          />
+
           <div className="btn-container">
-            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} disabled={isAccepted}>
-              Accept
-            </button>
-            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject} disabled={isRejected}>
-              Reject
+            <button className="btn btn-block" type="submit" hidden={isRejected}>
+              Re-submit Topic
             </button>
           </div>
         </div>
