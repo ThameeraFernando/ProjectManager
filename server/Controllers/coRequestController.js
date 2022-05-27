@@ -1,4 +1,4 @@
-const CoRequest = require("../modal/Request");
+const CoRequest = require("../modal/CoRequest");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors/index");
 

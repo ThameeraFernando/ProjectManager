@@ -9,7 +9,7 @@ const requestCoSchema = new mongoose.Schema(
     },
     coSupervisorEmail: {
       type: String,
-      required: [true, "please provide supervisor's email."],
+      required: [true, "please provide co-supervisor's email."],
       trim: true,
       validate: {
         validator: validator.isEmail,
@@ -20,7 +20,7 @@ const requestCoSchema = new mongoose.Schema(
 
     coSupervisorName: {
       type: String,
-      required: [true, "please provide supervisor's Name."],
+      required: [true, "please provide co-supervisor's Name."],
     },
     topic: {
       type: String,
@@ -36,5 +36,5 @@ const requestCoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const CoRequest = mongoose.model("CoRequest", requestCoSchema);
+const CoRequest = mongoose.model("corequest", requestCoSchema);
 module.exports = CoRequest;

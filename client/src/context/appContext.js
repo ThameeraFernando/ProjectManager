@@ -545,7 +545,7 @@ const AppProvider = ({ children }) => {
   //request co-supervisor
   const requestCoSupervisor = async (email, name) => {
     getGroups();
-    dispatch({ type: GET_COSUPERVISOR_REQUEST_BEGIN });
+    //dispatch({ type: GET_COSUPERVISOR_REQUEST_BEGIN });
     try {
       const { membergroupID, memberTopic } = state;
       let groupID = membergroupID;
@@ -558,6 +558,7 @@ const AppProvider = ({ children }) => {
         coSupervisorName,
         topic,
       });
+
       //  dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
     } catch (error) {
       // dispatch({
