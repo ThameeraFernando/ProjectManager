@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import SupervisorInfo from "./SupervisorInfo";
 import { Link } from "react-router-dom";
@@ -11,7 +11,12 @@ import { GrValidate } from "react-icons/gr";
 
 const Supervisor = (props) => {
   const { name, type, email, availability, field } = props;
-  const { requestSupervisor } = useAppContext();
+  const { requestSupervisor, getRequestSupervisor, requestGroups } =
+    useAppContext();
+
+  useEffect(() => {
+    getRequestSupervisor();
+  }, []);
 
   return (
     <Wrapper>
@@ -32,13 +37,15 @@ const Supervisor = (props) => {
         </div>
 
         <footer>
-          <button
-            type="button"
-            className="btn edit-btn"
-            onClick={() => requestSupervisor(email, name)}
-          >
-            Request
-          </button>
+          {!requestGroups.length >= 1 && (
+            <button
+              type="button"
+              className="btn edit-btn"
+              onClick={() => requestSupervisor(email, name)}
+            >
+              Request
+            </button>
+          )}
         </footer>
       </div>
     </Wrapper>

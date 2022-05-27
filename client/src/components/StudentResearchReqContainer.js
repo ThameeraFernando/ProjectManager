@@ -6,8 +6,7 @@ import StudentResearchReq from "./StudentResearchReq";
 import Wrapper from "../assets/wrappers/JobsContainer";
 
 const StudentResearchReqContainer = () => {
-  const { getRequestSupervisor, requestGroups, isLoading, getGroups } =
-    useAppContext();
+  const { getRequestSupervisor, requestGroups, isLoading } = useAppContext();
 
   useEffect(() => {
     getRequestSupervisor();

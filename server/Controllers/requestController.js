@@ -20,6 +20,24 @@ const createRequest = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ request });
 };
 
+//topic update
+const topicUpdate = async (req, res) => {
+  const { groupID: Gid } = req.params;
+  const { topic } = req.body;
+  if (!Gid || !topic) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const groupsRequest = await Request.findOne({ groupID: Gid });
+
+  groupsRequest.topic = topic;
+  groupsRequest.status = "pending";
+
+  await groupsRequest.save();
+
+  res.status(StatusCodes.OK).json({ groupsRequest });
+};
+
 const studentGetRequest = async (req, res) => {
   let { gid: groupID } = req.params;
   console.log(groupID);
@@ -107,4 +125,5 @@ module.exports = {
   studentGetRequest,
   supervisorGetRequest,
   getGroupDetails,
+  topicUpdate,
 };

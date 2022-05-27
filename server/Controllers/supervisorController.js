@@ -31,8 +31,10 @@ const createSupervisor = async (req, res) => {
   }
 };
 
+//student
 const getAllSupervisor = async (req, res) => {
-  const supervisors = await Supervisor.find();
+  const { type: worktype } = req.params;
+  const supervisors = await Supervisor.find({ type: worktype });
   res
     .status(StatusCodes.OK)
     .json({ supervisors, totalSupervisors: supervisors.length });

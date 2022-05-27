@@ -6,6 +6,7 @@ import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import StudentResearchCoReqInfo from "./StudentResearchCoReqInfo";
 import { Alert, FormRow } from "./index";
+import { useEffect } from "react";
 
 const StudentResearchCoReq = ({
   groupID,

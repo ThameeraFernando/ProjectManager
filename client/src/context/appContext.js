@@ -183,7 +183,7 @@ const AppProvider = ({ children }) => {
   };
   //login user
   const loginUser = async (currentUser) => {
-    console.log(currentUser);
+    //console.log(currentUser);
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
       const { data } = await axios.post("/api/v1/auth/login", currentUser);
@@ -208,8 +208,8 @@ const AppProvider = ({ children }) => {
   //logout User
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    removeUserFromLocalStorage();
     removeStudentDetailsToLocalStorage();
+    removeUserFromLocalStorage();
   };
   //Axios setup instance
   const authFetch = axios.create({
@@ -417,11 +417,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  //get all supervisor
+  //get all supervisor student
   const getAllSupervisor = async () => {
     dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
+    let sup = "supervisor";
     try {
-      const { data } = await authFetch.get("/supervisor");
+      const { data } = await authFetch.get(
+        `/supervisor/supervisorsdetails/${sup}`
+      );
       const { supervisors, totalSupervisors } = data;
 
       dispatch({
@@ -602,13 +605,25 @@ const AppProvider = ({ children }) => {
     } catch (error) {}
   };
 
-  //set edit topic when rejected
+  //set edit topic when rejected this will be updated in Group collection
 
   const editTopic = async ({ groupID, topic }) => {
     console.log(groupID, topic);
     try {
       const { response } = await authFetch.patch(
         `/students/groupRegister/${groupID}`,
+        { topic }
+      );
+    } catch (error) {}
+  };
+
+  //set edit topic when rejected this will be updated in request collection
+
+  const editTopicRequest = async ({ groupID, topic }) => {
+    console.log(groupID, topic);
+    try {
+      const { response } = await authFetch.patch(
+        `requests/groupRegister/${groupID}`,
         { topic }
       );
     } catch (error) {}
@@ -737,6 +752,7 @@ const AppProvider = ({ children }) => {
         getAllCoSupervisor,
         requestCoSupervisor,
         getRequestCoSupervisor,
+        editTopicRequest,
       }}
     >
       {children}
