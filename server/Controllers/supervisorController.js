@@ -57,8 +57,8 @@ const getSpecificSupervisor = async (req, res) => {
 };
 
 const UpdateSupervisor = async (req, res) => {
-  const { id: sid } = req.params;
-  const { name, email, field, type } = req.body;
+  // const { id: sid } = req.params;
+  // const { name, email, field, type } = req.body;
 
     const { id: sid } = req.params;
     const {name,email,field,type,count} = req.body 
