@@ -18,8 +18,6 @@ const groupRegister = async (req, res) => {
     topic,
   } = req.body;
 
-  console.log(req.body);
-
   if (
     !groupID ||
     !itNumOne ||
@@ -53,7 +51,6 @@ const getGroupRegister = async (req, res) => {
   });
 
   res.status(StatusCodes.OK).json(groups);
-  console.log(groups);
 };
 
 const getAllStudentGroups = async (req, res) => {
@@ -64,7 +61,7 @@ const getAllStudentGroups = async (req, res) => {
 const updateTopic = async (req, res) => {
   const { groupID: Gid } = req.params;
   const { topic } = req.body;
-  console.log(Gid);
+
   if (!Gid || !topic) {
     throw new BadRequestError("Please provide all values");
   }

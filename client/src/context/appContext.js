@@ -65,17 +65,19 @@ import {
   STUDENT_SUPERVISOR_REQUEST_ERROR,
   GET_ALL_COSUPERVISORS_BEGIN,
   GET_ALL_COSUPERVISORS_SUCCESS,
-
-
   REQUEST_FOR_SUPERVISOR_SUCCESS,
   ACCEPT_REQUEST_SUCCESS,
   ACCEPT_REQUEST_ERROR,
   DECLINED_REQUEST_SUCCESS,
   GET_SUPERVISOR_GROUP_BEGIN,
   GET_SUPERVISOR_GROUP_SUCCESS,
-
-
-
+  GET_COSUPERVISOR_REQUEST_BEGIN,
+  GET_COSUPERVISOR_REQUEST_SUCCESS,
+  GET_COSUPERVISOR_REQUEST_ERROR,
+  STUDENT_COSUPERVISOR_REQUEST_SUCCESS,
+  STUDENT_SUPERVISOR_EDIT_TOPIC_BEGIN,
+  STUDENT_SUPERVISOR_EDIT_TOPIC_SUCCESS,
+  STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -97,8 +99,8 @@ export const initialState = {
   deleteUserId: "",
   isUpdate: false,
   isDelete: false,
-  deleteSuperviseId:'',
-  editSuperviseId:'',
+  deleteSuperviseId: "",
+  editSuperviseId: "",
   editTopic: false,
 
   membergroupID: grpID,
@@ -119,14 +121,14 @@ export const initialState = {
   submissions: [],
   supervisors: [],
   totalSupervisors: [],
-
   specificSupervise: [],
   requestGroups: [],
+  requestCoGroups: [],
   coSupervisors: [],
   totalCoSupervisors: [],
-
   studentRequests:[],
   supervisorGroup:[],
+
 };
 
 const AppContext = React.createContext();
@@ -191,7 +193,7 @@ const AppProvider = ({ children }) => {
   };
   //login user
   const loginUser = async (currentUser) => {
-    console.log(currentUser);
+    //console.log(currentUser);
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
       const { data } = await axios.post("/api/v1/auth/login", currentUser);
@@ -216,8 +218,8 @@ const AppProvider = ({ children }) => {
   //logout User
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    removeUserFromLocalStorage();
     removeStudentDetailsToLocalStorage();
+    removeUserFromLocalStorage();
   };
   //Axios setup instance
   const authFetch = axios.create({
@@ -345,7 +347,10 @@ const AppProvider = ({ children }) => {
         field,
         userId,
       });
-      dispatch({ type: SUPERVISE_SUCCESS,payload: { msg: response.data.msg }, });
+      dispatch({
+        type: SUPERVISE_SUCCESS,
+        payload: { msg: response.data.msg },
+      });
     } catch (error) {
       dispatch({
         type: SUPERVISE_ERROR,
@@ -360,21 +365,22 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_SUPERVISE_BEGIN });
     try {
       const response = await axios.get(`/api/v1/supervisor/${uid}`);
-      const supervisor = response.data
+      const supervisor = response.data;
       // console.log(supervisor);
       dispatch({
         type: GET_SUPERVISE_SUCCESS,
-        payload: {supervisor },
+        payload: { supervisor },
       });
     } catch (error) {
       dispatch({
         type: GET_SUPERVISE_ERROR,
         payload: { msg: error.response.data.msg },
-      })
+      });
       // console.log(error);
     }
     clearAlert();
   };
+
   const setEditSupervise = ({_id, name, type, email, availability, field, count }) => {
     dispatch({type:SET_UPDATE_SUPERVISE,payload:{_id, name, type, email, availability, field, count }})
   }
@@ -390,42 +396,48 @@ const AppProvider = ({ children }) => {
 
       dispatch({type: UPDATE_SUPERVISE_SUCCESS})
     } catch (error) {
-        if (error.response.status === 401) return
-          dispatch({
-          type: UPDATE_SUPERVISE_ERROR,
-          payload: { msg: error.response.data.msg },
-        })
+      if (error.response.status === 401) return;
+      dispatch({
+        type: UPDATE_SUPERVISE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
     clearAlert()
     getSupervise(state.user._id)
   }
 
+
   //delete specific supervise
   const nav = useNavigate();
-  const deleteSupervise = async (sid,user) => { 
+  const deleteSupervise = async (sid, user) => {
     dispatch({ type: DELETE_SUPERVISE_BEGIN });
     try {
       const response = await axios.delete(`/api/v1/supervisor/${sid}`);
-      const msg = response.data.msg
+      const msg = response.data.msg;
       console.log(msg);
-      dispatch({ type: DELETE_SUPERVISE_SUCCESS, payload:msg });
-      getSupervise(user)
+      dispatch({ type: DELETE_SUPERVISE_SUCCESS, payload: msg });
+      getSupervise(user);
       nav("/supervisorhome");
     } catch (error) {
       dispatch({
         type: GET_SUPERVISE_ERROR,
         payload: { msg: error.response.data.msg },
-      })
+      });
       console.log(error);
     }
+
     clearAlert()
   }
 
-  //get all supervisor
+
+  //get all supervisor student
   const getAllSupervisor = async () => {
     dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
+    let sup = "supervisor";
     try {
-      const { data } = await authFetch.get("/supervisor");
+      const { data } = await authFetch.get(
+        `/supervisor/supervisorsdetails/${sup}`
+      );
       const { supervisors, totalSupervisors } = data;
 
       dispatch({
@@ -438,7 +450,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   //get all co-supervisor
   const getAllCoSupervisor = async () => {
     dispatch({ type: GET_ALL_COSUPERVISORS_BEGIN });
@@ -448,7 +459,7 @@ const AppProvider = ({ children }) => {
         `/supervisor/cosupervisors/${cosup}`
       );
       const { coSupervisors, totalCoSupervisors } = data;
-      console.log(coSupervisors);
+
       dispatch({
         type: GET_ALL_COSUPERVISORS_SUCCESS,
         payload: { coSupervisors, totalCoSupervisors },
@@ -459,12 +470,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
-  //student group reg
+  //student group register
 
   const groupReg = async ({ groupDetails }) => {
     dispatch({ type: STUDENT_GROUP_BEGIN });
-    console.log(groupDetails);
     try {
       const group = await authFetch.post(
         "/students/groupRegister",
@@ -477,6 +486,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+    clearAlert();
   };
 
   //get specific student group
@@ -548,11 +558,40 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+    clearAlert();
+  };
+
+  //request co-supervisor
+  const requestCoSupervisor = async (email, name) => {
+    getGroups();
+    dispatch({ type: GET_COSUPERVISOR_REQUEST_BEGIN });
+    try {
+      const { membergroupID, memberTopic } = state;
+      let groupID = membergroupID;
+      let topic = memberTopic;
+      let coSupervisorEmail = email;
+      let coSupervisorName = name;
+      const studentCoRequest = await authFetch.post("/corequests", {
+        groupID,
+        coSupervisorEmail,
+        coSupervisorName,
+        topic,
+      });
+
+      dispatch({ type: GET_COSUPERVISOR_REQUEST_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: GET_COSUPERVISOR_REQUEST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   //get request supervisor from student
 
   const getRequestSupervisor = async () => {
+    dispatch({ type: STUDENT_SUPERVISOR_REQUEST_BEGIN });
     getGroups();
 
     try {
@@ -562,16 +601,53 @@ const AppProvider = ({ children }) => {
         type: STUDENT_SUPERVISOR_REQUEST_SUCCESS,
         payload: { requestGroups },
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //get request co-supervisor from student
+
+  const getRequestCoSupervisor = async () => {
+    getGroups();
+
+    try {
+      const response = await authFetch.get(
+        `/corequests/${state.membergroupID}`
+      );
+      const { requestCoGroups } = response.data;
+      dispatch({
+        type: STUDENT_COSUPERVISOR_REQUEST_SUCCESS,
+        payload: { requestCoGroups },
+      });
     } catch (error) {}
   };
 
-  //set edit topic when rejected
+  //set edit topic when rejected this will be updated in Group collection
 
   const editTopic = async ({ groupID, topic }) => {
-    console.log(groupID, topic);
+    dispatch({ type: STUDENT_SUPERVISOR_EDIT_TOPIC_BEGIN });
     try {
       const { response } = await authFetch.patch(
         `/students/groupRegister/${groupID}`,
+        { topic }
+      );
+      dispatch({ type: STUDENT_SUPERVISOR_EDIT_TOPIC_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  //set edit topic when rejected this will be updated in request collection
+
+  const editTopicRequest = async ({ groupID, topic }) => {
+    try {
+      const { response } = await authFetch.patch(
+        `requests/groupRegister/${groupID}`,
         { topic }
       );
     } catch (error) {}
@@ -583,7 +659,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_ALL_STUDENT_GROUPS_BEGIN });
     try {
       const { data } = await authFetch.get(url);
-      console.log(data);
+
       // const { users, totalUsers, numOfPages } = data;
       dispatch({
         type: GET_ALL_STUDENT_GROUPS_SUCCESS,
@@ -643,7 +719,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
   //view Supervisor Student
   const setView = (id) => {
     dispatch({ type: SET_VIEW_SUPERVISOR, payload: { id } });
@@ -653,7 +728,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: DISPLAY_UPLOAD_SUCCESS_ALERT });
     clearAlert();
   };
-
 
 
  //supervisor fetch request (supervisor dashboard)
@@ -715,6 +789,7 @@ const AppProvider = ({ children }) => {
     }
   } 
 
+
   return (
     <AppContext.Provider
       value={{
@@ -752,6 +827,9 @@ const AppProvider = ({ children }) => {
         acceptStudentGroupReq,
         rejectStudentGroupReq,
         getSupervisorGroup,
+        requestCoSupervisor,
+        getRequestCoSupervisor,
+        editTopicRequest,
 
       }}
     >
