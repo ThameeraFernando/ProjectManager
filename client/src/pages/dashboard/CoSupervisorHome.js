@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import Supervisor from "../../components/MySupervise";
+import Supervisor from "../../components/MyCoSupervise";
 import Wrapper from "../../assets/wrappers/JobsContainer";
 import Loading from "../../components/Loading";
 
@@ -23,7 +23,7 @@ const CoSupervisorHome = () => {
       if (specificSupervise.length === 0) {
         return (
           <Wrapper>
-            <h2>No Users to display.</h2>
+            <h2>You are not supervise yet...</h2>
           </Wrapper>
         );
       }
