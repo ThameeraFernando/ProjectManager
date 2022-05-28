@@ -9,7 +9,6 @@ const AllStudentGroups = () => {
 
   return (
     <>
-      <SearchContainer />
       <StudentGroupContainer />
     </>
   );

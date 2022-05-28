@@ -27,6 +27,7 @@ import CoSupervise from "./CoSupervise";
 import StudentCoRequestList from "./StudentCoRequestList";
 import CoSupervisorGroup from "./CoSupervisorGroup";
 
+import MyDocuments from "./MyDocuments";
 
 export {
   DownloadFile,
@@ -51,11 +52,13 @@ export {
   CoSupervisors,
   SupervisorHome,
   SupervisorGroup,
+  MyDocuments,
   CoSupervisorHome,
   CoSupervise,
   StudentCoRequestList,
   CoSupervisorGroup
   
+
 
 
 };

@@ -5,7 +5,7 @@ import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { Link } from "react-router-dom";
-const Home = () => {
+const MyDocuments = () => {
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("Choose file");
   const [uploadedFile, setUploadedFile] = useState({});
@@ -40,7 +40,7 @@ const Home = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      navigator(`/download-file/${filename}`);
+      navigator(`download-file/${filename}`);
       const res = await axios.get(`/api/v1/files/${filename}`);
 
       const { fileName, filePath } = res.data;
@@ -84,7 +84,7 @@ const Home = () => {
               <>
                 {allDescriptions.map((des) => {
                   const { description } = des;
-                  if (des.docName == filename && des.submittedBy == "Admin") {
+                  if (des.docName == filename && des.submittedTo == user.type) {
                     return (
                       <>
                         <ItemWrapper>
@@ -142,4 +142,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyDocuments;

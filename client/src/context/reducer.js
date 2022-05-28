@@ -76,7 +76,8 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_BEGIN,
   STUDENT_SUPERVISOR_EDIT_TOPIC_SUCCESS,
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
-
+  HANDLE_CHANGE,
+  CLEAR_FILTER,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -368,11 +369,10 @@ const reducer = (state, action) => {
   }
   if (action.type === SET_UPDATE_SUPERVISE) {
     return {
-        ...state,
-        isEditing: true,
-        editSuperviseId: action.payload._id,
-        specificSupervise: action.payload
-
+      ...state,
+      isEditing: true,
+      editSuperviseId: action.payload._id,
+      specificSupervise: action.payload,
     };
   }
 
@@ -388,9 +388,8 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       isLoading: false,
-      alertText: 'Updated',
-      isEditing:false
-
+      alertText: "Updated",
+      isEditing: false,
     };
   }
   if (action.type === UPDATE_SUPERVISE_ERROR) {
@@ -400,7 +399,7 @@ const reducer = (state, action) => {
       alertType: "danger",
       showAlert: true,
       alertText: action.payload.msg,
-      isEditing:false
+      isEditing: false,
     };
   }
 
@@ -694,10 +693,24 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       requestCoGroups: action.payload.requestCoGroups,
-
     };
   }
 
+  //handle change
+
+  if (action.type === HANDLE_CHANGE) {
+    return { ...state, [action.payload.name]: action.payload.value };
+  }
+
+  //clear filter
+  if (action.type === CLEAR_FILTER) {
+    return {
+      ...state,
+      sort: "latest",
+      search: "",
+      searchType: "all",
+    };
+  }
   throw new Error(`no such action :${action.type}`);
 };
 export default reducer;
