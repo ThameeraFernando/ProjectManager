@@ -93,6 +93,7 @@ const UpdateUser = () => {
               >
                 <option value="Student">Student</option>
                 <option value="Supervisor">Supervisor</option>
+                <option value="Co Supervisor">Co Supervisor</option>
                 <option value="Panel Member">Panel Member</option>
                 <option value="Admin">Admin</option>
               </select>
