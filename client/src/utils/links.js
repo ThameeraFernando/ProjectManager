@@ -25,7 +25,7 @@ const links = [
   },
   {
     id: 3,
-    text: "Student Group Requests",
+    text: "Student Requests",
     path: "studentrequsets",
     icon: <ImUserPlus />,
   },
@@ -103,17 +103,42 @@ const links = [
     icon: <BiGroup />,
   },  
   {
-    id: 16,
+    id: 17,
     text: "Supervisor Home",
     path: "supervisorhome",
     icon: <AiTwotoneHome />,
   },
   {
-    id: 16,
-    text: "Supervisor Group",
+    id: 18,
+    text: "Research Group",
     path: "supervisorgroup",
     icon: <FaUsers />,
   },
+  {
+    id: 19,
+    text: "Co-Supervisor Home",
+    path: "cosupervisorhome",
+    icon: <AiTwotoneHome />,
+  },
+  {
+    id: 20,
+    text: "Co Supervise",
+    path: "cosupervise",
+    icon: <ImPlus />,
+  },
+  {
+    id: 21,
+    text: "Requests",
+    path: "studentcorequsets",
+    icon: <ImUserPlus />,
+  },
+  {
+    id: 21,
+    text: "Research Group",
+    path: "cosupervisorgroup",
+    icon: <FaUsers />,
+  },
+  
 ];
 
 export default links;

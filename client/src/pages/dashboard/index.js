@@ -22,6 +22,10 @@ import StudentResearchRequest from "./StudentResearchRequest";
 import CoSupervisors from "./CoSupervisors";
 import SupervisorHome from "./SupervisorHome";
 import SupervisorGroup from "./SupervisorGroup";
+import CoSupervisorHome from "./CoSupervisorHome";
+import CoSupervise from "./CoSupervise";
+import StudentCoRequestList from "./StudentCoRequestList";
+import CoSupervisorGroup from "./CoSupervisorGroup";
 
 
 export {
@@ -46,6 +50,12 @@ export {
   StudentResearchRequest,
   CoSupervisors,
   SupervisorHome,
-  SupervisorGroup
+  SupervisorGroup,
+  CoSupervisorHome,
+  CoSupervise,
+  StudentCoRequestList,
+  CoSupervisorGroup
+  
+
 
 };
