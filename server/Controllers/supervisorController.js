@@ -34,6 +34,7 @@ const createSupervisor = async (req, res) => {
 //student
 const getAllSupervisor = async (req, res) => {
   const { type: worktype } = req.params;
+
   const supervisors = await Supervisor.find({ type: worktype });
   res
     .status(StatusCodes.OK)
@@ -60,34 +61,37 @@ const UpdateSupervisor = async (req, res) => {
   // const { id: sid } = req.params;
   // const { name, email, field, type } = req.body;
 
-    const { id: sid } = req.params;
-    const {name,email,field,type,count} = req.body 
-    
-    // if(!type || !field ){
-    //     throw new BadRequestError('Please provide all values')
-    // }
+  const { id: sid } = req.params;
+  const { name, email, field, type, count } = req.body;
 
+  // if(!type || !field ){
+  //     throw new BadRequestError('Please provide all values')
+  // }
 
   const supervise = await Supervisor.findOne({ _id: sid });
 
-    if(!supervise){
-        throw new NotFoundError(`No supervisor with id :${sid}`)
-    }
+  if (!supervise) {
+    throw new NotFoundError(`No supervisor with id :${sid}`);
+  }
 
-    const isRequested = await Request.find({supervisorEmail:email}) 
-    // console.log(isRequested);    
-    if(isRequested.length>0){
-        return res.status(StatusCodes.METHOD_NOT_ALLOWED).send({ msg: "You are requested!" });
-    }else{
-        const updateSupervise = await Supervisor.findOneAndUpdate({_id:sid},req.body,{
-            new: true,
-            runValidators:true
-        })
-    
-        res.status(StatusCodes.OK).json({updateSupervise})
-    }
-    
+  const isRequested = await Request.find({ supervisorEmail: email });
+  // console.log(isRequested);
+  if (isRequested.length > 0) {
+    return res
+      .status(StatusCodes.METHOD_NOT_ALLOWED)
+      .send({ msg: "You are requested!" });
+  } else {
+    const updateSupervise = await Supervisor.findOneAndUpdate(
+      { _id: sid },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
+    res.status(StatusCodes.OK).json({ updateSupervise });
+  }
 };
 
 const deleteSupervisor = async (req, res) => {
@@ -117,12 +121,27 @@ const deleteSupervisor = async (req, res) => {
 
 const getCoSupervisors = async (req, res) => {
   const { type: worktype } = req.params;
+  const { search, availability } = req.query;
 
-  const coSupervisors = await Supervisor.find({ type: worktype });
+  const qobject = {
+    type: worktype,
+  };
 
-  if (!coSupervisors) {
-    throw new NotFoundError();
+  if (availability !== "all") {
+    qobject.availability = availability;
   }
+
+  if (search) {
+    qobject.field = search;
+  }
+
+  let qresult = Supervisor.find(qobject);
+
+  const coSupervisors = await qresult;
+
+  // if (!coSupervisors) {
+  //   throw new NotFoundError();
+  // }
 
   res
 
