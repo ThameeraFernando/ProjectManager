@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-const supervisorSchema =new mongoose.Schema(
+const supervisorSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -21,28 +21,28 @@ const supervisorSchema =new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ['supervisor', 'co-supervisor'],
-      default: 'supervisor',
+      enum: ["supervisor", "co-supervisor"],
+      default: "supervisor",
     },
     field: {
-        type: String,
-        required: [true, "please provide research field."],
-        trim: true,
+      type: String,
+      required: [true, "please provide research field."],
+      trim: true,
     },
     availability: {
-        type: String,
-        enum: ['available', 'not-available'],
-        default: 'available',
+      type: String,
+      enum: ["available", "not-available"],
+      default: "available",
     },
     count: {
-        type: Number,
-        max:[2, 'Cannot supervise more than 2 groups'],
-        default: 0,
+      type: Number,
+      max: [2, "Cannot supervise more than 2 groups"],
+      default: 0,
     },
     userId: {
       type: mongoose.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'Please provide user ID'],
+      ref: "User",
+      required: [true, "Please provide user ID"],
     },
   },
   { timestamps: true }
