@@ -115,13 +115,12 @@ const links = [
     icon: <FaUsers />,
   },
   {
-
     id: 18,
     text: "Review Documents",
     path: "my-docs",
     icon: <MdOutlineDriveFolderUpload />,
   },
-
+  {
     id: 19,
     text: "Co-Supervisor Home",
     path: "cosupervisorhome",
@@ -145,8 +144,6 @@ const links = [
     path: "cosupervisorgroup",
     icon: <FaUsers />,
   },
-  
-
 ];
 
 export default links;
