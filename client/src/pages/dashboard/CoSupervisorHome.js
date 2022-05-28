@@ -4,17 +4,17 @@ import Supervisor from "../../components/MySupervise";
 import Wrapper from "../../assets/wrappers/JobsContainer";
 import Loading from "../../components/Loading";
 
-const SupervisorHome = () => {
+const CoSupervisorHome = () => {
 
     const {
-        getSupervise,
+        getCoSupervise,
         specificSupervise,
         isLoading,
         user
       } = useAppContext();
     
       useEffect(() => {
-        getSupervise(user._id);
+        getCoSupervise(user._id);
       }, []);
       
       if (isLoading) {
@@ -41,4 +41,4 @@ const SupervisorHome = () => {
       );
 }
 
-export default SupervisorHome
+export default CoSupervisorHome
