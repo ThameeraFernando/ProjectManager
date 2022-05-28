@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import Supervisor from "../../components/MySupervise";
+import Supervisor from "../../components/MyCoSupervise";
 import Wrapper from "../../assets/wrappers/JobsContainer";
 import Loading from "../../components/Loading";
 
-const SupervisorHome = () => {
+const CoSupervisorHome = () => {
 
     const {
-        getSupervise,
+        getCoSupervise,
         specificSupervise,
         isLoading,
         user
       } = useAppContext();
     
       useEffect(() => {
-        getSupervise(user._id);
+        getCoSupervise(user._id);
       }, []);
       
       if (isLoading) {
@@ -23,7 +23,7 @@ const SupervisorHome = () => {
       if (specificSupervise.length === 0) {
         return (
           <Wrapper>
-            <h2>No Users to display.</h2>
+            <h2>You are not supervise yet...</h2>
           </Wrapper>
         );
       }
@@ -41,4 +41,4 @@ const SupervisorHome = () => {
       );
 }
 
-export default SupervisorHome
+export default CoSupervisorHome

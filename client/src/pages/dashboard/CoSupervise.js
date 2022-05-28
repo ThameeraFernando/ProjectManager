@@ -6,14 +6,16 @@ import Wrapper from "../../assets/wrappers/DashboardFormPage";
 
 
 
-const Supervise = () => {
+const CoSupervise = () => {
 
-    const { isLoading, showAlert, displayAlert, isEditing, user, editSupervise,supervise, specificSupervise } = useAppContext();
+    const { isLoading, showAlert, displayAlert, isEditing, user, editCoSupervise, cosupervise, specificSupervise } = useAppContext();
     const [name, setName] = useState(user?.name)
     const [email, setEmail] = useState(user?.email)
     const [specif, setspecifstate] = useState(specificSupervise);
 
-    const initialState = {name:name, email:email, type: specif.type||"supervisor", field: specif.field||"AI", userId: user._id };
+    
+
+    const initialState = {name:name, email:email, type: specif.type||"co-supervisor", field: specif.field||"AI", userId: user._id };
     const [values, setValues] = useState(initialState);
 
     // console.log(specif.type||'hi');
@@ -24,11 +26,11 @@ const Supervise = () => {
             return
         }
         if(isEditing){
-          editSupervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId}) 
+          editCoSupervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId}) 
           return
         }
         // console.log({name:name,email:email,type:values.type,field:values.field,userId:values.userId});
-        supervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId})
+        cosupervise({name:name,email:email,type:values.type,field:values.field,userId:values.userId})
         
     };
 
@@ -67,7 +69,7 @@ const Supervise = () => {
                 onChange={handleChange}
                 className="form-input"
             >
-                <option value="supervisor" >supervisor</option>
+                <option value="co-supervisor" >co-supervisor</option>
             </select>
         </div>
         <div className="form-row">
@@ -98,4 +100,4 @@ const Supervise = () => {
   )
 }
 
-export default Supervise
+export default CoSupervise

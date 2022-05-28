@@ -9,6 +9,7 @@ const submissionRouter = require("./Routes/submissionRoute");
 const requestRouter = require("./Routes/requestRoutes");
 
 const supervisorRouter = require("./Routes/supervisorRoutes");
+const coSupervisorRouter = require("./Routes/coSupervisorRoutes");
 
 const studentRouter = require("./Routes/studentRoute");
 
@@ -49,6 +50,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
 app.use("/api/v1/supervisor", supervisorRouter);
+app.use("/api/v1/cosupervisor", coSupervisorRouter);
 
 app.use("/api/v1/files", fileRouter);
 app.use("/api/v1/submissions", submissionRouter);

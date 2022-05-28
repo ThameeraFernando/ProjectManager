@@ -61,8 +61,15 @@ const UpdateSupervisor = async (req, res) => {
   // const { id: sid } = req.params;
   // const { name, email, field, type } = req.body;
 
-  const { id: sid } = req.params;
-  const { name, email, field, type, count } = req.body;
+
+
+    const { id: sid } = req.params;
+    const {name,email,field,type,count,availability} = req.body 
+    
+    // if(!type || !field ){
+    //     throw new BadRequestError('Please provide all values')
+    // }
+
 
   // if(!type || !field ){
   //     throw new BadRequestError('Please provide all values')
