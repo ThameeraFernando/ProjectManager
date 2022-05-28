@@ -26,8 +26,7 @@ import {
   CoSupervisors,
   SupervisorHome,
   SupervisorGroup,
-
-
+  MyDocuments,
 } from "./pages/dashboard/index";
 function App() {
   return (
@@ -46,6 +45,10 @@ function App() {
               <Route index element={<Home />} />
               <Route path="profile" element={<Profile />} />
               <Route path="download-file/:id" element={<DownloadFile />} />
+              <Route
+                path="my-docs/download-file/:id"
+                element={<DownloadFile />}
+              />
               <Route path="update-user" element={<UpdateUser />} />
               <Route path="user" element={<User />} />
               <Route path="all-users" element={<AllUsers />} />
@@ -65,6 +68,8 @@ function App() {
 
               <Route path="supervisorhome" element={<SupervisorHome />} />
               <Route path="supervisorgroup" element={<SupervisorGroup />} />
+
+              <Route path="my-docs" element={<MyDocuments />} />
 
               <Route
                 path="student-research-request"

@@ -101,7 +101,7 @@ const links = [
     text: "co-supervisors",
     path: "co-supervisors",
     icon: <BiGroup />,
-  },  
+  },
   {
     id: 16,
     text: "Supervisor Home",
@@ -113,6 +113,12 @@ const links = [
     text: "Supervisor Group",
     path: "supervisorgroup",
     icon: <FaUsers />,
+  },
+  {
+    id: 17,
+    text: "Review Documents",
+    path: "my-docs",
+    icon: <MdOutlineDriveFolderUpload />,
   },
 ];
 

@@ -23,6 +23,7 @@ import CoSupervisors from "./CoSupervisors";
 import SupervisorHome from "./SupervisorHome";
 import SupervisorGroup from "./SupervisorGroup";
 
+import MyDocuments from "./MyDocuments";
 
 export {
   DownloadFile,
@@ -46,6 +47,6 @@ export {
   StudentResearchRequest,
   CoSupervisors,
   SupervisorHome,
-  SupervisorGroup
-
+  SupervisorGroup,
+  MyDocuments,
 };

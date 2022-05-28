@@ -5,7 +5,35 @@ const CustomApiError = require("../errors/custom-api-error");
 const { JsonWebTokenError } = require("jsonwebtoken");
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find({});
+  const { type, search, sort } = req.query;
+  const queryObject = {};
+
+  //chain sort conditions
+  if (type && type !== "all") {
+    queryObject.type = type;
+  }
+  if (search) {
+    queryObject.name = { $regex: search, $options: "i" };
+    console.log(search);
+  }
+
+  //no await
+  let result = User.find(queryObject);
+
+  if (sort === "latest") {
+    result = result.sort("-createdAt");
+  }
+  if (sort === "oldest") {
+    result = result.sort("createdAt");
+  }
+  if (sort === "a-z") {
+    result = result.sort("name");
+  }
+  if (sort === "z-a") {
+    result = result.sort("-name");
+  }
+  const users = await result;
+
   return res
     .status(StatusCodes.OK)
     .send({ users, totalUsers: users.length, numOfPages: 1 });
