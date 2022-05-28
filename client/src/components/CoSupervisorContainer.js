@@ -16,10 +16,10 @@ const CoSupervisorContainer = () => {
     getRequestCoSupervisor,
   } = useAppContext();
 
-  var reqStatus;
   useEffect(() => {
     getAllCoSupervisor();
     getRequestCoSupervisor();
+    console.log(coSupervisors);
   }, []);
 
   if (isLoading) {
