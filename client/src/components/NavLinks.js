@@ -11,14 +11,15 @@ const NavLinks = ({ toggleSideBar }) => {
   if (
     user.type === "Student" ||
     user.type === "Supervisor" ||
-    user.type === "Panel Member"
+    user.type === "Panel Member" ||
+    user.type === "Co Supervisor"
   ) {
     NewLinks = NewLinks.filter((link) => {
       if (
         link.path !== "all-users" &&
         link.path !== "upload-docs" &&
         link.path !== "create-submissions" &&
-        link.path !== "staff-members"
+        link.path !== "staff-members" 
       ) {
         return link;
       }
@@ -29,7 +30,8 @@ const NavLinks = ({ toggleSideBar }) => {
   if (
     user.type === "Admin" ||
     user.type === "Supervisor" ||
-    user.type === "Panel Member"
+    user.type === "Panel Member" ||
+    user.type === "Co Supervisor"
   ) {
 
     NewLinks = NewLinks.filter((link) => {
@@ -37,7 +39,8 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "student-groups" &&
         link.path !== "supervisors" &&
         link.path !== "student-research-request" &&
-        link.path !== "co-supervisors"
+        link.path !== "co-supervisors" &&
+        link.path !== "all-student-groups" 
       ) {
 
         return link;
@@ -45,17 +48,39 @@ const NavLinks = ({ toggleSideBar }) => {
     });
   }
 
+  //supervisor
   if (
     user.type === "Student" ||
     user.type === "Admin" ||
-    user.type === "Panel Member"
+    user.type === "Panel Member" ||
+    user.type === "Co Supervisor"
   ) {
     NewLinks = NewLinks.filter((link) => {
       if (
         link.path !== "studentrequsets" &&
         link.path !== "reportsubmissions" &&
         link.path !== "supervisorhome" &&
-        link.path !== "supervisorgroup"
+        link.path !== "supervisorgroup" &&
+        link.path !== "supervise"
+      ) {
+        return link;
+      }
+    });
+  }
+
+  //co supervisor
+  if (
+    user.type === "Student" ||
+    user.type === "Admin" ||
+    user.type === "Panel Member" ||
+    user.type === "Supervisor" 
+  ) {
+    NewLinks = NewLinks.filter((link) => {
+      if (
+        link.path !== "cosupervisorgroup" &&
+        link.path !== "cosupervise" &&
+        link.path !== "studentcorequsets" &&
+        link.path !== "cosupervisorgroup"
       ) {
         return link;
       }
