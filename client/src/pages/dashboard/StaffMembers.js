@@ -14,7 +14,6 @@ const StaffMembers = () => {
   });
   return (
     <>
-      <SearchContainer />
       <StaffContainer />
     </>
   );

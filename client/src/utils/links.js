@@ -101,18 +101,24 @@ const links = [
     text: "co-supervisors",
     path: "co-supervisors",
     icon: <BiGroup />,
-  },  
+  },
   {
-    id: 17,
+    id: 16,
     text: "Supervisor Home",
     path: "supervisorhome",
     icon: <AiTwotoneHome />,
   },
   {
-    id: 18,
+    id: 17,
     text: "Research Group",
     path: "supervisorgroup",
     icon: <FaUsers />,
+  },
+  {
+    id: 18,
+    text: "Review Documents",
+    path: "my-docs",
+    icon: <MdOutlineDriveFolderUpload />,
   },
   {
     id: 19,
@@ -133,12 +139,11 @@ const links = [
     icon: <ImUserPlus />,
   },
   {
-    id: 21,
+    id: 22,
     text: "Research Group",
     path: "cosupervisorgroup",
     icon: <FaUsers />,
   },
-  
 ];
 
 export default links;
