@@ -752,7 +752,7 @@ const AppProvider = ({ children }) => {
         // console.log(accept.data);
         const updateReq = await axios.patch(`/api/v1/requests/${rid}`,{"status":"accepted"})
         // console.log(updateReq.data);
-        const updateCount = await axios.patch(`/api/v1/supervisor/${data[0]._id}`, { count:data[0].count+1 })
+        const updateCount = await axios.patch(`/api/v1/supervisor/${data[0]._id}`, { count:data[0].count+1,availability:'not-available' })
         // console.log(updateCount);
         dispatch({type:ACCEPT_REQUEST_SUCCESS,payload:{msg:'request accepted !'}})
       }else{
