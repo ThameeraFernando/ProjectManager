@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import SearchContainer from "../../components/SearchContainer";
+import SearchContainerStudent from "../../components/SearchContainerStudent";
 import CoSupervisorContainer from "../../components/CoSupervisorContainer";
 import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const CoSupervisors = () => {
 
   return (
     <>
-      <SearchContainer />
+      <SearchContainerStudent />
       <CoSupervisorContainer />
     </>
   );

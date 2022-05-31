@@ -81,6 +81,8 @@ import {
   UPDATE_PANEL_ADMIN_ERROR,
   UPDATE_PANEL_ADMIN_SUCCESS,
   UPDATE_PANEL_ADMIN_BEGIN,
+  CLEAR_FILTER_STUDENT,
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -715,6 +717,7 @@ const reducer = (state, action) => {
     };
   }
 
+
   //admin update student group
 
   if (action.type === UPDATE_PANEL_ADMIN_BEGIN) {
@@ -739,6 +742,18 @@ const reducer = (state, action) => {
       alertType: "danger",
       showAlert: true,
       alertText: action.payload.msg,
+    };
+  }
+
+
+  //clear filter
+  if (action.type === CLEAR_FILTER_STUDENT) {
+    return {
+      ...state,
+      sortStudent: "a-z",
+      searchStudent: "",
+      searchTypeStudent: "all",
+      searchStatusStudent: "all",
     };
   }
 

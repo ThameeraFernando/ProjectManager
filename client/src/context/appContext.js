@@ -83,6 +83,8 @@ import {
   UPDATE_PANEL_ADMIN_ERROR,
   UPDATE_PANEL_ADMIN_SUCCESS,
   UPDATE_PANEL_ADMIN_BEGIN,
+  CLEAR_FILTER_STUDENT,
+
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -134,6 +136,13 @@ export const initialState = {
   studentRequests: [],
   supervisorGroup: [],
 
+  empType: ["supervisor", "co-supervisor"],
+  empStatus: ["available", "not-available"],
+  searchStudent: "",
+  searchStatusStudent: "all",
+  searchTypeStudent: "all",
+  sortStudent: "a-z",
+  sortOptionStudent: ["a-z", "z-a"],
   search: "",
   searchType: "all",
   searchTypeOptions: ["Admin", "Co Supervisor", "Student", "Supervisor"],
@@ -465,7 +474,7 @@ const AppProvider = ({ children }) => {
     let sup = "supervisor";
     try {
       const { data } = await authFetch.get(
-        `/supervisor/supervisorsdetails/${sup}`
+        "/supervisor/supervisorsdetails/details"
       );
       const { supervisors, totalSupervisors } = data;
 
@@ -481,13 +490,17 @@ const AppProvider = ({ children }) => {
 
   //get all co-supervisor
   const getAllCoSupervisor = async () => {
+    const { searchStudent, searchStatusStudent, sortStudent } = state;
+    let url = `/cosupervisor/cosupervisorsdetails/details?availability=${searchStatusStudent}&sort=${sortStudent}`;
+    if (searchStudent) {
+      url = url + `&search=${searchStudent}`;
+    }
     dispatch({ type: GET_ALL_COSUPERVISORS_BEGIN });
-    let cosup = "co-supervisor";
+
     try {
-      const { data } = await authFetch.get(
-        `/supervisor/cosupervisors/${cosup}`
-      );
+      const { data } = await authFetch.get(url);
       const { coSupervisors, totalCoSupervisors } = data;
+      console.log(data);
 
       dispatch({
         type: GET_ALL_COSUPERVISORS_SUCCESS,
@@ -979,6 +992,7 @@ const AppProvider = ({ children }) => {
   };
 
   //supervisor dashboard
+
   const rejectStudentGroupReq = async (rid) => {
     try {
       const updateReq = await axios.patch(`/api/v1/requests/${rid}`, {
@@ -1022,6 +1036,7 @@ const AppProvider = ({ children }) => {
   };
 
   // get co-supervisor group
+
   const getCoSupervisorGroup = async (sName) => {
     try {
       dispatch({ type: GET_SUPERVISOR_GROUP_BEGIN });
@@ -1050,6 +1065,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+
   //add panel members
   const addPanelMember = async (pmEmail, pmName, _id) => {
     dispatch({ type: UPDATE_PANEL_ADMIN_BEGIN });
@@ -1068,7 +1084,12 @@ const AppProvider = ({ children }) => {
       });
     }
     clearAlert();
+
   };
+    //clear filter student
+  const clearFiltersStudent = () => {
+    dispatch({ type: CLEAR_FILTER_STUDENT });
+  }
 
   return (
     <AppContext.Provider
@@ -1121,6 +1142,8 @@ const AppProvider = ({ children }) => {
         rejectStudentCoGroupReq,
         getCoSupervisorGroup,
         addPanelMember,
+        clearFiltersStudent,
+
       }}
     >
       {children}
