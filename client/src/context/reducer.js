@@ -78,7 +78,11 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  UPDATE_PANEL_ADMIN_ERROR,
+  UPDATE_PANEL_ADMIN_SUCCESS,
+  UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -713,6 +717,35 @@ const reducer = (state, action) => {
     };
   }
 
+
+  //admin update student group
+
+  if (action.type === UPDATE_PANEL_ADMIN_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_PANEL_ADMIN_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Panel Member Updated",
+    };
+  }
+  if (action.type === UPDATE_PANEL_ADMIN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+
+
   //clear filter
   if (action.type === CLEAR_FILTER_STUDENT) {
     return {
@@ -723,6 +756,7 @@ const reducer = (state, action) => {
       searchStatusStudent: "all",
     };
   }
+
   throw new Error(`no such action :${action.type}`);
 };
 export default reducer;
