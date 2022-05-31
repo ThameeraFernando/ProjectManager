@@ -1,5 +1,5 @@
 import React from "react";
-import SearchContainer from "../../components/SearchContainer";
+import SearchContainerStudentSupervisor from "../../components/SearchContainerStudentSupervisor";
 import SupervisorContainer from "../../components/SupervisorContainer";
 import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const Supervisors = () => {
 
   return (
     <>
-      <SearchContainer />
+      <SearchContainerStudentSupervisor />
       <SupervisorContainer />
     </>
   );

@@ -35,7 +35,30 @@ const createSupervisor = async (req, res) => {
 const getAllSupervisor = async (req, res) => {
   // const { type: worktype } = req.params;
 
-  const supervisors = await Supervisor.find({});
+  const { search, availability, sort } = req.query;
+
+  const qobject = {};
+
+  if (availability && availability !== "all") {
+    qobject.availability = availability;
+  }
+
+  if (search) {
+    qobject.field = { $regex: search, $options: "i" };
+  }
+
+  let qresult = Supervisor.find(qobject);
+
+  if (sort === "a-z") {
+    qresult = qresult.sort("name");
+  }
+
+  if (sort === "z-a") {
+    qresult = qresult.sort("-name");
+  }
+
+  const supervisors = await qresult;
+
   res
     .status(StatusCodes.OK)
     .json({ supervisors, totalSupervisors: supervisors.length });

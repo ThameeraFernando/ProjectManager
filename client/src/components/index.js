@@ -9,6 +9,8 @@ import StudentResearchReqContainer from "./StudentResearchReqContainer";
 import CoSupervisorContainer from "./CoSupervisorContainer";
 import StudentResearchCoReqContanier from "./StudentResearchCoReqContanier";
 import SearchContainerStudent from "./SearchContainerStudent";
+import StudentPannelReqContainer from "./StudentPannelReqContainer";
+import SearchContainerStudentSupervisor from "./SearchContainerStudentSupervisor";
 export {
   Alert,
   FormRow,
@@ -21,4 +23,6 @@ export {
   CoSupervisorContainer,
   StudentResearchCoReqContanier,
   SearchContainerStudent,
+  StudentPannelReqContainer,
+  SearchContainerStudentSupervisor,
 };

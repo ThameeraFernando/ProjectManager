@@ -36,7 +36,7 @@ const StudentResearchCoReq = ({
     <Wrapper>
       <form className="form">
         <br />
-        <h5>{statusText}</h5>
+        <h5>{statusText} </h5>
         {showAlert && <Alert />}
 
         <div className="form-center">

@@ -16,7 +16,7 @@ const StudentResearchCoReqContanier = () => {
   if (requestCoGroups.length === 0) {
     return (
       <Wrapper>
-        <h5>No Requestes to display...</h5>
+        <h5>No Co-supervisor Requestes to display...</h5>
       </Wrapper>
     );
   }

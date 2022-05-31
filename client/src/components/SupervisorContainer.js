@@ -15,12 +15,19 @@ const SupervisorContainer = () => {
     requestGroups,
     showAlert,
     getRequestSupervisor,
+    searchStudentsupervisor,
+    searchStatusStudentsupervisor,
+    sortStudentsupervisor,
   } = useAppContext();
 
   useEffect(() => {
     getRequestSupervisor();
     getAllSupervisor();
-  }, []);
+  }, [
+    searchStudentsupervisor,
+    searchStatusStudentsupervisor,
+    sortStudentsupervisor,
+  ]);
 
   if (isLoading) {
     return <Loading center />;
@@ -28,7 +35,7 @@ const SupervisorContainer = () => {
   if (supervisors.length === 0) {
     return (
       <Wrapper>
-        <h2>No Users to display.</h2>
+        <h2>No Supervisors to display.</h2>
       </Wrapper>
     );
   }

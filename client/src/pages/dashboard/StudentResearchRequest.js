@@ -3,6 +3,7 @@ import {
   StudentResearchReqContainer,
   SearchContainer,
   StudentResearchCoReqContanier,
+  StudentPannelReqContainer,
 } from "../../components";
 
 const StudentResearchRequest = () => {
@@ -11,6 +12,7 @@ const StudentResearchRequest = () => {
       <SearchContainer />
       <StudentResearchReqContainer />
       <StudentResearchCoReqContanier />
+      <StudentPannelReqContainer />
     </>
   );
 };
