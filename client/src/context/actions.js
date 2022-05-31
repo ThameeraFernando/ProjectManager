@@ -143,3 +143,6 @@ export const HANDLE_CHANGE = "HANDLE_CHANGE";
 
 //clear filter
 export const CLEAR_FILTER = "CLEAR_FILTER";
+
+//clear filter Student
+export const CLEAR_FILTER_STUDENT = "CLEAR_FILTER_STUDENT";

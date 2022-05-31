@@ -80,6 +80,7 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  CLEAR_FILTER_STUDENT,
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -136,6 +137,7 @@ export const initialState = {
   searchStudent: "",
   searchStatusStudent: "all",
   searchTypeStudent: "all",
+  sortStudent: "a-z",
   sortOptionStudent: ["a-z", "z-a"],
   search: "",
   searchType: "all",
@@ -484,12 +486,15 @@ const AppProvider = ({ children }) => {
 
   //get all co-supervisor
   const getAllCoSupervisor = async () => {
+    const { searchStudent, searchStatusStudent, sortStudent } = state;
+    let url = `/cosupervisor/cosupervisorsdetails/details?availability=${searchStatusStudent}&sort=${sortStudent}`;
+    if (searchStudent) {
+      url = url + `&search=${searchStudent}`;
+    }
     dispatch({ type: GET_ALL_COSUPERVISORS_BEGIN });
-    //let cosup = "co-supervisor";
+
     try {
-      const { data } = await authFetch.get(
-        "/cosupervisor/cosupervisorsdetails/details"
-      );
+      const { data } = await authFetch.get(url);
       const { coSupervisors, totalCoSupervisors } = data;
       console.log(data);
 
@@ -821,8 +826,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  
-
   // co supervisor begin
   // add co-supervisor
   const cosupervise = async ({ name, email, type, field, userId }) => {
@@ -941,9 +944,7 @@ const AppProvider = ({ children }) => {
 
   //supervisor dashboard
 
-
-
-  const acceptStudentCoGroupReq = async (gid,rid) => {
+  const acceptStudentCoGroupReq = async (gid, rid) => {
     try {
       const response = await axios.get(
         `/api/v1/cosupervisor/${state.user._id}`
@@ -1010,12 +1011,11 @@ const AppProvider = ({ children }) => {
         `/api/v1/students/groupSupervisor/${sName}`
       );
       const { group } = response.data;
-      }catch(error){
-        console.log(error);
-
-      }}
-  const rejectStudentCoGroupReq =async (rid) => {
-
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const rejectStudentCoGroupReq = async (rid) => {
     try {
       const updateReq = await axios.patch(
         `/api/v1/corequests/cosupervisors/${rid}`,
@@ -1033,12 +1033,13 @@ const AppProvider = ({ children }) => {
 
   // get co-supervisor group
 
-  const getCoSupervisorGroup = async (sName) =>{
-
-    try{
-      dispatch({type:GET_SUPERVISOR_GROUP_BEGIN})
-      const response = await axios.get(`/api/v1/students/groupCoSupervisor/${sName}`)
-      const {group}  = response.data;
+  const getCoSupervisorGroup = async (sName) => {
+    try {
+      dispatch({ type: GET_SUPERVISOR_GROUP_BEGIN });
+      const response = await axios.get(
+        `/api/v1/students/groupCoSupervisor/${sName}`
+      );
+      const { group } = response.data;
 
       console.log(group);
       dispatch({ type: GET_SUPERVISOR_GROUP_SUCCESS, payload: { group } });
@@ -1046,7 +1047,6 @@ const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
-
 
   //handle changes
   const handleChange = ({ name, value }) => {
@@ -1060,8 +1060,11 @@ const AppProvider = ({ children }) => {
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTER });
   };
- 
 
+  //clear filter student
+  const clearFiltersStudent = () => {
+    dispatch({ type: CLEAR_FILTER_STUDENT });
+  };
 
   return (
     <AppContext.Provider
@@ -1113,6 +1116,7 @@ const AppProvider = ({ children }) => {
         acceptStudentCoGroupReq,
         rejectStudentCoGroupReq,
         getCoSupervisorGroup,
+        clearFiltersStudent,
       }}
     >
       {children}

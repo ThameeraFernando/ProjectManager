@@ -8,6 +8,7 @@ import SearchContainer from "./SearchContainer";
 import StudentResearchReqContainer from "./StudentResearchReqContainer";
 import CoSupervisorContainer from "./CoSupervisorContainer";
 import StudentResearchCoReqContanier from "./StudentResearchCoReqContanier";
+import SearchContainerStudent from "./SearchContainerStudent";
 export {
   Alert,
   FormRow,
@@ -19,4 +20,5 @@ export {
   StudentResearchReqContainer,
   CoSupervisorContainer,
   StudentResearchCoReqContanier,
+  SearchContainerStudent,
 };
