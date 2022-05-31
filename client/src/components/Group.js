@@ -9,7 +9,6 @@ import { IoPerson, IoTime } from "react-icons/io5";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { GiTeacher } from "react-icons/gi";
 import FormRow from "../components/FormRow";
-
 const User = ({
   _id,
   createdAt,
@@ -26,22 +25,27 @@ const User = ({
   itNumOne,
   itNumThree,
   itNumTwo,
-  panelMember,
+  panelMemberName,
+  panelMemberEmail,
 }) => {
   let cRdate = moment(createdAt);
   cRdate = cRdate.format("MMM Do, YYYY");
   let uPdate = moment(createdAt);
   uPdate = uPdate.format("MMM Do, YYYY");
-  //   const { setDeleteUser, setUpdateUser } = useAppContext();
-  const { pmName, setpmName } = useState(panelMember);
+  const { addPanelMember, isLoading } = useAppContext();
+  const [pmName, setName] = useState(panelMemberName);
+  const [pmEmail, setEmail] = useState(panelMemberEmail);
+  // console.log(panelMemberName, panelMemberEmail);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(pmEmail, pmName, _id);
+    addPanelMember(pmEmail, pmName, _id);
+  };
   return (
     <Wrapper>
       <header>
         <div className="main">{groupID}</div>
-        <div className="info">
-          {/* <h5>{type}</h5>
-          <p>{}</p> */}
-        </div>
+        <div className="info"></div>
       </header>
       <div className="content">
         <div className="content-center">
@@ -58,17 +62,25 @@ const User = ({
           <UserInfo icon={<IoTime />} text={cRdate} />
         </div>
         <br />
-        <br />
-
-        <form>
+        <form onSubmit={handleSubmit}>
+          <br />
           <div className="form-row">
-            <label className="form-label">Panel Member</label>
+            <label className="form-label">Panel Member Name</label>
             <input
-              className="form-input" 
+              className="form-input"
               value={pmName}
-              onChange={(e) => setpmName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
+          <div className="form-row">
+            <label className="form-label">Panel Member Email</label>
+            <input
+              className="form-input"
+              value={pmEmail}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
           <button type="submit" className="btn btn-block">
             Add Panel Member
           </button>

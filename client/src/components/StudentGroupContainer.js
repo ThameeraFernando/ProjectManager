@@ -3,6 +3,8 @@ import { useAppContext } from "../context/appContext";
 import Loading from "./Loading";
 import Group from "./Group";
 import Wrapper from "../assets/wrappers/JobsContainer";
+import Alert from "../components/Alert";
+
 const StudentGroupContainer = () => {
   const { getAllStudents, StudentGroups, isLoading } = useAppContext();
   useEffect(() => {
@@ -23,6 +25,7 @@ const StudentGroupContainer = () => {
       <h4>
         {StudentGroups.length} Student Group{StudentGroups.length > 1 && "s"}
       </h4>
+      <Alert />
       <div className="jobs">
         {StudentGroups.map((group) => {
           return <Group key={group._id} {...group} />;
