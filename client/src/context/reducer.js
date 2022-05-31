@@ -78,6 +78,7 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  CLEAR_FILTER_STUDENT,
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -709,6 +710,17 @@ const reducer = (state, action) => {
       sort: "latest",
       search: "",
       searchType: "all",
+    };
+  }
+
+  //clear filter
+  if (action.type === CLEAR_FILTER_STUDENT) {
+    return {
+      ...state,
+      sortStudent: "a-z",
+      searchStudent: "",
+      searchTypeStudent: "all",
+      searchStatusStudent: "all",
     };
   }
   throw new Error(`no such action :${action.type}`);
