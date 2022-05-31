@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import UserInfo from "./UserInfo";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { MdEmail, MdUpdate } from "react-icons/md";
 import { IoPerson, IoTime } from "react-icons/io5";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { GiTeacher } from "react-icons/gi";
+import FormRow from "../components/FormRow";
 
 const User = ({
   _id,
@@ -25,13 +26,14 @@ const User = ({
   itNumOne,
   itNumThree,
   itNumTwo,
+  panelMember,
 }) => {
   let cRdate = moment(createdAt);
   cRdate = cRdate.format("MMM Do, YYYY");
   let uPdate = moment(createdAt);
   uPdate = uPdate.format("MMM Do, YYYY");
   //   const { setDeleteUser, setUpdateUser } = useAppContext();
-
+  const { pmName, setpmName } = useState(panelMember);
   return (
     <Wrapper>
       <header>
@@ -55,6 +57,22 @@ const User = ({
           <UserInfo icon={<GiTeacher />} text={coSupervisor} />
           <UserInfo icon={<IoTime />} text={cRdate} />
         </div>
+        <br />
+        <br />
+
+        <form>
+          <div className="form-row">
+            <label className="form-label">Panel Member</label>
+            <input
+              className="form-input" 
+              value={pmName}
+              onChange={(e) => setpmName(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-block">
+            Add Panel Member
+          </button>
+        </form>
       </div>
     </Wrapper>
   );

@@ -107,6 +107,18 @@ const studentSchema = new Schema(
       type: String,
       required: [true, "please provide topic."],
     },
+    panelMemberName: {
+      type: String,
+      default: "pending",
+    },
+    panelMemberEmail: {
+      type: String,
+      default: "pending",
+    },
+    panelTopicEvaluation: {
+      type: String,
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

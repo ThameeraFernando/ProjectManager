@@ -19,7 +19,7 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "all-users" &&
         link.path !== "upload-docs" &&
         link.path !== "create-submissions" &&
-        link.path !== "staff-members" 
+        link.path !== "staff-members"
       ) {
         return link;
       }
@@ -33,16 +33,13 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Panel Member" ||
     user.type === "Co Supervisor"
   ) {
-
     NewLinks = NewLinks.filter((link) => {
       if (
         link.path !== "student-groups" &&
         link.path !== "supervisors" &&
         link.path !== "student-research-request" &&
-        link.path !== "co-supervisors" &&
-        link.path !== "all-student-groups" 
+        link.path !== "co-supervisors"
       ) {
-
         return link;
       }
     });
@@ -73,7 +70,7 @@ const NavLinks = ({ toggleSideBar }) => {
     user.type === "Student" ||
     user.type === "Admin" ||
     user.type === "Panel Member" ||
-    user.type === "Supervisor" 
+    user.type === "Supervisor"
   ) {
     NewLinks = NewLinks.filter((link) => {
       if (
