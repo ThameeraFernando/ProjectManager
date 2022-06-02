@@ -25,6 +25,8 @@ const StudentMessage = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         sendMessage({sender:user.type, message:message, group:membergroupID});
+        setMessage('')
+
     }
 
     if (isLoading) {
@@ -34,6 +36,9 @@ const StudentMessage = () => {
   return (
     <div>
       <div>
+      <div className='form-center'>
+        <h4>Group Chat</h4>
+      </div>
         {messages.length === 0 ? 'no messages yet...' :messages.map((message) => {
           if(message.sender==='Student'){
             message.sender='Group'
