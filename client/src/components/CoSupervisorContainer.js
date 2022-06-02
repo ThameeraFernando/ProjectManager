@@ -48,7 +48,7 @@ const CoSupervisorContainer = () => {
       <h5 hidden={requestCoGroups.length >= 1}>
         Co-Supervisor requests are based on first come first serve
       </h5>
-      {/* <h4>{showAlert && <Alert />}</h4> */}
+      {showAlert && <Alert />}
       <div className="jobs">
         {coSupervisors.map((coSupervisorlk) => {
           return (

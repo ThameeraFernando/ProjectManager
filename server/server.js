@@ -57,7 +57,7 @@ app.use("/api/v1/files", fileRouter);
 app.use("/api/v1/submissions", submissionRouter);
 app.use("/api/v1/requests", requestRouter);
 app.use("/api/v1/corequests", coRequestRouter);
-app.use("/api/v1/message", messageRouter); //coSupervisor request
+app.use("/api/v1/message", messageRouter);
 
 //student routes
 app.use("/api/v1/students", studentRouter);
