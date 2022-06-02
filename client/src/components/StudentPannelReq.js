@@ -27,16 +27,19 @@ const StudentPannelReq = ({
 
   let statusText = "";
   let isRejected;
+  let colorpanel;
 
   if (memberPannelTopic === "pending") {
     isRejected = true;
-    statusText = "your Pannel member request is still pending";
+    statusText = "your Panel member is still not allocated";
   } else if (memberPannelTopic === "accepted") {
-    statusText = "your Pannel member request accepted";
+    statusText = "your research topic is accepted by your Panel member";
     isRejected = true;
   } else {
-    statusText = "your requst is rejected try another topic";
+    statusText =
+      "your research topic is rejected by your Panel member, try another topic";
     isRejected = false;
+    colorpanel = "red";
   }
 
   const handleSubmit = (e) => {
@@ -54,7 +57,7 @@ const StudentPannelReq = ({
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <br />
-        <h5>{statusText}</h5>
+        <h5 style={{ color: colorpanel }}>{statusText}</h5>
         {showAlert && <Alert />}
 
         <div className="form-center">
@@ -105,6 +108,7 @@ const StudentPannelReq = ({
             name="newTopic"
             value={newTopic}
             isHidden={isRejected}
+            color="Red"
             handleChange={(e) => setNewTopic(e.target.value)}
           />
 

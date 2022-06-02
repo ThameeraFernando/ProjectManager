@@ -48,7 +48,7 @@ const SupervisorContainer = () => {
       <h5 hidden={requestGroups.length >= 1}>
         Supervisor requests are based on first come first serve
       </h5>
-      <h3>{showAlert && <Alert />}</h3>
+      {showAlert && <Alert />}
       <div className="jobs">
         {supervisors.map((supervisor) => {
           return (
