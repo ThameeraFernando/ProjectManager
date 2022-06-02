@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Link, Routes } from "react-router-dom";
 import { Landing, Register, Error } from "./pages/index";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { AppProvider } from "./context/appContext";
-
+import { Wait } from "./pages/Wait";
 import {
   SharedLayout,
   Profile,
@@ -95,6 +95,7 @@ function App() {
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>
+            <Route path="/wait" element={<Wait />}></Route>
             <Route path="*" element={<Error />}></Route>
           </Routes>
         </AppProvider>

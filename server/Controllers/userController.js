@@ -1,4 +1,5 @@
 const User = require("../modal/User");
+const StudentGroup = require("../modal/StudentGroup");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors/index");
 const CustomApiError = require("../errors/custom-api-error");
@@ -69,4 +70,28 @@ const deleteUser = async (req, res) => {
   return res.status(StatusCodes.OK).send({ msg: "Success! User Removed" });
 };
 
-module.exports = { getAllUsers, UpdateUser, deleteUser };
+const UpdateGroup = async (req, res) => {
+  const { id: gId } = req.params;
+  console.log(gId);
+  const { panelMemberName, panelMemberEmail } = req.body;
+  console.log(req.body);
+  if (!panelMemberName || !panelMemberEmail) {
+    throw new BadRequestError("Please Provide all values.");
+  }
+  const studentgroup = await StudentGroup.findOne({ _id: gId });
+  if (!studentgroup) {
+    throw new NotFoundError(`No group with group ID ${gId}`);
+  }
+  const updateStudentGroup = await StudentGroup.findOneAndUpdate(
+    { _id: gId },
+    req.body,
+    {
+      runValidators: true,
+      new: true,
+    }
+  );
+
+  res.status(StatusCodes.OK).send({ updateStudentGroup });
+};
+
+module.exports = { getAllUsers, UpdateUser, deleteUser, UpdateGroup };

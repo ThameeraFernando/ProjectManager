@@ -26,6 +26,9 @@ const StudnetGroup = () => {
     memberisRegister,
     memberTopic,
     user,
+    memberPannelName,
+    memberPannelTopic,
+    memberPannelEmail,
   } = useAppContext();
 
   const [groupID, setGroupID] = useState(membergroupID);
@@ -40,6 +43,9 @@ const StudnetGroup = () => {
   const [topic, setTopic] = useState(memberTopic);
   const [supervisor, setSupervisor] = useState("pending");
   const [coSupervisor, setCoSupervisor] = useState("pending");
+  const [pannelMemberName, setPannelMemberName] = useState(memberPannelName);
+  const [pannelMemberEmail, setPannelMemberEmail] = useState(memberPannelEmail);
+  const [pannelMemberTopic, setPannelMemberTopic] = useState(memberPannelTopic);
 
   useEffect(() => {
     getGroups();
@@ -210,6 +216,33 @@ const StudnetGroup = () => {
             isReadOnly={true}
             value={coSupervisor}
             handleChange={(e) => setCoSupervisor(e.target.value)}
+          />
+
+          <FormRow
+            type="text"
+            labelText="Pannel Member Name"
+            name="pannelMemberName"
+            isReadOnly={true}
+            value={memberPannelName || pannelMemberName}
+            handleChange={(e) => setPannelMemberName(e.target.value)}
+          />
+
+          <FormRow
+            type="email"
+            labelText="Pannel Member Email"
+            name="pannelMemberEmail"
+            isReadOnly={true}
+            value={memberPannelEmail || pannelMemberEmail}
+            handleChange={(e) => setPannelMemberEmail(e.target.value)}
+          />
+
+          <FormRow
+            type="text"
+            labelText=" panel Topic Evaluation Status"
+            name="pannelMemberTopic"
+            isReadOnly={true}
+            value={memberPannelTopic || pannelMemberTopic}
+            handleChange={(e) => setPannelMemberTopic(e.target.value)}
           />
 
           <div className="btn-container">

@@ -83,6 +83,11 @@ import {
   GET_MESSAGES_SUCCESS,
   GET_EVALUATION_GROUP_BEGIN,
   GET_EVALUATION_GROUP_SUCCESS
+  UPDATE_PANEL_ADMIN_ERROR,
+  UPDATE_PANEL_ADMIN_SUCCESS,
+  UPDATE_PANEL_ADMIN_BEGIN,
+  CLEAR_FILTER_STUDENT,
+  CLEAR_FILTER_STUDENTSUPERVISOR,
 
 
 } from "./actions";
@@ -122,6 +127,9 @@ export const initialState = {
   memberemailFour: "",
   membersupervisor: "pending",
   membercoSupervisor: "pending",
+  memberPannelName: "pending",
+  memberPannelEmail: "pending",
+  memberPannelTopic: "pending",
   memberTopic: "",
   memberisRegister: false,
   StudentGroups: [],
@@ -137,6 +145,20 @@ export const initialState = {
   supervisorGroup: [],
   messages:[],
   evaluationGroup:[],
+
+  empType: ["supervisor", "co-supervisor"],
+  empStatus: ["available", "not-available"],
+  searchStudent: "",
+  searchStatusStudent: "all",
+  searchTypeStudent: "all",
+  sortStudent: "a-z",
+  sortOptionStudent: ["a-z", "z-a"],
+
+  searchStudentsupervisor: "",
+  searchStatusStudentsupervisor: "all",
+  searchTypeStudentsupervisor: "all",
+  sortStudentsupervisor: "a-z",
+  sortOptionStudentsupervisor: ["a-z", "z-a"],
 
   search: "",
   searchType: "all",
@@ -465,12 +487,21 @@ const AppProvider = ({ children }) => {
 
   //get all supervisor student
   const getAllSupervisor = async () => {
+    const {
+      searchStudentsupervisor,
+      searchStatusStudentsupervisor,
+      sortStudentsupervisor,
+    } = state;
+
+    let url = `/supervisor/supervisorsdetails/details?availability=${searchStatusStudentsupervisor}&sort=${sortStudentsupervisor}`;
+
+    if (searchStudentsupervisor) {
+      url = url + `&search=${searchStudentsupervisor}`;
+    }
+
     dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
-    let sup = "supervisor";
     try {
-      const { data } = await authFetch.get(
-        `/supervisor/supervisorsdetails/${sup}`
-      );
+      const { data } = await authFetch.get(url);
       const { supervisors, totalSupervisors } = data;
 
       dispatch({
@@ -485,13 +516,17 @@ const AppProvider = ({ children }) => {
 
   //get all co-supervisor
   const getAllCoSupervisor = async () => {
+    const { searchStudent, searchStatusStudent, sortStudent } = state;
+    let url = `/cosupervisor/cosupervisorsdetails/details?availability=${searchStatusStudent}&sort=${sortStudent}`;
+    if (searchStudent) {
+      url = url + `&search=${searchStudent}`;
+    }
     dispatch({ type: GET_ALL_COSUPERVISORS_BEGIN });
-    let cosup = "co-supervisor";
+
     try {
-      const { data } = await authFetch.get(
-        `/supervisor/cosupervisors/${cosup}`
-      );
+      const { data } = await authFetch.get(url);
       const { coSupervisors, totalCoSupervisors } = data;
+      console.log(data);
 
       dispatch({
         type: GET_ALL_COSUPERVISORS_SUCCESS,
@@ -544,6 +579,9 @@ const AppProvider = ({ children }) => {
         coSupervisor,
         topic,
         isRegister,
+        panelMemberName,
+        panelMemberEmail,
+        panelTopicEvaluation,
       } = data.data;
 
       dispatch({
@@ -562,6 +600,9 @@ const AppProvider = ({ children }) => {
           coSupervisor,
           topic,
           isRegister,
+          panelMemberName,
+          panelMemberEmail,
+          panelTopicEvaluation,
         },
       });
       addStudentDetailsToLocalStorage({ membergroupID: groupID });
@@ -686,6 +727,17 @@ const AppProvider = ({ children }) => {
     } catch (error) {}
   };
 
+  //set edit topic when rejected this will be updated in request collection by pannel member(student part)
+
+  const editTopicPannel = async ({ groupID, topic }) => {
+    try {
+      const { response } = await authFetch.patch(
+        `requests//panneltopic/${groupID}`,
+        { topic }
+      );
+    } catch (error) {}
+  };
+
   //get all Student Groups
   const getAllStudents = async () => {
     let url = "/students";
@@ -795,7 +847,10 @@ const AppProvider = ({ children }) => {
         });
         // console.log(updateReq.data);
 
-        const updateCount = await axios.patch(`/api/v1/supervisor/${data[0]._id}`, { count:data[0].count+1,availability:'not-available' })
+        const updateCount = await axios.patch(
+          `/api/v1/supervisor/${data[0]._id}`,
+          { count: data[0].count + 1, availability: "not-available" }
+        );
 
         // console.log(updateCount);
         dispatch({
@@ -817,10 +872,6 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
-
-  
-
-
 
   // co supervisor begin
   // add co-supervisor
@@ -868,7 +919,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   //delete specific Co-Supervise
   const navv = useNavigate();
   const deleteCoSupervise = async (sid, user) => {
@@ -888,18 +938,30 @@ const AppProvider = ({ children }) => {
       console.log(error);
     }
 
-    clearAlert()
-  }
+    clearAlert();
+  };
 
   //edit specific supervise
-  const editCoSupervise = async ({ name, email, type, field, userId, count }) => {
-    dispatch({ type: UPDATE_SUPERVISE_BEGIN })
+  const editCoSupervise = async ({
+    name,
+    email,
+    type,
+    field,
+    userId,
+    count,
+  }) => {
+    dispatch({ type: UPDATE_SUPERVISE_BEGIN });
     try {
       await axios.patch(`/api/v1/cosupervisor/${state.editSuperviseId}`, {
-        name, email, type, field, userId, count
-    })
+        name,
+        email,
+        type,
+        field,
+        userId,
+        count,
+      });
 
-      dispatch({type: UPDATE_SUPERVISE_SUCCESS})
+      dispatch({ type: UPDATE_SUPERVISE_SUCCESS });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({
@@ -907,36 +969,50 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-    clearAlert()
-    getCoSupervise(state.user._id)
-  }
+    clearAlert();
+    getCoSupervise(state.user._id);
+  };
 
   //supervisor fetch request (supervisor dashboard)
   const getStudentCoGroupReq = async () => {
     try {
-      const response = await axios.get(`api/v1/corequests/cosupervisors/${state.user.email}`);
-      const {request}  = response.data;
-      dispatch({type:REQUEST_FOR_SUPERVISOR_SUCCESS, payload:{request:request}})
-    }catch(error){
+      const response = await axios.get(
+        `api/v1/corequests/cosupervisors/${state.user.email}`
+      );
+      const { request } = response.data;
+      dispatch({
+        type: REQUEST_FOR_SUPERVISOR_SUCCESS,
+        payload: { request: request },
+      });
+    } catch (error) {
       console.log(error);
     }
   };
 
   //supervisor dashboard
 
-
-
-  const acceptStudentCoGroupReq = async (gid,rid) => {
+  const acceptStudentCoGroupReq = async (gid, rid) => {
     try {
-      const response = await axios.get(`/api/v1/cosupervisor/${state.user._id}`);
-      const data = response.data
+      const response = await axios.get(
+        `/api/v1/cosupervisor/${state.user._id}`
+      );
+      const data = response.data;
       // console.log(data[0].count);
-      if(data[0].count===0){
-        const accept = await axios.patch(`/api/v1/students/groupCoSupervisor/${gid}`,{"cosupervisor":state.user.name})
+      if (data[0].count === 0) {
+        const accept = await axios.patch(
+          `/api/v1/students/groupCoSupervisor/${gid}`,
+          { cosupervisor: state.user.name }
+        );
         // console.log(accept.data);
-        const updateReq = await axios.patch(`/api/v1/corequests/cosupervisors/${rid}`,{"status":"accepted"})
+        const updateReq = await axios.patch(
+          `/api/v1/corequests/cosupervisors/${rid}`,
+          { status: "accepted" }
+        );
         // console.log(updateReq.data);
-        const updateCount = await axios.patch(`/api/v1/cosupervisor/${data[0]._id}`, { count:data[0].count+1,availability:'not-available' })
+        const updateCount = await axios.patch(
+          `/api/v1/cosupervisor/${data[0]._id}`,
+          { count: data[0].count + 1, availability: "not-available" }
+        );
         // console.log(updateCount);
         dispatch({
           type: ACCEPT_REQUEST_SUCCESS,
@@ -959,6 +1035,7 @@ const AppProvider = ({ children }) => {
   };
 
   //supervisor dashboard
+
   const rejectStudentGroupReq = async (rid) => {
     try {
       const updateReq = await axios.patch(`/api/v1/requests/${rid}`, {
@@ -981,6 +1058,7 @@ const AppProvider = ({ children }) => {
         `/api/v1/students/groupSupervisor/${sName}`
       );
       const { group } = response.data;
+
       dispatch({ type: GET_SUPERVISOR_GROUP_SUCCESS, payload: {group} });
       }catch(error){
         console.log(error);
@@ -988,21 +1066,29 @@ const AppProvider = ({ children }) => {
   }
   const rejectStudentCoGroupReq =async (rid) => {
     try {
-      const updateReq = await axios.patch(`/api/v1/corequests/cosupervisors/${rid}`,{"status":"declined"})
-      dispatch({type:DECLINED_REQUEST_SUCCESS,payload:{msg:'Request declined !!'}})
+      const updateReq = await axios.patch(
+        `/api/v1/corequests/cosupervisors/${rid}`,
+        { status: "declined" }
+      );
+      dispatch({
+        type: DECLINED_REQUEST_SUCCESS,
+        payload: { msg: "Request declined !!" },
+      });
     } catch (error) {
       console.log(error);
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
 
   // get co-supervisor group
-  const getCoSupervisorGroup = async (sName) =>{
 
-    try{
-      dispatch({type:GET_SUPERVISOR_GROUP_BEGIN})
-      const response = await axios.get(`/api/v1/students/groupCoSupervisor/${sName}`)
-      const {group}  = response.data;
+  const getCoSupervisorGroup = async (sName) => {
+    try {
+      dispatch({ type: GET_SUPERVISOR_GROUP_BEGIN });
+      const response = await axios.get(
+        `/api/v1/students/groupCoSupervisor/${sName}`
+      );
+      const { group } = response.data;
 
       console.log(group);
       dispatch({ type: GET_SUPERVISOR_GROUP_SUCCESS, payload: { group } });
@@ -1023,6 +1109,7 @@ const AppProvider = ({ children }) => {
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTER });
   };
+
 
   const getMessages = async (gid) => {
     try {
@@ -1090,6 +1177,37 @@ const AppProvider = ({ children }) => {
     getEvaluationGroup(email)
   };
 
+  //add panel members
+  const addPanelMember = async (pmEmail, pmName, _id) => {
+    dispatch({ type: UPDATE_PANEL_ADMIN_BEGIN });
+    try {
+      await authFetch.patch(`/users/studentGroup/${_id}`, {
+        panelMemberEmail: pmEmail,
+        panelMemberName: pmName,
+      });
+      dispatch({ type: UPDATE_PANEL_ADMIN_SUCCESS });
+      getAllStudents();
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: UPDATE_USER_ADMIN_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+
+  };
+    //clear filter student
+  const clearFiltersStudent = () => {
+    dispatch({ type: CLEAR_FILTER_STUDENT });
+  }
+
+  //clear filter student supervisor
+  const clearFiltersStudentSupervisor = () => {
+    dispatch({ type: CLEAR_FILTER_STUDENTSUPERVISOR });
+
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -1145,7 +1263,10 @@ const AppProvider = ({ children }) => {
         getEvaluationGroup,
         evaluate_AcceptTopic,
         evaluate_RejectTopic
-
+        addPanelMember,
+        clearFiltersStudent,
+        editTopicPannel,
+        clearFiltersStudentSupervisor,
 
       }}
     >

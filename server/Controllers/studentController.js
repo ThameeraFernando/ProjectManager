@@ -69,6 +69,7 @@ const updateTopic = async (req, res) => {
   const groups = await Groups.findOne({ groupID: Gid });
 
   groups.topic = topic;
+  groups.panelTopicEvaluation = "pending";
 
   await groups.save();
 
@@ -95,9 +96,9 @@ const updateSupervisor = async (req, res) => {
 };
 
 //by Supervisor
-const getSupervisorGroup = async (req,res)=>{
-  const { groupID:supervisor } = req.params;
- 
+const getSupervisorGroup = async (req, res) => {
+  const { groupID: supervisor } = req.params;
+
   console.log(supervisor);
 
   if (!supervisor) {
@@ -107,7 +108,7 @@ const getSupervisorGroup = async (req,res)=>{
   const group = await Groups.findOne({ supervisor: supervisor });
 
   res.status(StatusCodes.OK).json({ group });
-}
+};
 
 //by Panel Member
 const getEvaluationGroup = async (req,res)=>{
@@ -147,7 +148,7 @@ const evaluateGroup = async (req, res) => {
 //by co-supervisor
 const updateCoSupervisor = async (req, res) => {
   const { groupID: Gid } = req.params;
-  const { cosupervisor } = req.body; // by frontend supervisor or cosupervisor 
+  const { cosupervisor } = req.body; // by frontend supervisor or cosupervisor
   // console.log(supervisor);
 
   if (!Gid || !cosupervisor) {
@@ -164,9 +165,9 @@ const updateCoSupervisor = async (req, res) => {
 };
 
 //by co-Supervisor
-const getCoSupervisorGroup = async (req,res)=>{
-  const { groupID:supervisor } = req.params;
- 
+const getCoSupervisorGroup = async (req, res) => {
+  const { groupID: supervisor } = req.params;
+
   // console.log(supervisor);
 
   if (!supervisor) {
@@ -176,7 +177,7 @@ const getCoSupervisorGroup = async (req,res)=>{
   const group = await Groups.findOne({ coSupervisor: supervisor });
 
   res.status(StatusCodes.OK).json({ group });
-}
+};
 
 module.exports = {
   groupRegister,
@@ -189,4 +190,5 @@ module.exports = {
   updateCoSupervisor,
   getEvaluationGroup,
   evaluateGroup
+
 };

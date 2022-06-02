@@ -14,13 +14,16 @@ const CoSupervisorContainer = () => {
     getRequestGroupDetails,
     showAlert,
     getRequestCoSupervisor,
+    searchStudent,
+    searchStatusStudent,
+    sortStudent,
   } = useAppContext();
 
-  var reqStatus;
   useEffect(() => {
     getAllCoSupervisor();
     getRequestCoSupervisor();
-  }, []);
+    console.log(coSupervisors);
+  }, [searchStudent, searchStatusStudent, sortStudent]);
 
   if (isLoading) {
     return <Loading center />;
@@ -28,7 +31,7 @@ const CoSupervisorContainer = () => {
   if (coSupervisors.length === 0) {
     return (
       <Wrapper>
-        <h2>No Users to display.</h2>
+        <h2>No Co-supervisors to display.</h2>
       </Wrapper>
     );
   }
@@ -48,7 +51,7 @@ const CoSupervisorContainer = () => {
               type={coSupervisorlk.type}
               email={coSupervisorlk.email}
               availability={coSupervisorlk.availability}
-              field={coSupervisorlk.coSupervisorlk}
+              field={coSupervisorlk.field}
               // reqNewStatus={reqStatus}
             />
           );

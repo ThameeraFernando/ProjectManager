@@ -33,9 +33,32 @@ const createSupervisor = async (req, res) => {
 
 //student
 const getAllSupervisor = async (req, res) => {
-  const { type: worktype } = req.params;
+  // const { type: worktype } = req.params;
 
-  const supervisors = await Supervisor.find({ type: worktype });
+  const { search, availability, sort } = req.query;
+
+  const qobject = {};
+
+  if (availability && availability !== "all") {
+    qobject.availability = availability;
+  }
+
+  if (search) {
+    qobject.field = { $regex: search, $options: "i" };
+  }
+
+  let qresult = Supervisor.find(qobject);
+
+  if (sort === "a-z") {
+    qresult = qresult.sort("name");
+  }
+
+  if (sort === "z-a") {
+    qresult = qresult.sort("-name");
+  }
+
+  const supervisors = await qresult;
+
   res
     .status(StatusCodes.OK)
     .json({ supervisors, totalSupervisors: supervisors.length });
@@ -61,15 +84,12 @@ const UpdateSupervisor = async (req, res) => {
   // const { id: sid } = req.params;
   // const { name, email, field, type } = req.body;
 
+  const { id: sid } = req.params;
+  const { name, email, field, type, count, availability } = req.body;
 
-
-    const { id: sid } = req.params;
-    const {name,email,field,type,count,availability} = req.body 
-    
-    // if(!type || !field ){
-    //     throw new BadRequestError('Please provide all values')
-    // }
-
+  // if(!type || !field ){
+  //     throw new BadRequestError('Please provide all values')
+  // }
 
   // if(!type || !field ){
   //     throw new BadRequestError('Please provide all values')
@@ -126,36 +146,36 @@ const deleteSupervisor = async (req, res) => {
 
 //get core supervisors to the student page
 
-const getCoSupervisors = async (req, res) => {
-  const { type: worktype } = req.params;
-  const { search, availability } = req.query;
+// const getCoSupervisors = async (req, res) => {
+//   const { type: worktype } = req.params;
+//   const { search, availability } = req.query;
 
-  const qobject = {
-    type: worktype,
-  };
+//   const qobject = {
+//     type: worktype,
+//   };
 
-  if (availability !== "all") {
-    qobject.availability = availability;
-  }
+//   if (availability !== "all") {
+//     qobject.availability = availability;
+//   }
 
-  if (search) {
-    qobject.field = search;
-  }
+//   if (search) {
+//     qobject.field = search;
+//   }
 
-  let qresult = Supervisor.find(qobject);
+//   let qresult = Supervisor.find(qobject);
 
-  const coSupervisors = await qresult;
+//   const coSupervisors = await qresult;
 
-  // if (!coSupervisors) {
-  //   throw new NotFoundError();
-  // }
+//   // if (!coSupervisors) {
+//   //   throw new NotFoundError();
+//   // }
 
-  res
+//   res
 
-    .status(StatusCodes.OK)
+//     .status(StatusCodes.OK)
 
-    .json({ coSupervisors, totalCoSupervisors: coSupervisors.length });
-};
+//     .json({ coSupervisors, totalCoSupervisors: coSupervisors.length });
+// };
 
 module.exports = {
   getAllSupervisor,
@@ -163,5 +183,4 @@ module.exports = {
   deleteSupervisor,
   createSupervisor,
   getSpecificSupervisor,
-  getCoSupervisors,
 };

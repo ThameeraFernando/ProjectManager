@@ -81,6 +81,12 @@ import {
   GET_MESSAGES_SUCCESS,
   GET_EVALUATION_GROUP_BEGIN,
   GET_EVALUATION_GROUP_SUCCESS,
+  UPDATE_PANEL_ADMIN_ERROR,
+  UPDATE_PANEL_ADMIN_SUCCESS,
+  UPDATE_PANEL_ADMIN_BEGIN,
+  CLEAR_FILTER_STUDENT,
+  CLEAR_FILTER_STUDENTSUPERVISOR,
+
 
 } from "./actions";
 import Submission from "../components/Submission";
@@ -434,6 +440,9 @@ const reducer = (state, action) => {
       membercoSupervisor: action.payload.coSupervisor,
       memberTopic: action.payload.topic,
       memberisRegister: action.payload.isRegister,
+      memberPannelName: action.payload.panelMemberName,
+      memberPannelEmail: action.payload.panelMemberEmail,
+      memberPannelTopic: action.payload.panelTopicEvaluation,
     };
   }
   //get all student groups
@@ -716,6 +725,7 @@ const reducer = (state, action) => {
     };
   }
 
+
   if (action.type === GET_MESSAGES_SUCCESS) {
     return {
       ...state,
@@ -736,6 +746,56 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       evaluationGroup: action.payload.group,
+    };
+  }
+  //admin update student group
+
+  if (action.type === UPDATE_PANEL_ADMIN_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_PANEL_ADMIN_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Panel Member Updated",
+    };
+  }
+  if (action.type === UPDATE_PANEL_ADMIN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+
+
+  //clear filter
+
+  if (action.type === CLEAR_FILTER_STUDENT) {
+    return {
+      ...state,
+      sortStudent: "a-z",
+      searchStudent: "",
+      searchTypeStudent: "all",
+      searchStatusStudent: "all",
+    };
+  }
+
+  //clear filter student supervisor
+  if (action.type === CLEAR_FILTER_STUDENTSUPERVISOR) {
+    return {
+      ...state,
+      sortStudentsupervisor: "a-z",
+      searchStudentsupervisor: "",
+      searchTypeStudentsupervisor: "all",
+      searchStatusStudentsupervisor: "all",
     };
   }
 

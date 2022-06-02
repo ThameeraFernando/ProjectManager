@@ -109,25 +109,16 @@ const studentSchema = new Schema(
     },
 
     panelMemberName: {
-
       type: String,
-
       default: "pending",
-
     },
-
     panelMemberEmail: {
-
       type: String,
-
       default: "pending",
-
     },
-
     panelTopicEvaluation: {
-
       type: String,
-
+      enum: ["pending", "accepted", "declined"],
       default: "pending",
 
     },

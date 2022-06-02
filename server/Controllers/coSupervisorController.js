@@ -33,11 +33,41 @@ const createCoSupervisor = async (req, res) => {
 
 //student
 const getAllCoSupervisor = async (req, res) => {
-  const { type: worktype } = req.params;
-  const cosupervisors = await CoSupervisor.find({ type: worktype });
+  // const { type: worktype } = req.params;
+  // const coSupervisors = await CoSupervisor.find({});
+  // res
+  //   .status(StatusCodes.OK)
+  //   .json({ coSupervisors, totalCoSupervisors: coSupervisors.length });
+
+  const { search, availability, sort } = req.query;
+
+  const qobject = {};
+
+  if (availability && availability !== "all") {
+    qobject.availability = availability;
+  }
+
+  if (search) {
+    qobject.field = { $regex: search, $options: "i" };
+  }
+
+  let qresult = CoSupervisor.find(qobject);
+
+  if (sort === "a-z") {
+    qresult = qresult.sort("name");
+  }
+
+  if (sort === "z-a") {
+    qresult = qresult.sort("-name");
+  }
+
+  const coSupervisors = await qresult;
+
   res
+
     .status(StatusCodes.OK)
-    .json({ cosupervisors, totalSupervisors: cosupervisors.length });
+
+    .json({ coSupervisors, totalCoSupervisors: coSupervisors.length });
 };
 
 const getSpecificCoSupervisor = async (req, res) => {
@@ -60,34 +90,37 @@ const UpdateCoSupervisor = async (req, res) => {
   // const { id: sid } = req.params;
   // const { name, email, field, type } = req.body;
 
-    const { id: sid } = req.params;
-    const {name,email,field,type,count,availability} = req.body 
-    
-    // if(!type || !field ){
-    //     throw new BadRequestError('Please provide all values')
-    // }
+  const { id: sid } = req.params;
+  const { name, email, field, type, count, availability } = req.body;
 
+  // if(!type || !field ){
+  //     throw new BadRequestError('Please provide all values')
+  // }
 
   const cosupervise = await CoSupervisor.findOne({ _id: sid });
 
-    if(!cosupervise){
-        throw new NotFoundError(`No Co-supervisor with id :${sid}`)
-    }
+  if (!cosupervise) {
+    throw new NotFoundError(`No Co-supervisor with id :${sid}`);
+  }
 
-    const isRequested = await CoRequest.find({coSupervisorEmail:email}) 
-    // console.log(isRequested);    
-    if(isRequested.length>0){
-        return res.status(StatusCodes.METHOD_NOT_ALLOWED).send({ msg: "You are requested!" });
-    }else{
-        const updateCoSupervise = await CoSupervisor.findOneAndUpdate({_id:sid},req.body,{
-            new: true,
-            runValidators:true
-        })
-    
-        res.status(StatusCodes.OK).json({updateCoSupervise})
-    }
-    
+  const isRequested = await CoRequest.find({ coSupervisorEmail: email });
+  // console.log(isRequested);
+  if (isRequested.length > 0) {
+    return res
+      .status(StatusCodes.METHOD_NOT_ALLOWED)
+      .send({ msg: "You are requested!" });
+  } else {
+    const updateCoSupervise = await CoSupervisor.findOneAndUpdate(
+      { _id: sid },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
+    res.status(StatusCodes.OK).json({ updateCoSupervise });
+  }
 };
 
 const deleteCoSupervisor = async (req, res) => {

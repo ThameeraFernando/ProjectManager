@@ -14,6 +14,6 @@ router
   .get(getSpecificCoSupervisor)
   .patch(UpdateCoSupervisor)
   .delete(deleteCoSupervisor);
-router.route("/cosupervisorsdetails/:type").get(getAllCoSupervisor);
+router.route("/cosupervisorsdetails/details").get(getAllCoSupervisor);
 
 module.exports = router;

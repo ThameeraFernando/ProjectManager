@@ -15,7 +15,8 @@ router
   .get(getSpecificSupervisor)
   .patch(UpdateSupervisor)
   .delete(deleteSupervisor);
-router.route("/cosupervisors/:type").get(getCoSupervisors);
-router.route("/supervisorsdetails/:type").get(getAllSupervisor);
+// router.route("/cosupervisors/:type").get(getCoSupervisors);
+router.route("/supervisorsdetails/details").get(getAllSupervisor);
+// router.route("/supervisorsdetails/:type").get(getAllSupervisor); -test
 
 module.exports = router;
