@@ -17,11 +17,14 @@ const CoSupervisorContainer = () => {
     searchStudent,
     searchStatusStudent,
     sortStudent,
+    getRequestSupervisor,
+    requestCoGroups,
   } = useAppContext();
 
   useEffect(() => {
     getAllCoSupervisor();
     getRequestCoSupervisor();
+    getRequestSupervisor();
     console.log(coSupervisors);
   }, [searchStudent, searchStatusStudent, sortStudent]);
 
@@ -40,8 +43,12 @@ const CoSupervisorContainer = () => {
     <Wrapper>
       <h4>
         {totalCoSupervisors} Co-Supervisor{coSupervisors.length > 1 && "s"}
-        <h5>{showAlert && <Alert />}</h5>
       </h4>
+
+      <h5 hidden={requestCoGroups.length >= 1}>
+        Supervisor requests are based on first come first serve
+      </h5>
+      {/* <h4>{showAlert && <Alert />}</h4> */}
       <div className="jobs">
         {coSupervisors.map((coSupervisorlk) => {
           return (

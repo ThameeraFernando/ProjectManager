@@ -53,6 +53,7 @@ const CoSupervisor = (props) => {
                 <button
                   type="button"
                   className="btn edit-btn"
+                  hidden={availability === "not-available"}
                   onClick={() => requestCoSupervisor(email, name)}
                 >
                   Request

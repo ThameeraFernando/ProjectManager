@@ -298,7 +298,7 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: "success",
-      alertText: "Group register successfully completed",
+      alertText: "Research group registration successfully completed",
     };
   }
 

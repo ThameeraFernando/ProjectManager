@@ -597,6 +597,7 @@ const AppProvider = ({ children }) => {
       });
       addStudentDetailsToLocalStorage({ membergroupID: groupID });
     } catch (error) {}
+    clearAlert();
   };
 
   //request supervisor
@@ -722,7 +723,18 @@ const AppProvider = ({ children }) => {
   const editTopicPannel = async ({ groupID, topic }) => {
     try {
       const { response } = await authFetch.patch(
-        `requests//panneltopic/${groupID}`,
+        `requests/panneltopic/${groupID}`,
+        { topic }
+      );
+    } catch (error) {}
+  };
+
+  //set edit topic when rejected this will be updated in corequest(co-supervisor) collection by pannel member(student part)
+
+  const editTopicPannelCo = async ({ groupID, topic }) => {
+    try {
+      const { response } = await authFetch.patch(
+        `corequests/panneltopicup/${groupID}`,
         { topic }
       );
     } catch (error) {}
@@ -1161,6 +1173,7 @@ const AppProvider = ({ children }) => {
         clearFiltersStudent,
         editTopicPannel,
         clearFiltersStudentSupervisor,
+        editTopicPannelCo,
       }}
     >
       {children}

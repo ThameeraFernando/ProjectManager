@@ -7,8 +7,6 @@ const studentSchema = new Schema(
     groupID: {
       type: String,
       required: [true, "please provide Group ID."],
-      maxlength: 10,
-      minlength: 3,
       unique: true,
     },
 

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from "moment";
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
@@ -31,32 +30,34 @@ const StudentResearchReq = ({
 
   let statusText = "";
   let isRejected;
+  let colorlk;
 
   if (status === "pending") {
     isRejected = true;
-    statusText = "** your supervisor request is still pending **";
+    statusText = "Your supervisor request is still pending";
   } else if (status === "accepted") {
-    statusText = "your supervisor request accepted";
+    statusText = "your supervisor request is accepted";
     isRejected = true;
   } else {
-    statusText = "your requst is rejected try another topic";
+    statusText =
+      "your requst is rejected by your supervisor, try another topic and re-submit it";
     isRejected = false;
+    colorlk = "red";
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     const topic = newTopic;
     editTopic({ groupID, topic });
     editTopicRequest({ groupID, topic });
-    console.log(groupID, topic);
+    // console.log(groupID, topic);
   };
 
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <br />
-        <h5>{statusText}</h5>
-        {showAlert && <Alert />}
+        <h5 style={{ color: colorlk }}>{statusText} </h5>
+        {/* {showAlert && <Alert />} */}
 
         <div className="form-center">
           {/*Group ID*/}
@@ -72,7 +73,7 @@ const StudentResearchReq = ({
           <FormRow
             type="text"
             labelText="Topic"
-            name="itNumOne"
+            name="topic"
             value={topic}
             isReadOnly={true}
           />
@@ -81,21 +82,21 @@ const StudentResearchReq = ({
           <FormRow
             type="text"
             labelText="Status"
-            name="itNumTwo"
+            name="status"
             value={status}
             isReadOnly={true}
           />
           <FormRow
             type="text"
-            labelText="Super name"
-            name="itNumTwo"
+            labelText="Supervisor Name"
+            name="supervisorName"
             value={supervisorName}
             isReadOnly={true}
           />
           <FormRow
             type="text"
-            labelText="suoer email"
-            name="itNumTwo"
+            labelText="Supervisor Email"
+            name="supervisorEmail"
             value={supervisorEmail}
             isReadOnly={true}
           />
@@ -106,6 +107,7 @@ const StudentResearchReq = ({
             name="newTopic"
             value={newTopic}
             isHidden={isRejected}
+            color="Red"
             handleChange={(e) => setNewTopic(e.target.value)}
           />
 

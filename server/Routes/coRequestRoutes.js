@@ -4,12 +4,14 @@ const {
   createCoRequest,
   studentGetCoRequest,
   coSupervisorGetRequest,
-  coSupervisorUpdateRequest
+  coSupervisorUpdateRequest,
+  topicUpdatePannelCo,
 } = require("../Controllers/coRequestController");
 
 router.route("/").post(createCoRequest);
 router.route("/:gid").get(studentGetCoRequest);
 router.route("/cosupervisors/:sid").get(coSupervisorGetRequest);
 router.route("/cosupervisors/:id").patch(coSupervisorUpdateRequest);
+router.route("/panneltopicup/:groupID").patch(topicUpdatePannelCo);
 
 module.exports = router;

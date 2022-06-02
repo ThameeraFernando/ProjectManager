@@ -25,7 +25,7 @@ const StudentResearchCoReq = ({
     isRejected = false;
     statusText = "your co-supervisor request is still pending";
   } else if (status === "accepted") {
-    statusText = "your co-supervisor request accpeted";
+    statusText = "your co-supervisor request is accpeted";
     isRejected = true;
   } else {
     statusText = "your co-supervisor request rejected";
@@ -37,7 +37,7 @@ const StudentResearchCoReq = ({
       <form className="form">
         <br />
         <h5>{statusText} </h5>
-        {showAlert && <Alert />}
+        {/* {showAlert && <Alert />} */}
 
         <div className="form-center">
           {/*Group ID*/}
