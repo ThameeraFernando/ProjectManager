@@ -30,6 +30,7 @@ const StudnetGroup = () => {
     memberPannelName,
     memberPannelTopic,
     memberPannelEmail,
+    clearStudentValues,
   } = useAppContext();
 
   const [groupID, setGroupID] = useState(membergroupID);
@@ -53,7 +54,7 @@ const StudnetGroup = () => {
   }, []);
 
   const handleSubmit = (e) => {
-    //e.preventDefault();
+    e.preventDefault();
 
     if (
       !groupID ||
@@ -261,19 +262,13 @@ const StudnetGroup = () => {
             >
               submit
             </button>
-            <button
-              className="btn btn-block clear-btn"
-              disabled={isLoading || memberisRegister}
-              hidden={memberisRegister}
-              onClick={(e) => {
-                e.preventDefault();
-                // clearValues();
-              }}
-            >
-              clear
-            </button>
 
-            <Link to="/studentmessage" className="btn edit-btn mt-2">
+            <Link
+              disabled={isLoading || memberisRegister}
+              hidden={!memberisRegister}
+              to="/studentmessage"
+              className="btn edit-btn mt-2"
+            >
               Message
             </Link>
           </div>
