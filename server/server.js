@@ -16,6 +16,7 @@ const studentRouter = require("./Routes/studentRoute");
 const fileRouter = require("./Routes/docRoutes");
 
 const coRequestRouter = require("./Routes/coRequestRoutes");
+const messageRouter = require("./Routes/messageRoutes");
 
 const dotenv = require("dotenv");
 const morgan = require("morgan");
@@ -55,7 +56,8 @@ app.use("/api/v1/cosupervisor", coSupervisorRouter);
 app.use("/api/v1/files", fileRouter);
 app.use("/api/v1/submissions", submissionRouter);
 app.use("/api/v1/requests", requestRouter);
-app.use("/api/v1/corequests", coRequestRouter); //coSupervisor request
+app.use("/api/v1/corequests", coRequestRouter);
+app.use("/api/v1/message", messageRouter); //coSupervisor request
 
 //student routes
 app.use("/api/v1/students", studentRouter);

@@ -28,6 +28,11 @@ import StudentCoRequestList from "./StudentCoRequestList";
 import CoSupervisorGroup from "./CoSupervisorGroup";
 
 import MyDocuments from "./MyDocuments";
+import SupervisorMessage from "./SupervisorMessage";
+import EvaluationPanel from "./EvaluationPanel";
+import CoSupervisorMessage from "./CoSuperviosrMessage";
+import StudentMessage from "./StudentMessage";
+
 
 export {
   DownloadFile,
@@ -56,7 +61,11 @@ export {
   CoSupervisorHome,
   CoSupervise,
   StudentCoRequestList,
-  CoSupervisorGroup
+  CoSupervisorGroup,
+  SupervisorMessage,
+  EvaluationPanel,
+  CoSupervisorMessage,
+  StudentMessage
   
 
 

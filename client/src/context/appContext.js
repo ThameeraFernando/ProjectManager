@@ -80,11 +80,15 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  GET_MESSAGES_SUCCESS,
+  GET_EVALUATION_GROUP_BEGIN,
+  GET_EVALUATION_GROUP_SUCCESS
   UPDATE_PANEL_ADMIN_ERROR,
   UPDATE_PANEL_ADMIN_SUCCESS,
   UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
   CLEAR_FILTER_STUDENTSUPERVISOR,
+
 
 } from "./actions";
 const user = localStorage.getItem("user");
@@ -139,6 +143,8 @@ export const initialState = {
   totalCoSupervisors: [],
   studentRequests: [],
   supervisorGroup: [],
+  messages:[],
+  evaluationGroup:[],
 
   empType: ["supervisor", "co-supervisor"],
   empStatus: ["available", "not-available"],
@@ -1052,11 +1058,13 @@ const AppProvider = ({ children }) => {
         `/api/v1/students/groupSupervisor/${sName}`
       );
       const { group } = response.data;
-    } catch (error) {
-      console.log(error);
+
+      dispatch({ type: GET_SUPERVISOR_GROUP_SUCCESS, payload: {group} });
+      }catch(error){
+        console.log(error);
     }
-  };
-  const rejectStudentCoGroupReq = async (rid) => {
+  }
+  const rejectStudentCoGroupReq =async (rid) => {
     try {
       const updateReq = await axios.patch(
         `/api/v1/corequests/cosupervisors/${rid}`,
@@ -1103,6 +1111,72 @@ const AppProvider = ({ children }) => {
   };
 
 
+  const getMessages = async (gid) => {
+    try {
+      const response = await axios.get(`api/v1/message/${gid}`);
+      const {messages}  = response.data;
+      dispatch({type:GET_MESSAGES_SUCCESS, payload:{messages:messages}})
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  const sendMessage = async ({sender,message,group}) => {
+    try {
+      const response = await axios.post(`api/v1/message/`,{sender,message,group});
+      const send = response.data;
+      // dispatch({type:GET_MESSAGES_SUCCESS})
+      getMessages(group);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //panel member
+  const getEvaluationGroup = async (email) => {
+    try {
+      dispatch({ type: GET_EVALUATION_GROUP_BEGIN });
+      const response = await axios.get(`/api/v1/students/panelMember/${email}`);
+      const { group } = response.data;
+      console.log(group);
+      dispatch({ type: GET_EVALUATION_GROUP_SUCCESS, payload: {group} });
+      }catch(error){
+        console.log(error);
+    }
+  }
+ 
+  const evaluate_AcceptTopic = async (gid,email) => {
+    try {
+      const evaluate = await axios.patch(`/api/v1/students/panelMember/${gid}`, {
+        panelTopicEvaluation: "accepted",
+      });
+      dispatch({
+        type: ACCEPT_REQUEST_SUCCESS,
+        payload: { msg: "request accepted !" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    clearAlert();
+    getEvaluationGroup(email)
+  };
+
+  const evaluate_RejectTopic = async (gid,email) => {
+    try {
+      const evaluate = await axios.patch(`/api/v1/students/panelMember/${gid}`, {
+        panelTopicEvaluation: "declined",
+      });
+      dispatch({
+        type: DECLINED_REQUEST_SUCCESS,
+        payload: { msg: "Request declined !!" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    clearAlert();
+    getEvaluationGroup(email)
+  };
+
   //add panel members
   const addPanelMember = async (pmEmail, pmName, _id) => {
     dispatch({ type: UPDATE_PANEL_ADMIN_BEGIN });
@@ -1131,6 +1205,7 @@ const AppProvider = ({ children }) => {
   //clear filter student supervisor
   const clearFiltersStudentSupervisor = () => {
     dispatch({ type: CLEAR_FILTER_STUDENTSUPERVISOR });
+
   };
 
   return (
@@ -1183,6 +1258,11 @@ const AppProvider = ({ children }) => {
         acceptStudentCoGroupReq,
         rejectStudentCoGroupReq,
         getCoSupervisorGroup,
+        getMessages,
+        sendMessage,
+        getEvaluationGroup,
+        evaluate_AcceptTopic,
+        evaluate_RejectTopic
         addPanelMember,
         clearFiltersStudent,
         editTopicPannel,

@@ -29,17 +29,17 @@ topic,
 
   } = useAppContext();
 
-  const [isAccepted, setIsAccepted] = useState(false);
-  const [isRejected, setIsRejected] = useState(false);
+  // const [isAccepted, setIsAccepted] = useState(false);
+  // const [isRejected, setIsRejected] = useState(false);
   
-  useEffect(() => {
-    if(status==='accepted'){
-      setIsAccepted(true)
-    }
-    if(status==='declined'){
-      setIsRejected(true)
-    }
-  }, []);
+  // useEffect(() => {
+  //   if(status==='accepted'){
+  //     setIsAccepted(true)
+  //   }
+  //   if(status==='declined'){
+  //     setIsRejected(true)
+  //   }
+  // }, []);
   
  
   // const handleSubmit = (e) => {
@@ -109,10 +109,10 @@ topic,
           />
 
           <div className="btn-container">
-            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} disabled={isAccepted}>
+            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} >
               Accept
             </button>
-            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject} disabled={isRejected}>
+            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject} >
               Reject
             </button>
           </div>

@@ -31,9 +31,10 @@ import {
   CoSupervise,
   StudentCoRequestList,
   CoSupervisorGroup,
-
-
-
+  SupervisorMessage,
+  EvaluationPanel,
+  CoSupervisorMessage,
+  StudentMessage
 
 } from "./pages/dashboard/index";
 function App() {
@@ -82,7 +83,11 @@ function App() {
               <Route path="cosupervise" element={<CoSupervise />} />
               <Route path="studentcorequsets" element={<StudentCoRequestList />} />
               <Route path="cosupervisorgroup" element={<CoSupervisorGroup />} />
-
+              <Route path="supervisormessage" element={<SupervisorMessage />} />
+              <Route path="evaluationpanel" element={<EvaluationPanel />} /> {/* panel member */}
+              <Route path="cosupervisormessage" element={<CoSupervisorMessage />} />
+              <Route path="studentmessage" element={<StudentMessage />} />
+              
               <Route
                 path="student-research-request"
                 element={<StudentResearchRequest />}

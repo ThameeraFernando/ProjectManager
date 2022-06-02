@@ -107,6 +107,7 @@ const studentSchema = new Schema(
       type: String,
       required: [true, "please provide topic."],
     },
+
     panelMemberName: {
       type: String,
       default: "pending",
@@ -119,6 +120,7 @@ const studentSchema = new Schema(
       type: String,
       enum: ["pending", "accepted", "declined"],
       default: "pending",
+
     },
   },
   { timestamps: true }

@@ -6,6 +6,8 @@ import { MdEmail } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
 import Loading from "../../components/Loading";
 import { GiTeacher } from "react-icons/gi";
+import { Link } from "react-router-dom";
+
 
 const SupervisorGroup = () => {
     const { getSupervisorGroup, supervisorGroup, isLoading,user } = useAppContext();
@@ -43,9 +45,9 @@ return (
           <SupervisorInfo icon={<GiTeacher />} text={supervisorGroup.coSupervisor} />
         </div>
         <div className="content">
-            <button className="btn btn-success">
-                send message
-            </button>
+            <Link to='/supervisormessage' className="btn edit-btn">
+              Message
+            </Link>
         </div>
       </div>
     </Wrapper>

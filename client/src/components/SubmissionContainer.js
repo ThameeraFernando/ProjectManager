@@ -3,6 +3,7 @@ import { useAppContext } from "../context/appContext";
 import Loading from "./Loading";
 import Submission from "./Submission";
 import Wrapper from "../assets/wrappers/JobsContainer";
+
 const SubmissionContainer = () => {
   const { isLoading, getALlSubmissions, submissions } = useAppContext();
   useEffect(() => {
