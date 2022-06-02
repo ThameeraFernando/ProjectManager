@@ -6,6 +6,15 @@ const ProtectedRoute = ({ children }) => {
   if (!user) {
     return <Navigate to="/landing" />;
   }
+  if (
+    user.type === "Supervisor" ||
+    user.type === "Panel Member" ||
+    user.type === "Co Supervisor"
+  ) {
+    if (!user.isValidStaff) {
+      return <Navigate to="/wait" />;
+    }
+  }
   return children;
 };
 
