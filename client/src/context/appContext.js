@@ -82,7 +82,7 @@ import {
   CLEAR_FILTER,
   GET_MESSAGES_SUCCESS,
   GET_EVALUATION_GROUP_BEGIN,
-  GET_EVALUATION_GROUP_SUCCESS
+  GET_EVALUATION_GROUP_SUCCESS,
   UPDATE_PANEL_ADMIN_ERROR,
   UPDATE_PANEL_ADMIN_SUCCESS,
   UPDATE_PANEL_ADMIN_BEGIN,
@@ -1262,7 +1262,7 @@ const AppProvider = ({ children }) => {
         sendMessage,
         getEvaluationGroup,
         evaluate_AcceptTopic,
-        evaluate_RejectTopic
+        evaluate_RejectTopic,
         addPanelMember,
         clearFiltersStudent,
         editTopicPannel,
