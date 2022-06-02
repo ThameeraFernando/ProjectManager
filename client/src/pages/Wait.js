@@ -15,7 +15,7 @@ export const Wait = () => {
       <>
         <img src={img} alt="not found" />
         <h3>Please wait admin will verify you</h3>
-        <button className="btn" onClick={logoutUser}>
+        <button className="btn ml-3" onClick={logoutUser}>
           logout
         </button>
       </>
