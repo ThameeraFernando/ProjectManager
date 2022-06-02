@@ -8,10 +8,16 @@ const FormRow = ({
   labelText,
   isReadOnly,
   isHidden,
+  color,
 }) => {
   return (
     <div className="form-row">
-      <label htmlFor={name} className="form-label" hidden={isHidden}>
+      <label
+        htmlFor={name}
+        className="form-label"
+        hidden={isHidden}
+        style={{ color: color }}
+      >
         {labelText || name}
       </label>
       <input

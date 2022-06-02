@@ -4,12 +4,15 @@ import {
   SearchContainer,
   StudentResearchCoReqContanier,
   StudentPannelReqContainer,
+  Alert,
 } from "../../components";
+import { useAppContext } from "../../context/appContext";
 
 const StudentResearchRequest = () => {
+  const { showAlert } = useAppContext();
   return (
     <>
-      <SearchContainer />
+      {showAlert && <Alert />}
       <StudentResearchReqContainer />
       <StudentResearchCoReqContanier />
       <StudentPannelReqContainer />

@@ -88,8 +88,6 @@ import {
   UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
   CLEAR_FILTER_STUDENTSUPERVISOR,
-
-
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -143,8 +141,8 @@ export const initialState = {
   totalCoSupervisors: [],
   studentRequests: [],
   supervisorGroup: [],
-  messages:[],
-  evaluationGroup:[],
+  messages: [],
+  evaluationGroup: [],
 
   empType: ["supervisor", "co-supervisor"],
   empStatus: ["available", "not-available"],
@@ -607,6 +605,7 @@ const AppProvider = ({ children }) => {
       });
       addStudentDetailsToLocalStorage({ membergroupID: groupID });
     } catch (error) {}
+    clearAlert();
   };
 
   //request supervisor
@@ -732,7 +731,18 @@ const AppProvider = ({ children }) => {
   const editTopicPannel = async ({ groupID, topic }) => {
     try {
       const { response } = await authFetch.patch(
-        `requests//panneltopic/${groupID}`,
+        `requests/panneltopic/${groupID}`,
+        { topic }
+      );
+    } catch (error) {}
+  };
+
+  //set edit topic when rejected this will be updated in corequest(co-supervisor) collection by pannel member(student part)
+
+  const editTopicPannelCo = async ({ groupID, topic }) => {
+    try {
+      const { response } = await authFetch.patch(
+        `corequests/panneltopicup/${groupID}`,
         { topic }
       );
     } catch (error) {}
@@ -1059,12 +1069,12 @@ const AppProvider = ({ children }) => {
       );
       const { group } = response.data;
 
-      dispatch({ type: GET_SUPERVISOR_GROUP_SUCCESS, payload: {group} });
-      }catch(error){
-        console.log(error);
+      dispatch({ type: GET_SUPERVISOR_GROUP_SUCCESS, payload: { group } });
+    } catch (error) {
+      console.log(error);
     }
-  }
-  const rejectStudentCoGroupReq =async (rid) => {
+  };
+  const rejectStudentCoGroupReq = async (rid) => {
     try {
       const updateReq = await axios.patch(
         `/api/v1/corequests/cosupervisors/${rid}`,
@@ -1110,27 +1120,30 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
-
   const getMessages = async (gid) => {
     try {
       const response = await axios.get(`api/v1/message/${gid}`);
-      const {messages}  = response.data;
-      dispatch({type:GET_MESSAGES_SUCCESS, payload:{messages:messages}})
-    }catch(error){
+      const { messages } = response.data;
+      dispatch({ type: GET_MESSAGES_SUCCESS, payload: { messages: messages } });
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  const sendMessage = async ({sender,message,group}) => {
+  const sendMessage = async ({ sender, message, group }) => {
     try {
-      const response = await axios.post(`api/v1/message/`,{sender,message,group});
+      const response = await axios.post(`api/v1/message/`, {
+        sender,
+        message,
+        group,
+      });
       const send = response.data;
       // dispatch({type:GET_MESSAGES_SUCCESS})
       getMessages(group);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   //panel member
   const getEvaluationGroup = async (email) => {
@@ -1139,17 +1152,20 @@ const AppProvider = ({ children }) => {
       const response = await axios.get(`/api/v1/students/panelMember/${email}`);
       const { group } = response.data;
       console.log(group);
-      dispatch({ type: GET_EVALUATION_GROUP_SUCCESS, payload: {group} });
-      }catch(error){
-        console.log(error);
+      dispatch({ type: GET_EVALUATION_GROUP_SUCCESS, payload: { group } });
+    } catch (error) {
+      console.log(error);
     }
-  }
- 
-  const evaluate_AcceptTopic = async (gid,email) => {
+  };
+
+  const evaluate_AcceptTopic = async (gid, email) => {
     try {
-      const evaluate = await axios.patch(`/api/v1/students/panelMember/${gid}`, {
-        panelTopicEvaluation: "accepted",
-      });
+      const evaluate = await axios.patch(
+        `/api/v1/students/panelMember/${gid}`,
+        {
+          panelTopicEvaluation: "accepted",
+        }
+      );
       dispatch({
         type: ACCEPT_REQUEST_SUCCESS,
         payload: { msg: "request accepted !" },
@@ -1158,14 +1174,17 @@ const AppProvider = ({ children }) => {
       console.log(error);
     }
     clearAlert();
-    getEvaluationGroup(email)
+    getEvaluationGroup(email);
   };
 
-  const evaluate_RejectTopic = async (gid,email) => {
+  const evaluate_RejectTopic = async (gid, email) => {
     try {
-      const evaluate = await axios.patch(`/api/v1/students/panelMember/${gid}`, {
-        panelTopicEvaluation: "declined",
-      });
+      const evaluate = await axios.patch(
+        `/api/v1/students/panelMember/${gid}`,
+        {
+          panelTopicEvaluation: "declined",
+        }
+      );
       dispatch({
         type: DECLINED_REQUEST_SUCCESS,
         payload: { msg: "Request declined !!" },
@@ -1174,7 +1193,7 @@ const AppProvider = ({ children }) => {
       console.log(error);
     }
     clearAlert();
-    getEvaluationGroup(email)
+    getEvaluationGroup(email);
   };
 
   //add panel members
@@ -1195,17 +1214,15 @@ const AppProvider = ({ children }) => {
       });
     }
     clearAlert();
-
   };
-    //clear filter student
+  //clear filter student
   const clearFiltersStudent = () => {
     dispatch({ type: CLEAR_FILTER_STUDENT });
-  }
+  };
 
   //clear filter student supervisor
   const clearFiltersStudentSupervisor = () => {
     dispatch({ type: CLEAR_FILTER_STUDENTSUPERVISOR });
-
   };
 
   return (
@@ -1267,7 +1284,7 @@ const AppProvider = ({ children }) => {
         clearFiltersStudent,
         editTopicPannel,
         clearFiltersStudentSupervisor,
-
+        editTopicPannelCo,
       }}
     >
       {children}

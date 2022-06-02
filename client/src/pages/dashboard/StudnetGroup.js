@@ -53,7 +53,7 @@ const StudnetGroup = () => {
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     if (
       !groupID ||
@@ -97,10 +97,16 @@ const StudnetGroup = () => {
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <h3>
-          {memberisRegister ? "Group Details" : "Resgister Student Group"}
+          {memberisRegister
+            ? "Group Details"
+            : "Resgister Student research Group"}
         </h3>
+        <h5>
+          {memberisRegister
+            ? ""
+            : "GroupID should be - <LeaderITNum_researchfield>"}
+        </h5>
         <br />
-        <h5>You can submit your topic after the </h5>
         {showAlert && <Alert />}
 
         <div className="form-center">
@@ -212,7 +218,7 @@ const StudnetGroup = () => {
           {/*Co-supervisorour*/}
           <FormRow
             type="text"
-            labelText="Co-supervisorour"
+            labelText="Co-supervisor"
             name="coSupervisor"
             isReadOnly={true}
             value={coSupervisor}
@@ -221,7 +227,7 @@ const StudnetGroup = () => {
 
           <FormRow
             type="text"
-            labelText="Pannel Member Name"
+            labelText="Panel Member Name"
             name="pannelMemberName"
             isReadOnly={true}
             value={memberPannelName || pannelMemberName}
@@ -230,7 +236,7 @@ const StudnetGroup = () => {
 
           <FormRow
             type="email"
-            labelText="Pannel Member Email"
+            labelText="Panel Member Email"
             name="pannelMemberEmail"
             isReadOnly={true}
             value={memberPannelEmail || pannelMemberEmail}

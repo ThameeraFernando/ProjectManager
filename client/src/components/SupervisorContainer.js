@@ -44,8 +44,11 @@ const SupervisorContainer = () => {
     <Wrapper>
       <h4>
         {totalSupervisors} Supervisor{supervisors.length > 1 && "s"}
-        <h3>{showAlert && <Alert />}</h3>
       </h4>
+      <h5 hidden={requestGroups.length >= 1}>
+        Co-Supervisor requests are based on first come first serve
+      </h5>
+      <h3>{showAlert && <Alert />}</h3>
       <div className="jobs">
         {supervisors.map((supervisor) => {
           return (

@@ -68,16 +68,38 @@ const coSupervisorUpdateRequest = async (req, res) => {
     throw new NotFoundError(`No request with id :${rid}`);
   }
 
-  const updateRequest = await CoRequest.findOneAndUpdate({ _id: rid }, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const updateRequest = await CoRequest.findOneAndUpdate(
+    { _id: rid },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
   res.status(StatusCodes.OK).json({ updateRequest });
+};
+
+//topic update after by pannel member
+const topicUpdatePannelCo = async (req, res) => {
+  const { groupID: Gid } = req.params;
+  const { topic } = req.body;
+  if (!Gid || !topic) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const groupsRequest = await CoRequest.findOne({ groupID: Gid });
+
+  groupsRequest.topic = topic;
+
+  await groupsRequest.save();
+
+  res.status(StatusCodes.OK).json({ groupsRequest });
 };
 
 module.exports = {
   createCoRequest,
   studentGetCoRequest,
   coSupervisorGetRequest,
-  coSupervisorUpdateRequest
+  coSupervisorUpdateRequest,
+  topicUpdatePannelCo,
 };

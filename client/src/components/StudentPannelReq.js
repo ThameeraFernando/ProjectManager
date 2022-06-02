@@ -19,6 +19,7 @@ const StudentPannelReq = ({
     displayAlert,
     editTopic,
     editTopicPannel,
+    editTopicPannelCo,
     memberTopic,
   } = useAppContext();
 
@@ -29,7 +30,7 @@ const StudentPannelReq = ({
 
   if (memberPannelTopic === "pending") {
     isRejected = true;
-    statusText = "** your Pannel member request is still pending **";
+    statusText = "your Pannel member request is still pending";
   } else if (memberPannelTopic === "accepted") {
     statusText = "your Pannel member request accepted";
     isRejected = true;
@@ -44,6 +45,8 @@ const StudentPannelReq = ({
     const groupID = membergroupID;
     editTopic({ groupID, topic });
     editTopicPannel({ groupID, topic });
+    editTopicPannelCo({ groupID, topic });
+
     console.log(groupID, topic);
   };
 

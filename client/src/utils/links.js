@@ -92,16 +92,17 @@ const links = [
   },
   {
     id: 14,
-    text: "requests",
-    path: "student-research-request",
-    icon: <BiGroup />,
-  },
-  {
-    id: 15,
     text: "co-supervisors",
     path: "co-supervisors",
     icon: <BiGroup />,
   },
+  {
+    id: 15,
+    text: "requests",
+    path: "student-research-request",
+    icon: <BiGroup />,
+  },
+
   {
     id: 16,
     text: "Supervisor Home",
