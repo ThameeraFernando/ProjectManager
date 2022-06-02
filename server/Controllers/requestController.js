@@ -38,6 +38,23 @@ const topicUpdate = async (req, res) => {
   res.status(StatusCodes.OK).json({ groupsRequest });
 };
 
+//topic update after by pannel member
+const topicUpdatePannel = async (req, res) => {
+  const { groupID: Gid } = req.params;
+  const { topic } = req.body;
+  if (!Gid || !topic) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const groupsRequest = await Request.findOne({ groupID: Gid });
+
+  groupsRequest.topic = topic;
+
+  await groupsRequest.save();
+
+  res.status(StatusCodes.OK).json({ groupsRequest });
+};
+
 const studentGetRequest = async (req, res) => {
   let { gid: groupID } = req.params;
 
@@ -126,4 +143,5 @@ module.exports = {
   supervisorGetRequest,
   getGroupDetails,
   topicUpdate,
+  topicUpdatePannel,
 };

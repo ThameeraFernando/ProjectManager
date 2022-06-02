@@ -152,3 +152,6 @@ export const UPDATE_PANEL_ADMIN_BEGIN = "UPDATE_PANEL_ADMIN_BEGIN";
 //clear filter Student
 export const CLEAR_FILTER_STUDENT = "CLEAR_FILTER_STUDENT";
 
+//clear filter StudentSupervisor
+export const CLEAR_FILTER_STUDENTSUPERVISOR = "CLEAR_FILTER_STUDENTSUPERVISOR";
+

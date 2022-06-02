@@ -84,6 +84,7 @@ import {
   UPDATE_PANEL_ADMIN_SUCCESS,
   UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
+  CLEAR_FILTER_STUDENTSUPERVISOR,
 
 } from "./actions";
 const user = localStorage.getItem("user");
@@ -122,6 +123,9 @@ export const initialState = {
   memberemailFour: "",
   membersupervisor: "pending",
   membercoSupervisor: "pending",
+  memberPannelName: "pending",
+  memberPannelEmail: "pending",
+  memberPannelTopic: "pending",
   memberTopic: "",
   memberisRegister: false,
   StudentGroups: [],
@@ -143,6 +147,13 @@ export const initialState = {
   searchTypeStudent: "all",
   sortStudent: "a-z",
   sortOptionStudent: ["a-z", "z-a"],
+
+  searchStudentsupervisor: "",
+  searchStatusStudentsupervisor: "all",
+  searchTypeStudentsupervisor: "all",
+  sortStudentsupervisor: "a-z",
+  sortOptionStudentsupervisor: ["a-z", "z-a"],
+
   search: "",
   searchType: "all",
   searchTypeOptions: ["Admin", "Co Supervisor", "Student", "Supervisor"],
@@ -470,12 +481,21 @@ const AppProvider = ({ children }) => {
 
   //get all supervisor student
   const getAllSupervisor = async () => {
+    const {
+      searchStudentsupervisor,
+      searchStatusStudentsupervisor,
+      sortStudentsupervisor,
+    } = state;
+
+    let url = `/supervisor/supervisorsdetails/details?availability=${searchStatusStudentsupervisor}&sort=${sortStudentsupervisor}`;
+
+    if (searchStudentsupervisor) {
+      url = url + `&search=${searchStudentsupervisor}`;
+    }
+
     dispatch({ type: GET_ALL_SUPERVISORS_BEGIN });
-    let sup = "supervisor";
     try {
-      const { data } = await authFetch.get(
-        "/supervisor/supervisorsdetails/details"
-      );
+      const { data } = await authFetch.get(url);
       const { supervisors, totalSupervisors } = data;
 
       dispatch({
@@ -553,6 +573,9 @@ const AppProvider = ({ children }) => {
         coSupervisor,
         topic,
         isRegister,
+        panelMemberName,
+        panelMemberEmail,
+        panelTopicEvaluation,
       } = data.data;
 
       dispatch({
@@ -571,6 +594,9 @@ const AppProvider = ({ children }) => {
           coSupervisor,
           topic,
           isRegister,
+          panelMemberName,
+          panelMemberEmail,
+          panelTopicEvaluation,
         },
       });
       addStudentDetailsToLocalStorage({ membergroupID: groupID });
@@ -690,6 +716,17 @@ const AppProvider = ({ children }) => {
     try {
       const { response } = await authFetch.patch(
         `requests/groupRegister/${groupID}`,
+        { topic }
+      );
+    } catch (error) {}
+  };
+
+  //set edit topic when rejected this will be updated in request collection by pannel member(student part)
+
+  const editTopicPannel = async ({ groupID, topic }) => {
+    try {
+      const { response } = await authFetch.patch(
+        `requests//panneltopic/${groupID}`,
         { topic }
       );
     } catch (error) {}
@@ -1091,6 +1128,11 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTER_STUDENT });
   }
 
+  //clear filter student supervisor
+  const clearFiltersStudentSupervisor = () => {
+    dispatch({ type: CLEAR_FILTER_STUDENTSUPERVISOR });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -1143,6 +1185,8 @@ const AppProvider = ({ children }) => {
         getCoSupervisorGroup,
         addPanelMember,
         clearFiltersStudent,
+        editTopicPannel,
+        clearFiltersStudentSupervisor,
 
       }}
     >

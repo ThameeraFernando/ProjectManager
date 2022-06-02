@@ -31,7 +31,7 @@ const CoSupervisorContainer = () => {
   if (coSupervisors.length === 0) {
     return (
       <Wrapper>
-        <h2>No Users to display.</h2>
+        <h2>No Co-supervisors to display.</h2>
       </Wrapper>
     );
   }

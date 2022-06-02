@@ -117,6 +117,7 @@ const studentSchema = new Schema(
     },
     panelTopicEvaluation: {
       type: String,
+      enum: ["pending", "accepted", "declined"],
       default: "pending",
     },
   },

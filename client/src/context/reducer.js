@@ -82,6 +82,7 @@ import {
   UPDATE_PANEL_ADMIN_SUCCESS,
   UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
+  CLEAR_FILTER_STUDENTSUPERVISOR,
 
 } from "./actions";
 import Submission from "../components/Submission";
@@ -435,6 +436,9 @@ const reducer = (state, action) => {
       membercoSupervisor: action.payload.coSupervisor,
       memberTopic: action.payload.topic,
       memberisRegister: action.payload.isRegister,
+      memberPannelName: action.payload.panelMemberName,
+      memberPannelEmail: action.payload.panelMemberEmail,
+      memberPannelTopic: action.payload.panelTopicEvaluation,
     };
   }
   //get all student groups
@@ -717,7 +721,6 @@ const reducer = (state, action) => {
     };
   }
 
-
   //admin update student group
 
   if (action.type === UPDATE_PANEL_ADMIN_BEGIN) {
@@ -747,6 +750,7 @@ const reducer = (state, action) => {
 
 
   //clear filter
+
   if (action.type === CLEAR_FILTER_STUDENT) {
     return {
       ...state,
@@ -756,6 +760,18 @@ const reducer = (state, action) => {
       searchStatusStudent: "all",
     };
   }
+
+  //clear filter student supervisor
+  if (action.type === CLEAR_FILTER_STUDENTSUPERVISOR) {
+    return {
+      ...state,
+      sortStudentsupervisor: "a-z",
+      searchStudentsupervisor: "",
+      searchTypeStudentsupervisor: "all",
+      searchStatusStudentsupervisor: "all",
+    };
+  }
+
 
   throw new Error(`no such action :${action.type}`);
 };
