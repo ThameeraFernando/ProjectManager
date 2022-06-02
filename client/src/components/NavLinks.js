@@ -59,8 +59,7 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "reportsubmissions" &&
         link.path !== "supervisorhome" &&
         link.path !== "supervisorgroup" &&
-        link.path !== "supervise" &&
-        link.path !== "evaluationpanel"
+        link.path !== "supervise" 
       ) {
         return link;
       }
@@ -81,6 +80,23 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "studentcorequsets" &&
         link.path !== "cosupervisorgroup" &&
         link.path !== "cosupervisorhome"
+      ) {
+        return link;
+      }
+    });
+  }
+
+
+  //panel member
+  if (
+    user.type === "Student" ||
+    user.type === "Admin" ||
+    user.type === "Co Supervisor" ||
+    user.type === "Supervisor"
+  ) {
+    NewLinks = NewLinks.filter((link) => {
+      if (
+        link.path !== "evaluationpanel"
       ) {
         return link;
       }
