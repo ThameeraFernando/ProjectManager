@@ -78,8 +78,16 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  GET_MESSAGES_SUCCESS,
+  GET_EVALUATION_GROUP_BEGIN,
+  GET_EVALUATION_GROUP_SUCCESS,
+  UPDATE_PANEL_ADMIN_ERROR,
+  UPDATE_PANEL_ADMIN_SUCCESS,
+  UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
   CLEAR_FILTER_STUDENTSUPERVISOR,
+
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -717,7 +725,59 @@ const reducer = (state, action) => {
     };
   }
 
-  //clear filter student co-supervisor
+
+  if (action.type === GET_MESSAGES_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      messages: action.payload.messages,
+    };
+  }
+
+  //get supervisor group(supervisor dashboard)
+  if (action.type === GET_EVALUATION_GROUP_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_EVALUATION_GROUP_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      evaluationGroup: action.payload.group,
+    };
+  }
+  //admin update student group
+
+  if (action.type === UPDATE_PANEL_ADMIN_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_PANEL_ADMIN_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Panel Member Updated",
+    };
+  }
+  if (action.type === UPDATE_PANEL_ADMIN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      showAlert: true,
+      alertText: action.payload.msg,
+    };
+  }
+
+
+  //clear filter
+
   if (action.type === CLEAR_FILTER_STUDENT) {
     return {
       ...state,
@@ -738,6 +798,7 @@ const reducer = (state, action) => {
       searchStatusStudentsupervisor: "all",
     };
   }
+
 
   throw new Error(`no such action :${action.type}`);
 };

@@ -1,7 +1,7 @@
 import { AiTwotoneHome } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { ImProfile, ImUserPlus, ImFilesEmpty, ImPlus } from "react-icons/im";
-import { BiGroup } from "react-icons/bi";
+import { BiGroup,BiNews } from "react-icons/bi";
 import {
   AiOutlineUsergroupAdd,
   AiOutlineFileAdd,
@@ -29,12 +29,12 @@ const links = [
     path: "studentrequsets",
     icon: <ImUserPlus />,
   },
-  {
-    id: 4,
-    text: "Report & Submissions",
-    path: "reportsubmissions",
-    icon: <ImFilesEmpty />,
-  },
+  // {
+  //   id: 4,
+  //   text: "Report & Submissions",
+  //   path: "reportsubmissions",
+  //   icon: <ImFilesEmpty />,
+  // },
   {
     id: 5,
     text: "profile",
@@ -144,6 +144,15 @@ const links = [
     text: "Research Group",
     path: "cosupervisorgroup",
     icon: <FaUsers />,
+  },
+
+
+  // panel member
+  {
+    id: 223,
+    text: "Evaluation Panel",
+    path: "evaluationpanel",
+    icon: <BiNews />,
   },
 ];
 

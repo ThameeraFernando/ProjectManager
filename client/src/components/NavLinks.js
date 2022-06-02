@@ -58,7 +58,8 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "reportsubmissions" &&
         link.path !== "supervisorhome" &&
         link.path !== "supervisorgroup" &&
-        link.path !== "supervise"
+        link.path !== "supervise" &&
+        link.path !== "evaluationpanel"
       ) {
         return link;
       }
@@ -77,12 +78,16 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "cosupervisorgroup" &&
         link.path !== "cosupervise" &&
         link.path !== "studentcorequsets" &&
-        link.path !== "cosupervisorgroup"
+        link.path !== "cosupervisorgroup" &&
+        link.path !== "cosupervisorhome"
       ) {
         return link;
       }
     });
   }
+  
+
+  
 
   return (
     <div className="nav-links">

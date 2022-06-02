@@ -11,8 +11,8 @@ const StudentReqForCoSupervisor = ({
 _id,
 groupID,
 status,
-supervisorEmail,
-supervisorName,
+coSupervisorEmail,
+coSupervisorName,
 topic,
 }) => {
   const {
@@ -22,18 +22,6 @@ topic,
 
   } = useAppContext();
 
-  const [isAccepted, setIsAccepted] = useState(false);
-  const [isRejected, setIsRejected] = useState(false);
-  
-  useEffect(() => {
-    if(status!=='accepted' || status==='declined'){
-      setIsAccepted(true)
-      setIsRejected(true)
-    }
-    
-  }, []);
-  
- 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   // const topic = newTopic;
@@ -89,22 +77,22 @@ topic,
             type="text"
             labelText="Supervisor name"
             name="itNumTwo"
-            value={supervisorName}
+            value={coSupervisorName}
             isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="supervisor email"
             name="itNumTwo"
-            value={supervisorEmail}
+            value={coSupervisorEmail}
             isReadOnly={true}
           />
 
           <div className="btn-container">
-            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} disabled={isAccepted}>
+            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} >
               Accept
             </button>
-            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject} disabled={isRejected}>
+            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject}>
               Reject
             </button>
           </div>

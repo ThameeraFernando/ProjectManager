@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { Alert, FormRow } from "../../components/index";
+import { Link } from "react-router-dom";
 
 const StudnetGroup = () => {
   const {
@@ -271,6 +272,10 @@ const StudnetGroup = () => {
             >
               clear
             </button>
+
+            <Link to="/studentmessage" className="btn edit-btn mt-2">
+              Message
+            </Link>
           </div>
         </div>
       </form>

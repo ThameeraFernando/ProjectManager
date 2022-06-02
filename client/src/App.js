@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Link, Routes } from "react-router-dom";
 import { Landing, Register, Error } from "./pages/index";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { AppProvider } from "./context/appContext";
-
+import { Wait } from "./pages/Wait";
 import {
   SharedLayout,
   Profile,
@@ -31,9 +31,10 @@ import {
   CoSupervise,
   StudentCoRequestList,
   CoSupervisorGroup,
-
-
-
+  SupervisorMessage,
+  EvaluationPanel,
+  CoSupervisorMessage,
+  StudentMessage
 
 } from "./pages/dashboard/index";
 function App() {
@@ -82,7 +83,11 @@ function App() {
               <Route path="cosupervise" element={<CoSupervise />} />
               <Route path="studentcorequsets" element={<StudentCoRequestList />} />
               <Route path="cosupervisorgroup" element={<CoSupervisorGroup />} />
-
+              <Route path="supervisormessage" element={<SupervisorMessage />} />
+              <Route path="evaluationpanel" element={<EvaluationPanel />} /> {/* panel member */}
+              <Route path="cosupervisormessage" element={<CoSupervisorMessage />} />
+              <Route path="studentmessage" element={<StudentMessage />} />
+              
               <Route
                 path="student-research-request"
                 element={<StudentResearchRequest />}
@@ -90,6 +95,7 @@ function App() {
             </Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/landing" element={<Landing />}></Route>
+            <Route path="/wait" element={<Wait />}></Route>
             <Route path="*" element={<Error />}></Route>
           </Routes>
         </AppProvider>

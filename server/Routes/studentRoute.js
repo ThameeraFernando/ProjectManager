@@ -10,6 +10,8 @@ const {
   getSupervisorGroup,
   updateCoSupervisor,
   getCoSupervisorGroup,
+  getEvaluationGroup,
+  evaluateGroup
 
 } = require("../Controllers/studentController");
 
@@ -20,6 +22,10 @@ router.route("/groupRegister/:groupID").patch(updateTopic);
 //dilupa
 router.route("/groupSupervisor/:groupID").patch(updateSupervisor).get(getSupervisorGroup);
 router.route("/groupCoSupervisor/:groupID").patch(updateCoSupervisor).get(getCoSupervisorGroup);
+
+// panel member
+router.route("/panelMember/:panelMemberEmail").patch(evaluateGroup).get(getEvaluationGroup);
+
 
 router.route("/").get(getAllStudentGroups);
 module.exports = router;
