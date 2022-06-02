@@ -109,6 +109,41 @@ const getSupervisorGroup = async (req,res)=>{
   res.status(StatusCodes.OK).json({ group });
 }
 
+//by Panel Member
+const getEvaluationGroup = async (req,res)=>{
+  const { panelMemberEmail} = req.params;
+
+  if (!panelMemberEmail) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const group = await Groups.findOne({ panelMemberEmail });
+
+  res.status(StatusCodes.OK).json({ group });
+}
+
+//by panel member
+const evaluateGroup = async (req, res) => {
+  const { panelMemberEmail: Gid } = req.params;
+  const { panelTopicEvaluation } = req.body;
+
+  if (!Gid) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const grp = await Groups.find({ groupID: Gid  });
+
+  if (!grp) {
+    throw new NotFoundError(`No group with name :${Gid}`);
+  }
+
+  const group = await Groups.findOneAndUpdate({ groupID: Gid }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(StatusCodes.OK).json({ group });
+};
+
 //by co-supervisor
 const updateCoSupervisor = async (req, res) => {
   const { groupID: Gid } = req.params;
@@ -151,5 +186,7 @@ module.exports = {
   updateSupervisor,
   getSupervisorGroup,
   getCoSupervisorGroup,
-  updateCoSupervisor
+  updateCoSupervisor,
+  getEvaluationGroup,
+  evaluateGroup
 };

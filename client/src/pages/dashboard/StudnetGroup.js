@@ -232,6 +232,10 @@ const StudnetGroup = () => {
             >
               clear
             </button>
+
+            <Link to='/studentmessage' className="btn edit-btn">
+              Message
+            </Link>
           </div>
         </div>
       </form>

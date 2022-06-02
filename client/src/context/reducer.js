@@ -78,6 +78,10 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  GET_MESSAGES_SUCCESS,
+  GET_EVALUATION_GROUP_BEGIN,
+  GET_EVALUATION_GROUP_SUCCESS,
+
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -711,6 +715,31 @@ const reducer = (state, action) => {
       searchType: "all",
     };
   }
+
+  if (action.type === GET_MESSAGES_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      messages: action.payload.messages,
+    };
+  }
+
+  //get supervisor group(supervisor dashboard)
+  if (action.type === GET_EVALUATION_GROUP_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_EVALUATION_GROUP_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      evaluationGroup: action.payload.group,
+    };
+  }
+
+
   throw new Error(`no such action :${action.type}`);
 };
 export default reducer;
