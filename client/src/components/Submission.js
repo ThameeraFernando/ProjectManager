@@ -24,6 +24,7 @@ const Submission = ({
   let uPdate = moment(updatedAt);
   uPdate = uPdate.format("MMM Do, YYYY");
   const { removeSubmission, user } = useAppContext();
+  console.log(user.type);
   const today = new Date();
   const endDate = new Date(dueDate);
   const days = parseInt((endDate - today) / (1000 * 60 * 60 * 24));
@@ -36,55 +37,112 @@ const Submission = ({
   );
 
   // console.log(days, hours, minutes, seconds);
-  return (
-    <Wrapper>
-      <header>
-        <div className="info">
-          <p>{description}</p>
-        </div>
-      </header>
-      <div className="content">
-        <div className="content-center">
-          <UserInfo icon={<IoPerson />} text={submittedBy} />
-          <UserInfo icon={<GiTeacher />} text={submittedTo} />
-          <UserInfo
-            icon={<AiOutlineClockCircle />}
-            text={`${days} days ${hours} hours ${minutes} minutes`}
-          />
-        </div>
-        <footer>
-          <div className="actions">
-            {user.type === "Admin" && (
-              <button
-                type="button"
-                className="btn delete-btn mr-2"
-                onClick={() => removeSubmission(_id)}
-              >
-                Remove Submission
-              </button>
-            )}
-            {user.type === "Student" && (
-              <Link
-                to="/student-submissions"
-                className={days < 0 ? "btn delete-btn" : "btn edit-btn"}
-                state={{
-                  _id,
-                  createdAt,
-                  description,
-                  dueDate,
-                  submittedBy,
-                  submittedTo,
-                  updatedAt,
-                }}
-              >
-                Add Submission
-              </Link>
-            )}
+  if (submittedBy === user.type) {
+    return (
+      <Wrapper>
+        <>
+          <header>
+            <div className="info">
+              <p>{description}</p>
+            </div>
+          </header>
+          <div className="content">
+            <div className="content-center">
+              <UserInfo icon={<IoPerson />} text={submittedBy} />
+              <UserInfo icon={<GiTeacher />} text={submittedTo} />
+              <UserInfo
+                icon={<AiOutlineClockCircle />}
+                text={`${days} days ${hours} hours ${minutes} minutes`}
+              />
+            </div>
+            <footer>
+              <div className="actions">
+                {user.type === "Admin" && (
+                  <button
+                    type="button"
+                    className="btn delete-btn mr-2"
+                    onClick={() => removeSubmission(_id)}
+                  >
+                    Remove Submission
+                  </button>
+                )}
+
+                <Link
+                  to="/student-submissions"
+                  className={days < 0 ? "btn delete-btn" : "btn edit-btn"}
+                  state={{
+                    _id,
+                    createdAt,
+                    description,
+                    dueDate,
+                    submittedBy,
+                    submittedTo,
+                    updatedAt,
+                  }}
+                >
+                  Add Submission
+                </Link>
+              </div>
+            </footer>
           </div>
-        </footer>
-      </div>
-    </Wrapper>
-  );
+        </>
+      </Wrapper>
+    );
+  }
+
+  if (user.type === "Admin") {
+    return (
+      <Wrapper>
+        <>
+          <header>
+            <div className="info">
+              <p>{description}</p>
+            </div>
+          </header>
+          <div className="content">
+            <div className="content-center">
+              <UserInfo icon={<IoPerson />} text={submittedBy} />
+              <UserInfo icon={<GiTeacher />} text={submittedTo} />
+              <UserInfo
+                icon={<AiOutlineClockCircle />}
+                text={`${days} days ${hours} hours ${minutes} minutes`}
+              />
+            </div>
+            <footer>
+              <div className="actions">
+                {user.type === "Admin" && (
+                  <button
+                    type="button"
+                    className="btn delete-btn mr-2"
+                    onClick={() => removeSubmission(_id)}
+                  >
+                    Remove Submission
+                  </button>
+                )}
+                {user.type === "Student" && (
+                  <Link
+                    to="/student-submissions"
+                    className={days < 0 ? "btn delete-btn" : "btn edit-btn"}
+                    state={{
+                      _id,
+                      createdAt,
+                      description,
+                      dueDate,
+                      submittedBy,
+                      submittedTo,
+                      updatedAt,
+                    }}
+                  >
+                    Add Submission
+                  </Link>
+                )}
+              </div>
+            </footer>
+          </div>
+        </>
+      </Wrapper>
+    );
+  }
 };
 
 export default Submission;

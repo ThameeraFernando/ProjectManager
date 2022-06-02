@@ -19,7 +19,8 @@ const NavLinks = ({ toggleSideBar }) => {
         link.path !== "all-users" &&
         link.path !== "upload-docs" &&
         link.path !== "create-submissions" &&
-        link.path !== "staff-members"
+        link.path !== "staff-members" &&
+        link.path !== "all-student-groups"
       ) {
         return link;
       }
@@ -85,9 +86,6 @@ const NavLinks = ({ toggleSideBar }) => {
       }
     });
   }
-  
-
-  
 
   return (
     <div className="nav-links">

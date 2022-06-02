@@ -21,9 +21,9 @@ const SubmissionContainer = () => {
   }
   return (
     <Wrapper>
-      <h4>
+      {/* <h4>
         {submissions.length} submission{submissions.length > 1 && "s"}
-      </h4>
+      </h4> */}
       <div className="jobs">
         {submissions.map((submission) => {
           return <Submission key={submission._id} {...submission} />;
