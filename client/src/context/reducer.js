@@ -86,8 +86,6 @@ import {
   UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
   CLEAR_FILTER_STUDENTSUPERVISOR,
-
-
 } from "./actions";
 import Submission from "../components/Submission";
 const reducer = (state, action) => {
@@ -307,6 +305,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Research group registration successfully completed",
+      memberisRegister: true,
     };
   }
 
@@ -725,7 +724,6 @@ const reducer = (state, action) => {
     };
   }
 
-
   if (action.type === GET_MESSAGES_SUCCESS) {
     return {
       ...state,
@@ -775,7 +773,6 @@ const reducer = (state, action) => {
     };
   }
 
-
   //clear filter
 
   if (action.type === CLEAR_FILTER_STUDENT) {
@@ -798,7 +795,6 @@ const reducer = (state, action) => {
       searchStatusStudentsupervisor: "all",
     };
   }
-
 
   throw new Error(`no such action :${action.type}`);
 };

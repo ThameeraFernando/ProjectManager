@@ -46,7 +46,7 @@ const SupervisorContainer = () => {
         {totalSupervisors} Supervisor{supervisors.length > 1 && "s"}
       </h4>
       <h5 hidden={requestGroups.length >= 1}>
-        Co-Supervisor requests are based on first come first serve
+        Supervisor requests are based on first come first serve
       </h5>
       <h3>{showAlert && <Alert />}</h3>
       <div className="jobs">
