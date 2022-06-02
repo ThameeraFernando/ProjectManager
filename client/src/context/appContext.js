@@ -80,8 +80,12 @@ import {
   STUDENT_SUPERVISOR_EDIT_TOPIC_ERROR,
   HANDLE_CHANGE,
   CLEAR_FILTER,
+  UPDATE_PANEL_ADMIN_ERROR,
+  UPDATE_PANEL_ADMIN_SUCCESS,
+  UPDATE_PANEL_ADMIN_BEGIN,
   CLEAR_FILTER_STUDENT,
   CLEAR_FILTER_STUDENTSUPERVISOR,
+
 } from "./actions";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -1098,10 +1102,31 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
-  //clear filter student
+
+  //add panel members
+  const addPanelMember = async (pmEmail, pmName, _id) => {
+    dispatch({ type: UPDATE_PANEL_ADMIN_BEGIN });
+    try {
+      await authFetch.patch(`/users/studentGroup/${_id}`, {
+        panelMemberEmail: pmEmail,
+        panelMemberName: pmName,
+      });
+      dispatch({ type: UPDATE_PANEL_ADMIN_SUCCESS });
+      getAllStudents();
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: UPDATE_USER_ADMIN_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+
+  };
+    //clear filter student
   const clearFiltersStudent = () => {
     dispatch({ type: CLEAR_FILTER_STUDENT });
-  };
+  }
 
   //clear filter student supervisor
   const clearFiltersStudentSupervisor = () => {
@@ -1158,9 +1183,11 @@ const AppProvider = ({ children }) => {
         acceptStudentCoGroupReq,
         rejectStudentCoGroupReq,
         getCoSupervisorGroup,
+        addPanelMember,
         clearFiltersStudent,
         editTopicPannel,
         clearFiltersStudentSupervisor,
+
       }}
     >
       {children}
