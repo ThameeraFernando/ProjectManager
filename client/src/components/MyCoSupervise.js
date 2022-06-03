@@ -10,17 +10,25 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { GrValidate } from "react-icons/gr";
 import Alert from "./Alert";
 
-
-const MyCoSupervise = ({_id, name, type, email, availability, field, count }) => {
-  const { setEditSupervise, deleteCoSupervise, user, showAlert } = useAppContext();
+const MyCoSupervise = ({
+  _id,
+  name,
+  type,
+  email,
+  availability,
+  field,
+  count,
+}) => {
+  const { setEditSupervise, deleteCoSupervise, user, showAlert } =
+    useAppContext();
   return (
-    <Wrapper>
+    <Wrapper data-testid="test-8">
       <header>
         {showAlert && <Alert />}
         <div className="main-icon">{name.charAt(0)}</div>
         <div className="info">
           <h5>{type}</h5>
-          <p>{name}</p>
+          <p data-testid="test-9">{name}</p>
         </div>
       </header>
       <div className="content">
@@ -35,9 +43,19 @@ const MyCoSupervise = ({_id, name, type, email, availability, field, count }) =>
 
         <footer>
           <Link
-            to='/cosupervise'
+            to="/cosupervise"
             className="btn edit-btn"
-            onClick={() => {setEditSupervise({_id, name, type, email, availability, field, count }) }}
+            onClick={() => {
+              setEditSupervise({
+                _id,
+                name,
+                type,
+                email,
+                availability,
+                field,
+                count,
+              });
+            }}
           >
             Edit
           </Link>
@@ -45,7 +63,7 @@ const MyCoSupervise = ({_id, name, type, email, availability, field, count }) =>
           <button
             type="button"
             className="btn delete-btn"
-            onClick={() => deleteCoSupervise(_id,user._id)}
+            onClick={() => deleteCoSupervise(_id, user._id)}
           >
             Delete
           </button>
