@@ -29,12 +29,12 @@ const CoSupervisor = (props) => {
   });
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="test-5">
       <header>
         <div className="main-icon">{name.charAt(0)}</div>
         <div className="info">
           <h5>{type}</h5>
-          <p>{name}</p>
+          <p data-testid="test-6">{name}</p>
         </div>
       </header>
       <div className="content">

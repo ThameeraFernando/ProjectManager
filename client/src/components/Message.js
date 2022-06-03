@@ -9,7 +9,7 @@ const Message = (props) => {
     const { sender, message } = props;
     
     return (
-        <Wrapper>
+        <Wrapper data-testid="test-4">
             <div className="content">
                 <div className="content-center">
                     <SupervisorInfo icon={<IoPerson />} text={sender} />

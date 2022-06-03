@@ -18,7 +18,7 @@ const Profile = () => {
     updateUser({ name, email, type });
   };
   return (
-    <Wrapper>
+    <Wrapper data-testid="test-10">
       <form className="form">
         <h3>Profile</h3>
         {showAlert && <Alert />}

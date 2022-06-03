@@ -28,12 +28,12 @@ const User = ({
     validStaff = "Valid staff member";
   }
   return (
-    <Wrapper>
+    <Wrapper data-testid="test-2">
       <header>
         <div className="main-icon">{email.charAt(0)}</div>
         <div className="info">
           <h5>{type}</h5>
-          <p>{name}</p>
+          <p data-testid="test-3">{name}</p>
         </div>
       </header>
       <div className="content">

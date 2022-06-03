@@ -6,7 +6,7 @@ import Wrapper from "../assets/wrappers/BigSidebar";
 const BigSidebar = () => {
   const { showSideBar } = useAppContext();
   return (
-    <Wrapper>
+    <Wrapper data-testid='test-1'>
       <div
         className={
           showSideBar ? "sidebar-container " : "sidebar-container show-sidebar"

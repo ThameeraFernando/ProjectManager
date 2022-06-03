@@ -74,7 +74,7 @@ const MyDocuments = () => {
     }
   };
   return (
-    <Wrapper>
+    <Wrapper data-testid="test-12">
       <div className="jobs">
         {allFiles &&
           allFiles.map((file) => {
