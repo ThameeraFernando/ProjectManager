@@ -49,7 +49,6 @@ const StudentPannelReq = ({
     editTopic({ groupID, topic });
     editTopicPannel({ groupID, topic });
     editTopicPannelCo({ groupID, topic });
-
     console.log(groupID, topic);
   };
 
