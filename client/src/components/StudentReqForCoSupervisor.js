@@ -8,19 +8,15 @@ import StudentResearchReqInfo from "./StudentResearchReqInfo";
 import { Alert, FormRow } from "./index";
 
 const StudentReqForCoSupervisor = ({
-_id,
-groupID,
-status,
-coSupervisorEmail,
-coSupervisorName,
-topic,
+  _id,
+  groupID,
+  status,
+  coSupervisorEmail,
+  coSupervisorName,
+  topic,
 }) => {
-  const {
-    showAlert,
-    rejectStudentCoGroupReq,
-    acceptStudentCoGroupReq,
-
-  } = useAppContext();
+  const { showAlert, rejectStudentCoGroupReq, acceptStudentCoGroupReq } =
+    useAppContext();
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -30,14 +26,13 @@ topic,
   // };
 
   const handleAccept = (e) => {
-    e.preventDefault()
-    acceptStudentCoGroupReq(groupID,_id)
-  }
+    e.preventDefault();
+    acceptStudentCoGroupReq(groupID, _id);
+  };
 
-  const handleReject =(e)  => {
-    rejectStudentCoGroupReq(_id)
-  }
-
+  const handleReject = (e) => {
+    rejectStudentCoGroupReq(_id);
+  };
 
   return (
     <Wrapper>
@@ -56,43 +51,51 @@ topic,
             isReadOnly={true}
           />
 
-          {/*IT NUM 1*/}
+          {/*Topic*/}
           <FormRow
             type="text"
             labelText="Topic"
-            name="itNumOne"
+            name="topic"
             value={topic}
             isReadOnly={true}
           />
 
-          {/*IT NUM 2*/}
+          {/*Status*/}
           <FormRow
             type="text"
             labelText="Status"
-            name="itNumTwo"
+            name="status"
             value={status}
             isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="Supervisor name"
-            name="itNumTwo"
+            name="coSupervisorName"
             value={coSupervisorName}
             isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="supervisor email"
-            name="itNumTwo"
+            name="coSupervisorEmail"
             value={coSupervisorEmail}
             isReadOnly={true}
           />
 
           <div className="btn-container">
-            <button className="btn btn-block btn-success" type="submit" onClick={handleAccept} >
+            <button
+              className="btn btn-block btn-success"
+              type="submit"
+              onClick={handleAccept}
+            >
               Accept
             </button>
-            <button className="btn btn-block btn-danger" type="submit" onClick={handleReject}>
+            <button
+              className="btn btn-block btn-danger"
+              type="submit"
+              onClick={handleReject}
+            >
               Reject
             </button>
           </div>
