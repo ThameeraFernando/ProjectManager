@@ -69,23 +69,24 @@ const StudentPannelReq = ({
             isReadOnly={true}
           />
 
-          {/*IT NUM 1*/}
+          {/*Panel member Name*/}
           <FormRow
             type="text"
-            labelText="Pannel member Name"
+            labelText="Panel member Name"
             name="memberPannelName"
             value={memberPannelName}
             isReadOnly={true}
           />
 
-          {/*IT NUM 2*/}
+          {/*Panel Member Email*/}
           <FormRow
             type="text"
-            labelText="Pannel Member Email"
+            labelText="Panel Member Email"
             name="memberPannelEmail"
             value={memberPannelEmail}
             isReadOnly={true}
           />
+          {/*Topic*/}
           <FormRow
             type="text"
             labelText="Topic"
@@ -93,6 +94,7 @@ const StudentPannelReq = ({
             value={memberTopic}
             isReadOnly={true}
           />
+          {/*Topic status*/}
           <FormRow
             type="text"
             labelText="Topic status"

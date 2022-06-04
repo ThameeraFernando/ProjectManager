@@ -49,11 +49,11 @@ const StudentResearchCoReq = ({
             isReadOnly={true}
           />
 
-          {/*IT NUM 1*/}
+          {/*Topic*/}
           <FormRow
             type="text"
             labelText="Topic"
-            name="itNumOne"
+            name="topic"
             value={topic}
             isReadOnly={true}
           />
@@ -62,21 +62,21 @@ const StudentResearchCoReq = ({
           <FormRow
             type="text"
             labelText="Status"
-            name="itNumTwo"
+            name="Status"
             value={status}
             isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="Co-supervisor name"
-            name="itNumTwo"
+            name="coSupervisorName"
             value={coSupervisorName}
             isReadOnly={true}
           />
           <FormRow
             type="text"
             labelText="Co-supervisor email"
-            name="itNumTwo"
+            name="coSupervisorEmail"
             value={coSupervisorEmail}
             isReadOnly={true}
           />

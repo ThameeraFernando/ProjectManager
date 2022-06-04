@@ -69,7 +69,7 @@ const StudentResearchReq = ({
             isReadOnly={true}
           />
 
-          {/*IT NUM 1*/}
+          {/*topic*/}
           <FormRow
             type="text"
             labelText="Topic"
@@ -78,7 +78,7 @@ const StudentResearchReq = ({
             isReadOnly={true}
           />
 
-          {/*IT NUM 2*/}
+          {/*Status*/}
           <FormRow
             type="text"
             labelText="Status"
